@@ -6,10 +6,11 @@ import javax.persistence.*;
 @Table(name = "heath_status")
 public class HeathStatus {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    
     @Column(name = "id")
+    @OneToMany
     private Integer id;
 
     @Column(name = "name")
