@@ -9,6 +9,7 @@ public class PregnancyStatus {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	
 	@Column(name="id")
+	@OneToMany
 	private Integer id;
 	
 	@Column(name="name")

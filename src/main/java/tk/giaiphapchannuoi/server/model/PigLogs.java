@@ -18,11 +18,9 @@ public class PigLogs {
 	private Date date;
 	
 	@Column(name="action_type")
-	@OneToOne
 	private Integer action_type;
 	
 	@Column(name="action_id")
-	@OneToOne
 	private Integer action_id;
 	
 	@Column(name="pig_id")
@@ -33,15 +31,12 @@ public class PigLogs {
 	private String pig_code;
 	
 	@Column(name="house_id")
-	@ManyToOne
 	private Integer house_id;
 	
 	@Column(name="round_id")
-	@ManyToOne
 	private Integer round_id;
 	
 	@Column(name="breed_id")
-	@ManyToOne
 	private Integer breed_id;
 	
 	@Column(name="gender")
@@ -75,7 +70,6 @@ public class PigLogs {
 	private Float health_point;
 	
 	@Column(name="foot")
-	@ManyToOne
 	private Integer foot;
 	
 	@Column(name="function_udder")
@@ -119,7 +113,6 @@ public class PigLogs {
 	private String images;
 	
 	@Column(name="health_status")
-	@ManyToOne
 	private Integer health_status;
 	
 	@Column(name="breeding_type")
@@ -129,7 +122,6 @@ public class PigLogs {
 	private Integer breed_status;
 	
 	@Column(name="pregnancy_status")
-	@ManyToOne
 	private Integer pregnancy_status;
 	
 	@Column(name="overview_status")
@@ -142,7 +134,6 @@ public class PigLogs {
 	private Integer status;
 	
 	@Column(name="price_code")
-	@ManyToOne
 	private Integer price_ocde;
 
 	public PigLogs(

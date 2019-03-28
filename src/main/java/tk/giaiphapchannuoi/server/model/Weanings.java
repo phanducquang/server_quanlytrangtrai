@@ -12,7 +12,6 @@ public class Weanings {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	
 	@Column(name="id")
-	@OneToOne
 	private Integer id;
 	
 	@Column(name="pig_id")

@@ -2,24 +2,25 @@ package tk.giaiphapchannuoi.server.model;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name = "gential_type")
-public class GentialType {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+@Table(name="mark_types")
+public class MarkTypes {
 
-	@Column(name = "id")
+	@Id
+	@GeneratedValue (strategy = GenerationType.AUTO)
+	
+	@Column(name="id")
 	@OneToMany
 	private Integer id;
 	
-	@Column(name = "name")
+	@Column(name="name")
 	private String name;
 	
 	@Column(name="description")
 	private String description;
 
-	public GentialType(String name, String description) {
+	public MarkTypes(String name, String description) {
+		super();
 		this.name = name;
 		this.description = description;
 	}
@@ -47,7 +48,6 @@ public class GentialType {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 	
 	
 }

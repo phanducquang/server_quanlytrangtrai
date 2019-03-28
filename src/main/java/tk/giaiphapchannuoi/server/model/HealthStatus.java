@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "heath_status")
-public class HeathStatus {
+public class HealthStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,12 +20,12 @@ public class HeathStatus {
     private String description;
 
 
-    public HeathStatus(String name, String description) {
+    public HealthStatus(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public HeathStatus() {
+    public HealthStatus() {
     }
 
     public Integer getId() {

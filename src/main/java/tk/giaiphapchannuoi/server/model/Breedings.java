@@ -22,7 +22,6 @@ public class Breedings {
 	private Date date;
 	
 	@Column(name="log_id")
-	@ManyToOne
 	private Integer log_id;
 	
 	@Column(name="type_id")

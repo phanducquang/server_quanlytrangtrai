@@ -19,7 +19,6 @@ public class Houses {
 	private Integer section_id;
 	
 	@Column(name="type_id")
-	@ManyToOne
 	private Integer type_id;
 	
 	@Column(name="house_code")

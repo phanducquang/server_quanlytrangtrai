@@ -12,15 +12,12 @@ public class MatingRoles {
 	private Integer id;
 	
 	@Column(name="father_id")
-	@ManyToOne
 	private Integer father_id;
 	
 	@Column(name="mother_id")
-	@ManyToOne
 	private Integer mother_id;
 	
 	@Column(name="child_id")
-	@ManyToOne
 	private Integer child_id;
 	
 	@Column(name="birth_status_estimate")

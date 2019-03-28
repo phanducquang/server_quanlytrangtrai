@@ -10,7 +10,7 @@ public class Breeds {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	
 	@Column(name = "id")
-	@OneToOne
+	@OneToMany
 	private Integer id;
 	
 	@Column(name="name")
