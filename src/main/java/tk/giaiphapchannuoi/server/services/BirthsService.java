@@ -16,11 +16,24 @@ public class BirthsService {
     @Autowired
     BirthsRepository birthsRepository;
 
-    public List<Births> findallbirths(){
-        return birthsRepository.findAll();
+    public List<Births> findall(){
+        return birthsRepository.findAllByDelFlag(false);
     }
 
     public Optional<Births> findbyid(Integer id){
-        return birthsRepository.findById(id);
+        return birthsRepository.findByIdAndDelFlag(id, false);
     }
+
+    public Births save(Births births){
+        return birthsRepository.save(births);
+    }
+
+    public Boolean delete(Births births){
+        births.setDelFlag(true);
+        if(birthsRepository.save(births) != null){
+            return true;
+        }
+        return false;
+    }
+
 }

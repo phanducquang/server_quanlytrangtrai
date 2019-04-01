@@ -28,7 +28,7 @@ public class Births implements Serializable {
 	private Integer parities;
 
 	@Column(name="borning")
-	private Integer boming;
+	private Integer borning;
 	
 	@Column(name="fetal_weight")
 	private Float fetal_weight;
@@ -37,10 +37,10 @@ public class Births implements Serializable {
 	private Integer selected;
 
 	@Column(name="die_before_borning")
-	private Integer die_before_boming;
+	private Integer die_before_borning;
 
 	@Column(name="die_borning")
-	private Integer die_boming;
+	private Integer die_borning;
 	
 	@Column(name="die_black")
 	private Integer die_black;
@@ -54,23 +54,27 @@ public class Births implements Serializable {
 	@Column(name="remain")
 	private Integer remain;
 
+	@Column(name = "del_flag")
+	private Boolean delFlag;
+
 	public Births() {
 	}
 
-	public Births(Integer mating_id, Date date, Integer log_id, Integer parities, Integer boming, Float fetal_weight, Integer selected, Integer die_before_boming, Integer die_boming, Integer die_black, Integer defect, Integer small_remove, Integer remain) {
+	public Births(Integer mating_id, Date date, Integer log_id, Integer parities, Integer borning, Float fetal_weight, Integer selected, Integer die_before_borning, Integer die_borning, Integer die_black, Integer defect, Integer small_remove, Integer remain, Boolean delFlag) {
 		this.mating_id = mating_id;
 		this.date = date;
 		this.log_id = log_id;
 		this.parities = parities;
-		this.boming = boming;
+		this.borning = borning;
 		this.fetal_weight = fetal_weight;
 		this.selected = selected;
-		this.die_before_boming = die_before_boming;
-		this.die_boming = die_boming;
+		this.die_before_borning = die_before_borning;
+		this.die_borning = die_borning;
 		this.die_black = die_black;
 		this.defect = defect;
 		this.small_remove = small_remove;
 		this.remain = remain;
+		this.delFlag = delFlag;
 	}
 
 	public Integer getId() {
@@ -161,27 +165,35 @@ public class Births implements Serializable {
 		this.remain = remain;
 	}
 
-	public Integer getBoming() {
-		return boming;
+	public Integer getBorning() {
+		return borning;
 	}
 
-	public void setBoming(Integer boming) {
-		this.boming = boming;
+	public void setBorning(Integer borning) {
+		this.borning = borning;
 	}
 
-	public Integer getDie_before_boming() {
-		return die_before_boming;
+	public Integer getDie_before_borning() {
+		return die_before_borning;
 	}
 
-	public void setDie_before_boming(Integer die_before_boming) {
-		this.die_before_boming = die_before_boming;
+	public void setDie_before_borning(Integer die_before_borning) {
+		this.die_before_borning = die_before_borning;
 	}
 
-	public Integer getDie_boming() {
-		return die_boming;
+	public Integer getDie_borning() {
+		return die_borning;
 	}
 
-	public void setDie_boming(Integer die_boming) {
-		this.die_boming = die_boming;
+	public void setDie_borning(Integer die_borning) {
+		this.die_borning = die_borning;
+	}
+
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
 	}
 }
