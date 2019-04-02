@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface BirthsRepository extends JpaRepository<Births, Integer> {
 
-    Optional<Births> findByIdAndDelFlag(Integer id, Boolean del_flag);
+    Optional<Births> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
-    List<Births> findAllByDelFlag(Boolean del_flag);
+    List<Births> findAllByDelFlag(Boolean delFlag);
 
 }

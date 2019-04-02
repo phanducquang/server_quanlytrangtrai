@@ -16,13 +16,13 @@ public class Births implements Serializable {
 	private Integer id;
 	
 	@Column(name="mating_id")
-	private Integer mating_id;
+	private Integer matingId;
 	
 	@Column(name="date")
 	private Date date;
 	
 	@Column(name="log_id")
-	private Integer log_id;
+	private Integer logId;
 	
 	@Column(name="parities")
 	private Integer parities;
@@ -31,25 +31,25 @@ public class Births implements Serializable {
 	private Integer borning;
 	
 	@Column(name="fetal_weight")
-	private Float fetal_weight;
+	private Float fetalWeight;
 	
 	@Column(name="selected")
 	private Integer selected;
 
 	@Column(name="die_before_borning")
-	private Integer die_before_borning;
+	private Integer dieBeforeBorning;
 
 	@Column(name="die_borning")
-	private Integer die_borning;
+	private Integer dieBorning;
 	
 	@Column(name="die_black")
-	private Integer die_black;
+	private Integer dieBlack;
 	
 	@Column(name="defect")
 	private Integer defect;
 	
 	@Column(name="small_remove")
-	private Integer small_remove;
+	private Integer smallRemove;
 	
 	@Column(name="remain")
 	private Integer remain;
@@ -60,19 +60,19 @@ public class Births implements Serializable {
 	public Births() {
 	}
 
-	public Births(Integer mating_id, Date date, Integer log_id, Integer parities, Integer borning, Float fetal_weight, Integer selected, Integer die_before_borning, Integer die_borning, Integer die_black, Integer defect, Integer small_remove, Integer remain, Boolean delFlag) {
-		this.mating_id = mating_id;
+	public Births(Integer matingId, Date date, Integer logId, Integer parities, Integer borning, Float fetalWeight, Integer selected, Integer dieBeforeBorning, Integer dieBorning, Integer dieBlack, Integer defect, Integer smallRemove, Integer remain, Boolean delFlag) {
+		this.matingId = matingId;
 		this.date = date;
-		this.log_id = log_id;
+		this.logId = logId;
 		this.parities = parities;
 		this.borning = borning;
-		this.fetal_weight = fetal_weight;
+		this.fetalWeight = fetalWeight;
 		this.selected = selected;
-		this.die_before_borning = die_before_borning;
-		this.die_borning = die_borning;
-		this.die_black = die_black;
+		this.dieBeforeBorning = dieBeforeBorning;
+		this.dieBorning = dieBorning;
+		this.dieBlack = dieBlack;
 		this.defect = defect;
-		this.small_remove = small_remove;
+		this.smallRemove = smallRemove;
 		this.remain = remain;
 		this.delFlag = delFlag;
 	}
@@ -85,12 +85,12 @@ public class Births implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getMating_id() {
-		return mating_id;
+	public Integer getMatingId() {
+		return matingId;
 	}
 
-	public void setMating_id(Integer mating_id) {
-		this.mating_id = mating_id;
+	public void setMatingId(Integer matingId) {
+		this.matingId = matingId;
 	}
 
 	public Date getDate() {
@@ -101,12 +101,12 @@ public class Births implements Serializable {
 		this.date = date;
 	}
 
-	public Integer getLog_id() {
-		return log_id;
+	public Integer getLogId() {
+		return logId;
 	}
 
-	public void setLog_id(Integer log_id) {
-		this.log_id = log_id;
+	public void setLogId(Integer logId) {
+		this.logId = logId;
 	}
 
 	public Integer getParities() {
@@ -117,12 +117,20 @@ public class Births implements Serializable {
 		this.parities = parities;
 	}
 
-	public Float getFetal_weight() {
-		return fetal_weight;
+	public Integer getBorning() {
+		return borning;
 	}
 
-	public void setFetal_weight(Float fetal_weight) {
-		this.fetal_weight = fetal_weight;
+	public void setBorning(Integer borning) {
+		this.borning = borning;
+	}
+
+	public Float getFetalWeight() {
+		return fetalWeight;
+	}
+
+	public void setFetalWeight(Float fetalWeight) {
+		this.fetalWeight = fetalWeight;
 	}
 
 	public Integer getSelected() {
@@ -133,12 +141,28 @@ public class Births implements Serializable {
 		this.selected = selected;
 	}
 
-	public Integer getDie_black() {
-		return die_black;
+	public Integer getDieBeforeBorning() {
+		return dieBeforeBorning;
 	}
 
-	public void setDie_black(Integer die_black) {
-		this.die_black = die_black;
+	public void setDieBeforeBorning(Integer dieBeforeBorning) {
+		this.dieBeforeBorning = dieBeforeBorning;
+	}
+
+	public Integer getDieBorning() {
+		return dieBorning;
+	}
+
+	public void setDieBorning(Integer dieBorning) {
+		this.dieBorning = dieBorning;
+	}
+
+	public Integer getDieBlack() {
+		return dieBlack;
+	}
+
+	public void setDieBlack(Integer dieBlack) {
+		this.dieBlack = dieBlack;
 	}
 
 	public Integer getDefect() {
@@ -149,12 +173,12 @@ public class Births implements Serializable {
 		this.defect = defect;
 	}
 
-	public Integer getSmall_remove() {
-		return small_remove;
+	public Integer getSmallRemove() {
+		return smallRemove;
 	}
 
-	public void setSmall_remove(Integer small_remove) {
-		this.small_remove = small_remove;
+	public void setSmallRemove(Integer smallRemove) {
+		this.smallRemove = smallRemove;
 	}
 
 	public Integer getRemain() {
@@ -163,30 +187,6 @@ public class Births implements Serializable {
 
 	public void setRemain(Integer remain) {
 		this.remain = remain;
-	}
-
-	public Integer getBorning() {
-		return borning;
-	}
-
-	public void setBorning(Integer borning) {
-		this.borning = borning;
-	}
-
-	public Integer getDie_before_borning() {
-		return die_before_borning;
-	}
-
-	public void setDie_before_borning(Integer die_before_borning) {
-		this.die_before_borning = die_before_borning;
-	}
-
-	public Integer getDie_borning() {
-		return die_borning;
-	}
-
-	public void setDie_borning(Integer die_borning) {
-		this.die_borning = die_borning;
 	}
 
 	public Boolean getDelFlag() {
