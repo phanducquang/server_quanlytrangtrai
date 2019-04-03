@@ -18,7 +18,7 @@ public class BreedingsController {
     BreedingsService breedingsService;
 
     @GetMapping(value = "/{id}")
-    public Optional<Breedings> findBirth(@PathVariable Integer id){
+    public Optional<Breedings> findById(@PathVariable Integer id){
         return breedingsService.findbyid(id);
     }
 

@@ -19,7 +19,7 @@ public class BirthsController {
     BirthsService birthsService;
 
     @GetMapping(value = "/{id}")
-    public Optional<Births> findBirth(@PathVariable Integer id){
+    public Optional<Births> findById(@PathVariable Integer id){
         return birthsService.findbyid(id);
     }
 
