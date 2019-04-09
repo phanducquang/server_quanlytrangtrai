@@ -21,7 +21,6 @@ public class Groups implements Serializable {
 	private Integer parentId;
 	
 	@Column(name="round_id")
-	@ManyToOne
 	private Integer roundId;
 	
 	@Column(name="avg_birthday")

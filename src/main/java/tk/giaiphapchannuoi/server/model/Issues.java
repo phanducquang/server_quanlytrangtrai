@@ -24,12 +24,18 @@ public class Issues implements Serializable {
 	@Column(name="description")
 	private String description;
 
-	public Issues(Integer level, String symbol, String lesions, String description) {
-		super();
+	@Column(name = "del_flag")
+	private Boolean delFlag;
+
+	public Issues() {
+	}
+
+	public Issues(Integer level, String symbol, String lesions, String description, Boolean delFlag) {
 		this.level = level;
 		this.symbol = symbol;
 		this.lesions = lesions;
 		this.description = description;
+		this.delFlag = delFlag;
 	}
 
 	public Integer getId() {
@@ -71,6 +77,12 @@ public class Issues implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
+	public Boolean getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Boolean delFlag) {
+		this.delFlag = delFlag;
+	}
 }
