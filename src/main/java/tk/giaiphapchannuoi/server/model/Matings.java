@@ -30,7 +30,7 @@ public class Matings implements Serializable {
 	private Integer logId;
 	
 	@Column(name="child_id")
-	private Integer childid;
+	private Integer childId;
 	
 	@Column(name="birth_estimate")
 	private Date birthEstimate;
@@ -47,13 +47,13 @@ public class Matings implements Serializable {
 	public Matings() {
 	}
 
-	public Matings(Integer motherId, Integer fatherId, Integer spermId, Date date, Integer logId, Integer childid, Date birthEstimate, Integer birthStatusEstimate, Integer employeeId, Boolean delFlag) {
+	public Matings(Integer motherId, Integer fatherId, Integer spermId, Date date, Integer logId, Integer childId, Date birthEstimate, Integer birthStatusEstimate, Integer employeeId, Boolean delFlag) {
 		this.motherId = motherId;
 		this.fatherId = fatherId;
 		this.spermId = spermId;
 		this.date = date;
 		this.logId = logId;
-		this.childid = childid;
+		this.childId = childId;
 		this.birthEstimate = birthEstimate;
 		this.birthStatusEstimate = birthStatusEstimate;
 		this.employeeId = employeeId;
@@ -108,12 +108,12 @@ public class Matings implements Serializable {
 		this.logId = logId;
 	}
 
-	public Integer getChildid() {
-		return childid;
+	public Integer getChildId() {
+		return childId;
 	}
 
-	public void setChildid(Integer childid) {
-		this.childid = childid;
+	public void setChildId(Integer childId) {
+		this.childId = childId;
 	}
 
 	public Date getBirthEstimate() {
