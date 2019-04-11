@@ -35,8 +35,8 @@ public class Groups implements Serializable {
 	@Column(name="origin_sum_weight")
 	private Float originSumWeight;
 	
-	@Column(name="origin_agv_weight")
-	private Float originAgvWeight;
+	@Column(name="origin_avg_weight")
+	private Float originAvgWeight;
 	
 	@Column(name="status")
 	private Integer status;
@@ -56,7 +56,7 @@ public class Groups implements Serializable {
 	public Groups() {
 	}
 
-	public Groups(String groupCode, Integer parentId, Integer roundId, Date avgBirthday, Integer quantity, String overviewStatus, Float originSumWeight, Float originAgvWeight, Integer status, Integer mark, Integer healthStatus, String description, Boolean delFlag) {
+	public Groups(String groupCode, Integer parentId, Integer roundId, Date avgBirthday, Integer quantity, String overviewStatus, Float originSumWeight, Float originAvgWeight, Integer status, Integer mark, Integer healthStatus, String description, Boolean delFlag) {
 		this.groupCode = groupCode;
 		this.parentId = parentId;
 		this.roundId = roundId;
@@ -64,7 +64,7 @@ public class Groups implements Serializable {
 		this.quantity = quantity;
 		this.overviewStatus = overviewStatus;
 		this.originSumWeight = originSumWeight;
-		this.originAgvWeight = originAgvWeight;
+		this.originAvgWeight = originAvgWeight;
 		this.status = status;
 		this.mark = mark;
 		this.healthStatus = healthStatus;
@@ -136,12 +136,12 @@ public class Groups implements Serializable {
 		this.originSumWeight = originSumWeight;
 	}
 
-	public Float getOriginAgvWeight() {
-		return originAgvWeight;
+	public Float getOriginAvgWeight() {
+		return originAvgWeight;
 	}
 
-	public void setOriginAgvWeight(Float originAgvWeight) {
-		this.originAgvWeight = originAgvWeight;
+	public void setOriginAvgWeight(Float originAvgWeight) {
+		this.originAvgWeight = originAvgWeight;
 	}
 
 	public Integer getStatus() {

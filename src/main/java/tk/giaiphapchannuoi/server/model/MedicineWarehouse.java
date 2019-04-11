@@ -23,9 +23,6 @@ public class MedicineWarehouse implements Serializable {
 	@Column(name="invoice_id")
 	private Integer invoiceId;
 	
-	@Column(name="invoice_no")
-	private String invoiceNo;
-	
 	@Column(name="parent_id")
 	private Integer parentId;
 	
@@ -68,11 +65,10 @@ public class MedicineWarehouse implements Serializable {
 	public MedicineWarehouse() {
 	}
 
-	public MedicineWarehouse(Integer warehouseId, Integer medicineId, Integer invoiceId, String invoiceNo, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
+	public MedicineWarehouse(Integer warehouseId, Integer medicineId, Integer invoiceId, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
 		this.warehouseId = warehouseId;
 		this.medicineId = medicineId;
 		this.invoiceId = invoiceId;
-		this.invoiceNo = invoiceNo;
 		this.parentId = parentId;
 		this.importDate = importDate;
 		this.unit = unit;
@@ -118,14 +114,6 @@ public class MedicineWarehouse implements Serializable {
 
 	public void setInvoiceId(Integer invoiceId) {
 		this.invoiceId = invoiceId;
-	}
-
-	public String getInvoiceNo() {
-		return invoiceNo;
-	}
-
-	public void setInvoiceNo(String invoiceNo) {
-		this.invoiceNo = invoiceNo;
 	}
 
 	public Integer getParentId() {

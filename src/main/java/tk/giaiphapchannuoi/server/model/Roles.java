@@ -4,37 +4,37 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "group_permissions")
-public class GroupPermission implements Serializable {
+@Table(name="roles")
+public class Roles implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@GeneratedValue (strategy = GenerationType.AUTO)
+	@Column(name="id")
 	private Integer id;
-
-	@Column(name = "group_id")
+	
+	@Column(name="group_id")
 	private Integer groupId;
-
-	@Column(name = "name")
+	
+	@Column(name="name")
 	private String name;
-
-	@Column(name = "num_order")
-	private Integer order;
-
-	@Column(name = "show")
-	private Integer show;
+	
+	@Column(name="code")
+	private String code;
+	
+	@Column(name="description")
+	private String description;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 
-	public GroupPermission() {
+	public Roles() {
 	}
 
-	public GroupPermission(Integer groupId, String name, Integer order, Integer show, Boolean delFlag) {
+	public Roles(Integer groupId, String name, String code, String description, Boolean delFlag) {
 		this.groupId = groupId;
 		this.name = name;
-		this.order = order;
-		this.show = show;
+		this.code = code;
+		this.description = description;
 		this.delFlag = delFlag;
 	}
 
@@ -62,20 +62,20 @@ public class GroupPermission implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public String getCode() {
+		return code;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	public Integer getShow() {
-		return show;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setShow(Integer show) {
-		this.show = show;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Boolean getDelFlag() {

@@ -4,22 +4,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="issues")
-public class Issues implements Serializable {
-
+@Table(name="pregnancy_status")
+public class PregnancyStatus implements Serializable {
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
+	
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name="level")
-	private Integer level;
-	
-	@Column(name="symptom")
-	private String symptom;
-	
-	@Column(name="lesions")
-	private String lesions;
+	@Column(name="name")
+	private String name;
 	
 	@Column(name="description")
 	private String description;
@@ -27,13 +21,11 @@ public class Issues implements Serializable {
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 
-	public Issues() {
+	public PregnancyStatus() {
 	}
 
-	public Issues(Integer level, String symptom, String lesions, String description, Boolean delFlag) {
-		this.level = level;
-		this.symptom = symptom;
-		this.lesions = lesions;
+	public PregnancyStatus(String name, String description, Boolean delFlag) {
+		this.name = name;
 		this.description = description;
 		this.delFlag = delFlag;
 	}
@@ -46,28 +38,12 @@ public class Issues implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getLevel() {
-		return level;
+	public String getName() {
+		return name;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public String getSymptom() {
-		return symptom;
-	}
-
-	public void setSymptom(String symptom) {
-		this.symptom = symptom;
-	}
-
-	public String getLesions() {
-		return lesions;
-	}
-
-	public void setLesions(String lesions) {
-		this.lesions = lesions;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
