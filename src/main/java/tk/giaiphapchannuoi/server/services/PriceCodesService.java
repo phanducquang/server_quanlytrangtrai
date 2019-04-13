@@ -25,8 +25,14 @@ public class PriceCodesService {
     }
 
     public PriceCodes save(PriceCodes priceCode){
+        priceCode.setDelFlag(false);
         return priceCodesRepository.save(priceCode);
     }
+
+    public PriceCodes update(PriceCodes priceCode){
+        return priceCodesRepository.save(priceCode);
+    }
+
 
     public Boolean delete(PriceCodes priceCode){
         priceCode.setDelFlag(true);

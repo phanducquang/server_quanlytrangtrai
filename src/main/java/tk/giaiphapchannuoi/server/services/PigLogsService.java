@@ -25,8 +25,14 @@ public class PigLogsService {
     }
 
     public PigLogs save(PigLogs pigLog){
+        pigLog.setDelFlag(false);
         return pigLogsRepository.save(pigLog);
     }
+
+    public PigLogs update(PigLogs pigLog){
+        return pigLogsRepository.save(pigLog);
+    }
+
 
     public Boolean delete(PigLogs pigLog){
         pigLog.setDelFlag(true);

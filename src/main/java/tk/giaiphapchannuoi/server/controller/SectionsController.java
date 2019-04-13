@@ -29,18 +29,20 @@ public class SectionsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Sections section){
-        if(sectionsService.save(section) == null){
+        Sections temp = sectionsService.save(section);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(section);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Sections section){
-        if(sectionsService.save(section) == null){
+        Sections temp = sectionsService.update(section);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(section);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

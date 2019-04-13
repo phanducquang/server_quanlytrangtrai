@@ -29,18 +29,20 @@ public class RoundsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Rounds round){
-        if(roundsService.save(round) == null){
+        Rounds temp = roundsService.save(round);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(round);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Rounds round){
-        if(roundsService.save(round) == null){
+        Rounds temp = roundsService.update(round);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(round);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

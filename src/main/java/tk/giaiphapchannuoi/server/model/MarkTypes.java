@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="mark_types")
-public class MarkTypes implements Serializable {
+public class MarkTypes extends Auditable implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)

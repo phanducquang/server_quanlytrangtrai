@@ -29,18 +29,20 @@ public class FootTypeController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody FootType footType){
-        if(footTypeService.save(footType) == null){
+        FootType temp = footTypeService.save(footType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(footType);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody FootType footType){
-        if(footTypeService.save(footType) == null){
+        FootType temp = footTypeService.update(footType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(footType);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

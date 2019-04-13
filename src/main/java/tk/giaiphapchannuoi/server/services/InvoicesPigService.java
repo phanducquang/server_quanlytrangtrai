@@ -25,8 +25,14 @@ public class InvoicesPigService {
     }
 
     public InvoicesPig save(InvoicesPig invoicePig){
+        invoicePig.setDelFlag(false);
         return invoicePigRepository.save(invoicePig);
     }
+
+    public InvoicesPig update(InvoicesPig invoicePig){
+        return invoicePigRepository.save(invoicePig);
+    }
+
 
     public Boolean delete(InvoicesPig invoicePig){
         invoicePig.setDelFlag(true);

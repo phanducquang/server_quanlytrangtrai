@@ -25,6 +25,11 @@ public class PregnancyStatusService {
     }
 
     public PregnancyStatus save(PregnancyStatus pregnancyStatus){
+        pregnancyStatus.setDelFlag(false);
+        return pregnancyStatusRepository.save(pregnancyStatus);
+    }
+
+    public PregnancyStatus update(PregnancyStatus pregnancyStatus){
         return pregnancyStatusRepository.save(pregnancyStatus);
     }
 

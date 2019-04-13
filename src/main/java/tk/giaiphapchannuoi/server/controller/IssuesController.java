@@ -29,7 +29,8 @@ public class IssuesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Issues issues){
-        if(issuesService.save(issues) == null){
+        Issues temp = issuesService.save(issues);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(issues);
@@ -37,7 +38,8 @@ public class IssuesController {
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Issues issues){
-        if(issuesService.save(issues) == null){
+        Issues temp = issuesService.update(issues);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(issues);

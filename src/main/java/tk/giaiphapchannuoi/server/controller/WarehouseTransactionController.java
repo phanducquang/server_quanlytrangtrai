@@ -29,18 +29,20 @@ public class WarehouseTransactionController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody WarehouseTransaction warehouseTransaction){
-        if(warehouseTransactionService.save(warehouseTransaction) == null){
+        WarehouseTransaction temp = warehouseTransactionService.save(warehouseTransaction);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(warehouseTransaction);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody WarehouseTransaction warehouseTransaction){
-        if(warehouseTransactionService.save(warehouseTransaction) == null){
+        WarehouseTransaction temp = warehouseTransactionService.update(warehouseTransaction);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(warehouseTransaction);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

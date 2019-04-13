@@ -2,10 +2,11 @@ package tk.giaiphapchannuoi.server.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name="foot_type")
-public class FootType implements Serializable {
+public class FootType extends Auditable implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")

@@ -25,8 +25,14 @@ public class RolesService {
     }
 
     public Roles save(Roles role){
+        role.setDelFlag(false);
         return rolesRepository.save(role);
     }
+
+    public Roles update(Roles role){
+        return rolesRepository.save(role);
+    }
+
 
     public Boolean delete(Roles role){
         role.setDelFlag(true);

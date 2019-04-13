@@ -25,6 +25,11 @@ public class GroupPermissionService {
     }
 
     public GroupPermission save(GroupPermission groupPermission){
+        groupPermission.setDelFlag(false);
+        return groupPermissionRepository.save(groupPermission);
+    }
+
+    public GroupPermission update(GroupPermission groupPermission){
         return groupPermissionRepository.save(groupPermission);
     }
 

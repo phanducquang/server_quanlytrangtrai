@@ -29,18 +29,20 @@ public class RolePermissionController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody RolePermission rolePermission){
-        if(rolePermissionService.save(rolePermission) == null){
+        RolePermission temp = rolePermissionService.save(rolePermission);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(rolePermission);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody RolePermission rolePermission){
-        if(rolePermissionService.save(rolePermission) == null){
+        RolePermission temp = rolePermissionService.update(rolePermission);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(rolePermission);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

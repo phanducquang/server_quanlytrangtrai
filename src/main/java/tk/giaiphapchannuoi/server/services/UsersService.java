@@ -25,6 +25,11 @@ public class UsersService {
     }
 
     public Users save(Users user){
+        user.setDelFlag(false);
+        return usersRepository.save(user);
+    }
+
+    public Users update(Users user){
         return usersRepository.save(user);
     }
 

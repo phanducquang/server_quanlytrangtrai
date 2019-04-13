@@ -25,8 +25,14 @@ public class IssuesDiseasesService {
     }
 
     public IssuesDiseases save(IssuesDiseases issuesDisease){
+        issuesDisease.setDelFlag(false);
         return issuesDiseasesRepository.save(issuesDisease);
     }
+
+    public IssuesDiseases update(IssuesDiseases issuesDisease){
+        return issuesDiseasesRepository.save(issuesDisease);
+    }
+
 
     public Boolean delete(IssuesDiseases issuesDisease){
         issuesDisease.setDelFlag(true);

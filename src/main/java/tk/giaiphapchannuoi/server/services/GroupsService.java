@@ -25,8 +25,14 @@ public class GroupsService {
     }
 
     public Groups save(Groups group){
+        group.setDelFlag(false);
         return groupsRepository.save(group);
     }
+
+    public Groups update(Groups group){
+        return groupsRepository.save(group);
+    }
+
 
     public Boolean delete(Groups group){
         group.setDelFlag(true);

@@ -29,18 +29,20 @@ public class InvoicesProductController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody InvoicesProduct invoiceProduct){
-        if(invoicesProductService.save(invoiceProduct) == null){
+        InvoicesProduct temp = invoicesProductService.save(invoiceProduct);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(invoiceProduct);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody InvoicesProduct invoiceProduct){
-        if(invoicesProductService.save(invoiceProduct) == null){
+        InvoicesProduct temp = invoicesProductService.update(invoiceProduct);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(invoiceProduct);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

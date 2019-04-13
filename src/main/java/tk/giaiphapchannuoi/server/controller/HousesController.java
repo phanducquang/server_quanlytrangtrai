@@ -29,18 +29,20 @@ public class HousesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Houses house){
-        if(housesService.save(house) == null){
+        Houses temp = housesService.save(house);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(house);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Houses house){
-        if(housesService.save(house) == null){
+        Houses temp = housesService.update(house);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(house);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

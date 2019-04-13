@@ -25,8 +25,14 @@ public class FoodTypeService {
     }
 
     public FoodType save(FoodType foodType){
+        foodType.setDelFlag(false);
         return foodTypeTypeRepository.save(foodType);
     }
+
+    public FoodType update(FoodType foodType){
+        return foodTypeTypeRepository.save(foodType);
+    }
+
 
     public Boolean delete(FoodType foodType){
         foodType.setDelFlag(true);

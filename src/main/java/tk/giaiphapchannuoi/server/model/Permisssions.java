@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="permissions")
-public class Permisssions implements Serializable {
+public class Permisssions extends Auditable implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)

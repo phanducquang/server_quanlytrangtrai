@@ -25,6 +25,11 @@ public class UserRoleService {
     }
 
     public UserRole save(UserRole userRole){
+        userRole.setDelFlag(false);
+        return userRoleRepository.save(userRole);
+    }
+
+    public UserRole update(UserRole userRole){
         return userRoleRepository.save(userRole);
     }
 

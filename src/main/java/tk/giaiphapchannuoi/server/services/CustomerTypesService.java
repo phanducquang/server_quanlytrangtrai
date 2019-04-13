@@ -25,8 +25,14 @@ public class CustomerTypesService {
     }
 
     public CustomerTypes save(CustomerTypes customerTypes){
+        customerTypes.setDelFlag(false);
         return customerTypesRepository.save(customerTypes);
     }
+
+    public CustomerTypes update(CustomerTypes customerTypes){
+        return customerTypesRepository.save(customerTypes);
+    }
+
 
     public Boolean delete(CustomerTypes customerTypes){
         customerTypes.setDelFlag(true);

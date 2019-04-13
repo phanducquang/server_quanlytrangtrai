@@ -25,8 +25,14 @@ public class RolePermissionService {
     }
 
     public RolePermission save(RolePermission rolePermission){
+        rolePermission.setDelFlag(false);
         return rolePermissionRepository.save(rolePermission);
     }
+
+    public RolePermission update(RolePermission rolePermission){
+        return rolePermissionRepository.save(rolePermission);
+    }
+
 
     public Boolean delete(RolePermission rolePermission){
         rolePermission.setDelFlag(true);

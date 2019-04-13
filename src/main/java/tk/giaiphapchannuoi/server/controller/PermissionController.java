@@ -29,18 +29,20 @@ public class PermissionController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Permisssions permisssion){
-        if(permissionService.save(permisssion) == null){
+        Permisssions temp = permissionService.save(permisssion);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(permisssion);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Permisssions permisssion){
-        if(permissionService.save(permisssion) == null){
+        Permisssions temp = permissionService.update(permisssion);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(permisssion);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

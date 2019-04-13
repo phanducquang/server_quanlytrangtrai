@@ -25,8 +25,14 @@ public class MarkTypesService {
     }
 
     public MarkTypes save(MarkTypes markType){
+        markType.setDelFlag(false);
         return markTypesRepository.save(markType);
     }
+
+    public MarkTypes update(MarkTypes markType){
+        return markTypesRepository.save(markType);
+    }
+
 
     public Boolean delete(MarkTypes markType){
         markType.setDelFlag(true);

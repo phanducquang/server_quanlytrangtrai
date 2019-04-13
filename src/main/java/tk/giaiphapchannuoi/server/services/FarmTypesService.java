@@ -25,8 +25,14 @@ public class FarmTypesService {
     }
 
     public FarmTypes save(FarmTypes farmType){
+        farmType.setDelFlag(false);
         return farmTypeTypeRepository.save(farmType);
     }
+
+    public FarmTypes update(FarmTypes farmType){
+        return farmTypeTypeRepository.save(farmType);
+    }
+
 
     public Boolean delete(FarmTypes farmType){
         farmType.setDelFlag(true);

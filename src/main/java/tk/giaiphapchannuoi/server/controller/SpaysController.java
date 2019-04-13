@@ -29,18 +29,20 @@ public class SpaysController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Spays spay){
-        if(spaysService.save(spay) == null){
+        Spays temp = spaysService.save(spay);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(spay);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Spays spay){
-        if(spaysService.save(spay) == null){
+        Spays temp = spaysService.update(spay);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(spay);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

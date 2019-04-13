@@ -25,8 +25,14 @@ public class PermissionService {
     }
 
     public Permisssions save(Permisssions permisssion){
+        permisssion.setDelFlag(false);
         return permissionRepository.save(permisssion);
     }
+
+    public Permisssions update(Permisssions permisssion){
+        return permissionRepository.save(permisssion);
+    }
+
 
     public Boolean delete(Permisssions permisssion){
         permisssion.setDelFlag(true);

@@ -29,18 +29,20 @@ public class FoodWarehouseController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody FoodWarehouse foodWarehouse){
-        if(foodWarehouseService.save(foodWarehouse) == null){
+        FoodWarehouse temp = foodWarehouseService.save(foodWarehouse);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(foodWarehouse);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody FoodWarehouse foodWarehouse){
-        if(foodWarehouseService.save(foodWarehouse) == null){
+        FoodWarehouse temp = foodWarehouseService.update(foodWarehouse);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(foodWarehouse);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

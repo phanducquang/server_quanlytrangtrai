@@ -29,18 +29,20 @@ public class WarehouseTypeController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody WarehouseType warehouseType){
-        if(warehouseTypeService.save(warehouseType) == null){
+        WarehouseType temp = warehouseTypeService.save(warehouseType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(warehouseType);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody WarehouseType warehouseType){
-        if(warehouseTypeService.save(warehouseType) == null){
+        WarehouseType temp = warehouseTypeService.update(warehouseType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(warehouseType);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

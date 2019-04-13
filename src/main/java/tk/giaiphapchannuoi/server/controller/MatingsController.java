@@ -29,18 +29,20 @@ public class MatingsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Matings mating){
-        if(matingsService.save(mating) == null){
+        Matings temp = matingsService.save(mating);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(mating);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Matings mating){
-        if(matingsService.save(mating) == null){
+        Matings temp = matingsService.update(mating);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(mating);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

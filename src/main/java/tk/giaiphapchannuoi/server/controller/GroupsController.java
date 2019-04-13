@@ -29,18 +29,20 @@ public class GroupsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Groups group){
-        if(groupsService.save(group) == null){
+        Groups temp = groupsService.save(group);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(group);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Groups group){
-        if(groupsService.save(group) == null){
+        Groups temp = groupsService.update(group);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(group);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

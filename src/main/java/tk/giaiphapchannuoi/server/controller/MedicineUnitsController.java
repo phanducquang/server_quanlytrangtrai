@@ -29,18 +29,20 @@ public class MedicineUnitsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody MedicineUnits medicineUnit){
-        if(medicineUnitsService.save(medicineUnit) == null){
+        MedicineUnits temp = medicineUnitsService.save(medicineUnit);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(medicineUnit);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody MedicineUnits medicineUnit){
-        if(medicineUnitsService.save(medicineUnit) == null){
+        MedicineUnits temp = medicineUnitsService.update(medicineUnit);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(medicineUnit);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

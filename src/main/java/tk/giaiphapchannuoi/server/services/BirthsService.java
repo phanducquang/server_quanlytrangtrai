@@ -25,6 +25,11 @@ public class BirthsService {
     }
 
     public Births save(Births births){
+        births.setDelFlag(false);
+        return birthsRepository.save(births);
+    }
+
+    public Births update(Births births){
         return birthsRepository.save(births);
     }
 

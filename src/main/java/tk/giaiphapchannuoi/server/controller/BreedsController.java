@@ -29,18 +29,20 @@ public class BreedsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Breeds breeds){
-        if(breedsService.save(breeds) == null){
+        Breeds temp = breedsService.save(breeds);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(breeds);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Breeds breeds){
-        if(breedsService.save(breeds) == null){
+        Breeds temp = breedsService.update(breeds);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(breeds);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

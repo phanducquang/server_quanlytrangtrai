@@ -25,8 +25,14 @@ public class EmployeesService {
     }
 
     public Employees save(Employees employee){
+        employee.setDelFlag(false);
         return employeesRepository.save(employee);
     }
+
+    public Employees update(Employees employee){
+        return employeesRepository.save(employee);
+    }
+
 
     public Boolean delete(Employees employee){
         employee.setDelFlag(true);

@@ -25,8 +25,14 @@ public class WarehouseTypeService {
     }
 
     public WarehouseType save(WarehouseType warehouseType){
+        warehouseType.setDelFlag(false);
         return warehouseTypeRepositry.save(warehouseType);
     }
+
+    public WarehouseType update(WarehouseType warehouseType){
+        return warehouseTypeRepositry.save(warehouseType);
+    }
+
 
     public Boolean delete(WarehouseType warehouseType){
         warehouseType.setDelFlag(true);

@@ -29,18 +29,20 @@ public class RegenciesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Regencies regency){
-        if(regenciesService.save(regency) == null){
+        Regencies temp = regenciesService.save(regency);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(regency);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Regencies regency){
-        if(regenciesService.save(regency) == null){
+        Regencies temp = regenciesService.update(regency);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(regency);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

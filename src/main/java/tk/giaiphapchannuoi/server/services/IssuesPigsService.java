@@ -25,8 +25,14 @@ public class IssuesPigsService {
     }
 
     public IssuesPigs save(IssuesPigs issuesPig){
+        issuesPig.setDelFlag(false);
         return issuesPigsRepository.save(issuesPig);
     }
+
+    public IssuesPigs update(IssuesPigs issuesPig){
+        return issuesPigsRepository.save(issuesPig);
+    }
+
 
     public Boolean delete(IssuesPigs issuesPig){
         issuesPig.setDelFlag(true);

@@ -25,8 +25,14 @@ public class GroupLogsService {
     }
 
     public GroupLogs save(GroupLogs groupLog){
+        groupLog.setDelFlag(false);
         return groupLogsRepository.save(groupLog);
     }
+
+    public GroupLogs update(GroupLogs groupLog){
+        return groupLogsRepository.save(groupLog);
+    }
+
 
     public Boolean delete(GroupLogs groupLog){
         groupLog.setDelFlag(true);

@@ -29,18 +29,20 @@ public class FarmsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Farms farm){
-        if(farmsService.save(farm) == null){
+        Farms temp = farmsService.save(farm);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(farm);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Farms farm){
-        if(farmsService.save(farm) == null){
+        Farms temp = farmsService.update(farm);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(farm);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

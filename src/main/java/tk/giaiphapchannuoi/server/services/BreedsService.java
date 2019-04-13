@@ -25,6 +25,11 @@ public class BreedsService {
     }
 
     public Breeds save(Breeds breeds){
+        breeds.setDelFlag(false);
+        return breedsRepository.save(breeds);
+    }
+
+    public Breeds update(Breeds breeds){
         return breedsRepository.save(breeds);
     }
 

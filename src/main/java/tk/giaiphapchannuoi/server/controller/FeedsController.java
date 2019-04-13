@@ -29,18 +29,20 @@ public class FeedsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Feeds feed){
-        if(feedsService.save(feed) == null){
+        Feeds temp = feedsService.save(feed);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(feed);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Feeds feed){
-        if(feedsService.save(feed) == null){
+        Feeds temp = feedsService.update(feed);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(feed);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

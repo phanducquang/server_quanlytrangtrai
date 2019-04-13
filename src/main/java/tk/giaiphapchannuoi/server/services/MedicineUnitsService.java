@@ -25,8 +25,14 @@ public class MedicineUnitsService {
     }
 
     public MedicineUnits save(MedicineUnits medicineUnit){
+        medicineUnit.setDelFlag(false);
         return medicineUnitsRepository.save(medicineUnit);
     }
+
+    public MedicineUnits update(MedicineUnits medicineUnit){
+        return medicineUnitsRepository.save(medicineUnit);
+    }
+
 
     public Boolean delete(MedicineUnits medicineUnit){
         medicineUnit.setDelFlag(true);

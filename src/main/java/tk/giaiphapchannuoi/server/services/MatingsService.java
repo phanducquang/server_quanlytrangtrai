@@ -25,8 +25,14 @@ public class MatingsService {
     }
 
     public Matings save(Matings mating){
+        mating.setDelFlag(false);
         return matingsRepository.save(mating);
     }
+
+    public Matings update(Matings mating){
+        return matingsRepository.save(mating);
+    }
+
 
     public Boolean delete(Matings mating){
         mating.setDelFlag(true);

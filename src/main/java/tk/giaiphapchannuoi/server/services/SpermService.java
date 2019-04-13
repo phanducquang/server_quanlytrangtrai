@@ -25,6 +25,11 @@ public class SpermService {
     }
 
     public Sperm save(Sperm sperm){
+        sperm.setDelFlag(false);
+        return spermRepository.save(sperm);
+    }
+
+    public Sperm update(Sperm sperm){
         return spermRepository.save(sperm);
     }
 

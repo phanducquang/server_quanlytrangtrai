@@ -1,5 +1,7 @@
 package tk.giaiphapchannuoi.server.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +27,14 @@ public class FootTypeService {
     }
 
     public FootType save(FootType footType){
+        footType.setDelFlag(false);
         return footTypeRepository.save(footType);
     }
+
+    public FootType update(FootType footType){
+        return footTypeRepository.saveAndFlush(footType);
+    }
+
 
     public Boolean delete(FootType footType){
         footType.setDelFlag(true);

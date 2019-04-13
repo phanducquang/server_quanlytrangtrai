@@ -25,8 +25,14 @@ public class GentialTypeService {
     }
 
     public GentialType save(GentialType gentialType){
+        gentialType.setDelFlag(false);
         return gentialTypeRepository.save(gentialType);
     }
+
+    public GentialType update(GentialType gentialType){
+        return gentialTypeRepository.save(gentialType);
+    }
+
 
     public Boolean delete(GentialType gentialType){
         gentialType.setDelFlag(true);

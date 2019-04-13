@@ -25,8 +25,14 @@ public class HousesService {
     }
 
     public Houses save(Houses house){
+        house.setDelFlag(false);
         return housesRepository.save(house);
     }
+
+    public Houses update(Houses house){
+        return housesRepository.save(house);
+    }
+
 
     public Boolean delete(Houses house){
         house.setDelFlag(true);

@@ -29,18 +29,20 @@ public class UserRoleController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody UserRole userRole){
-        if(userRoleService.save(userRole) == null){
+        UserRole temp = userRoleService.save(userRole);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(userRole);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody UserRole userRole){
-        if(userRoleService.save(userRole) == null){
+        UserRole temp = userRoleService.update(userRole);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(userRole);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

@@ -25,8 +25,14 @@ public class IssuesService {
     }
 
     public Issues save(Issues issues){
+        issues.setDelFlag(false);
         return issuesRepository.save(issues);
     }
+
+    public Issues update(Issues issues){
+        return issuesRepository.save(issues);
+    }
+
 
     public Boolean delete(Issues issues){
         issues.setDelFlag(true);

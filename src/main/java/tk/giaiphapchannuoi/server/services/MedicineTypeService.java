@@ -26,8 +26,14 @@ public class MedicineTypeService {
     }
 
     public MedicineType save(MedicineType medicineType){
+        medicineType.setDelFlag(false);
         return medicineTypeRepository.save(medicineType);
     }
+
+    public MedicineType update(MedicineType medicineType){
+        return medicineTypeRepository.save(medicineType);
+    }
+
 
     public Boolean delete(MedicineType medicineType){
         medicineType.setDelFlag(true);

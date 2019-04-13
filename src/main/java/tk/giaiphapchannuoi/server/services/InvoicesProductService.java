@@ -25,6 +25,11 @@ public class InvoicesProductService {
     }
 
     public InvoicesProduct save(InvoicesProduct invoiceProduct){
+        invoiceProduct.setDelFlag(false);
+        return invoicesProductRepository.save(invoiceProduct);
+    }
+
+    public InvoicesProduct update(InvoicesProduct invoiceProduct){
         return invoicesProductRepository.save(invoiceProduct);
     }
 

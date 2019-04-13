@@ -25,6 +25,11 @@ public class InvoicePigDetailService {
     }
 
     public InvoicePigDetail save(InvoicePigDetail invoicePigDetail){
+        invoicePigDetail.setDelFlag(false);
+        return invoicePigDetailRepository.save(invoicePigDetail);
+    }
+
+    public InvoicePigDetail update(InvoicePigDetail invoicePigDetail){
         return invoicePigDetailRepository.save(invoicePigDetail);
     }
 

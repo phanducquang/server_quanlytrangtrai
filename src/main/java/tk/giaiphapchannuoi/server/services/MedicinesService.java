@@ -25,8 +25,14 @@ public class MedicinesService {
     }
 
     public Medicines save(Medicines medicine){
+        medicine.setDelFlag(false);
         return medicinesRepository.save(medicine);
     }
+
+    public Medicines update(Medicines medicine){
+        return medicinesRepository.save(medicine);
+    }
+
 
     public Boolean delete(Medicines medicine){
         medicine.setDelFlag(true);

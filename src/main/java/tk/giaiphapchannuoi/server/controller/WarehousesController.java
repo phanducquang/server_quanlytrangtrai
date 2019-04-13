@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.model.WarehouseType;
 import tk.giaiphapchannuoi.server.model.Warehouses;
 import tk.giaiphapchannuoi.server.services.WarehousesService;
 
@@ -29,18 +30,20 @@ public class WarehousesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Warehouses warehouse){
-        if(warehousesService.save(warehouse) == null){
+        Warehouses temp = warehousesService.save(warehouse);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(warehouse);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Warehouses warehouse){
-        if(warehousesService.save(warehouse) == null){
+        Warehouses temp = warehousesService.update(warehouse);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(warehouse);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

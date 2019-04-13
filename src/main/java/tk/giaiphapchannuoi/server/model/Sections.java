@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="sections")
-public class Sections implements Serializable {
+public class Sections extends Auditable implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)

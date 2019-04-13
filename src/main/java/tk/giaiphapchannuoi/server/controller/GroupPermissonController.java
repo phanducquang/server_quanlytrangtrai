@@ -29,18 +29,20 @@ public class GroupPermissonController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody GroupPermission groupPermission){
-        if(groupPermissionService.save(groupPermission) == null){
+        GroupPermission temp = groupPermissionService.save(groupPermission);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(groupPermission);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody GroupPermission groupPermission){
-        if(groupPermissionService.save(groupPermission) == null){
+        GroupPermission temp = groupPermissionService.update(groupPermission);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(groupPermission);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

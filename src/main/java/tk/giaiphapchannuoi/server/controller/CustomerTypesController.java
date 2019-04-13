@@ -29,18 +29,20 @@ public class CustomerTypesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody CustomerTypes customerTypes){
-        if(customerTypesService.save(customerTypes) == null){
+        CustomerTypes temp = customerTypesService.save(customerTypes);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(customerTypes);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody CustomerTypes customerTypes){
-        if(customerTypesService.save(customerTypes) == null){
+        CustomerTypes temp = customerTypesService.update(customerTypes);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(customerTypes);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

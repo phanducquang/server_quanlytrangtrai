@@ -25,8 +25,14 @@ public class HealthStatusService {
     }
 
     public HealthStatus save(HealthStatus healthStatus){
+        healthStatus.setDelFlag(false);
         return healthStatusRepository.save(healthStatus);
     }
+
+    public HealthStatus update(HealthStatus healthStatus){
+        return healthStatusRepository.save(healthStatus);
+    }
+
 
     public Boolean delete(HealthStatus healthStatus){
         healthStatus.setDelFlag(true);

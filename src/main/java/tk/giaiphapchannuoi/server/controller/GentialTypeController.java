@@ -29,18 +29,20 @@ public class GentialTypeController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody GentialType gentialType){
-        if(gentialTypeService.save(gentialType) == null){
+        GentialType temp = gentialTypeService.save(gentialType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(gentialType);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody GentialType gentialType){
-        if(gentialTypeService.save(gentialType) == null){
+        GentialType temp = gentialTypeService.update(gentialType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(gentialType);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

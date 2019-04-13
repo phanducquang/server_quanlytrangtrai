@@ -25,8 +25,14 @@ public class FarmsService {
     }
 
     public Farms save(Farms farm){
+        farm.setDelFlag(false);
         return farmsRepository.save(farm);
     }
+
+    public Farms update(Farms farm){
+        return farmsRepository.save(farm);
+    }
+
 
     public Boolean delete(Farms farm){
         farm.setDelFlag(true);

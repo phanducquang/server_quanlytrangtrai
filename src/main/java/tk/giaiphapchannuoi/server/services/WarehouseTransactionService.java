@@ -25,6 +25,11 @@ public class WarehouseTransactionService {
     }
 
     public WarehouseTransaction save(WarehouseTransaction warehouseTransaction){
+        warehouseTransaction.setDelFlag(false);
+        return warehouseTransactionRepository.save(warehouseTransaction);
+    }
+
+    public WarehouseTransaction update(WarehouseTransaction warehouseTransaction){
         return warehouseTransactionRepository.save(warehouseTransaction);
     }
 

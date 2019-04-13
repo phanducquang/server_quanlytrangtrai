@@ -37,7 +37,7 @@ public class MedicineWarehouseController {
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody MedicineWarehouse medicineWarehouse){
-        if(medicineWarehouseService.save(medicineWarehouse) == null){
+        if(medicineWarehouseService.update(medicineWarehouse) == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(medicineWarehouse);

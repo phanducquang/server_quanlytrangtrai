@@ -29,18 +29,20 @@ public class PregnancyStatusController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody PregnancyStatus pregnancyStatus){
-        if(pregnancyStatusService.save(pregnancyStatus) == null){
+        PregnancyStatus temp = pregnancyStatusService.save(pregnancyStatus);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(pregnancyStatus);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody PregnancyStatus pregnancyStatus){
-        if(pregnancyStatusService.save(pregnancyStatus) == null){
+        PregnancyStatus temp = pregnancyStatusService.update(pregnancyStatus);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(pregnancyStatus);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

@@ -29,18 +29,20 @@ public class WeaningsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Weanings weaning){
-        if(weaningsService.save(weaning) == null){
+        Weanings temp = weaningsService.save(weaning);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(weaning);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Weanings weaning){
-        if(weaningsService.save(weaning) == null){
+        Weanings temp = weaningsService.update(weaning);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(weaning);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

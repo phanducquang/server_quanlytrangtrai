@@ -29,18 +29,20 @@ public class MatingRolesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody MatingRoles matingRole){
-        if(matingRolesService.save(matingRole) == null){
+        MatingRoles temp = matingRolesService.save(matingRole);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(matingRole);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody MatingRoles matingRole){
-        if(matingRolesService.save(matingRole) == null){
+        MatingRoles temp = matingRolesService.update(matingRole);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(matingRole);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

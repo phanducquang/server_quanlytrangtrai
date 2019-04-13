@@ -25,8 +25,14 @@ public class ObjectTypeService {
     }
 
     public ObjectType save(ObjectType objectType){
+        objectType.setDelFlag(false);
         return objectTypeRepository.save(objectType);
     }
+
+    public ObjectType update(ObjectType objectType){
+        return objectTypeRepository.save(objectType);
+    }
+
 
     public Boolean delete(ObjectType objectType){
         objectType.setDelFlag(true);

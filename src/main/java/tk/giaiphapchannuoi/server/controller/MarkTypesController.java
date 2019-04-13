@@ -29,18 +29,20 @@ public class MarkTypesController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody MarkTypes markType){
-        if(markTypesService.save(markType) == null){
+        MarkTypes temp = markTypesService.save(markType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(markType);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody MarkTypes markType){
-        if(markTypesService.save(markType) == null){
+        MarkTypes temp = markTypesService.update(markType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(markType);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

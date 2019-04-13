@@ -25,8 +25,14 @@ public class FoodWarehouseService {
     }
 
     public FoodWarehouse save(FoodWarehouse foodWarehouse){
+        foodWarehouse.setDelFlag(false);
         return foodWarehouseRepository.save(foodWarehouse);
     }
+
+    public FoodWarehouse update(FoodWarehouse foodWarehouse){
+        return foodWarehouseRepository.save(foodWarehouse);
+    }
+
 
     public Boolean delete(FoodWarehouse foodWarehouse){
         foodWarehouse.setDelFlag(true);

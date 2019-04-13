@@ -25,6 +25,11 @@ public class WeaningsService {
     }
 
     public Weanings save(Weanings weaning){
+        weaning.setDelFlag(false);
+        return weaningsRepository.save(weaning);
+    }
+
+    public Weanings update(Weanings weaning){
         return weaningsRepository.save(weaning);
     }
 

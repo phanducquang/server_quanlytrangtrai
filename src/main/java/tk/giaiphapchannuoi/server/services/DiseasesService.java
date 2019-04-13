@@ -25,6 +25,11 @@ public class DiseasesService {
     }
 
     public Diseases save(Diseases diseases){
+        diseases.setDelFlag(false);
+        return diseasesRepository.save(diseases);
+    }
+
+    public Diseases update(Diseases diseases){
         return diseasesRepository.save(diseases);
     }
 

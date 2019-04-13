@@ -25,6 +25,11 @@ public class MedicineWarehouseService {
     }
 
     public MedicineWarehouse save(MedicineWarehouse medicineWarehouse){
+        medicineWarehouse.setDelFlag(false);
+        return medicineWarehouseRepository.save(medicineWarehouse);
+    }
+
+    public MedicineWarehouse update(MedicineWarehouse medicineWarehouse){
         return medicineWarehouseRepository.save(medicineWarehouse);
     }
 

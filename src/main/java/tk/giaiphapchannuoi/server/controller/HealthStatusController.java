@@ -29,18 +29,20 @@ public class HealthStatusController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody HealthStatus healthStatus){
-        if(healthStatusService.save(healthStatus) == null){
+        HealthStatus temp = healthStatusService.save(healthStatus);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(healthStatus);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody HealthStatus healthStatus){
-        if(healthStatusService.save(healthStatus) == null){
+        HealthStatus temp = healthStatusService.update(healthStatus);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(healthStatus);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

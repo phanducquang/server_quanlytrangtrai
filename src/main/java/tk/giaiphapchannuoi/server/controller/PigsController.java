@@ -29,18 +29,20 @@ public class PigsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Pigs pig){
-        if(pigsService.save(pig) == null){
+        Pigs temp = pigsService.save(pig);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(pig);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Pigs pig){
-        if(pigsService.save(pig) == null){
+        Pigs temp = pigsService.update(pig);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(pig);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

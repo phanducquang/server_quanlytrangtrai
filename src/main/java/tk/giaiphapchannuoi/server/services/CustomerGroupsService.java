@@ -25,6 +25,11 @@ public class CustomerGroupsService {
     }
 
     public CustomerGroups save(CustomerGroups customerGroups){
+        customerGroups.setDelFlag(false);
+        return customerGroupsRepository.save(customerGroups);
+    }
+
+    public CustomerGroups update(CustomerGroups customerGroups){
         return customerGroupsRepository.save(customerGroups);
     }
 

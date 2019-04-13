@@ -29,18 +29,20 @@ public class InvoicePigDetailController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody InvoicePigDetail invoicePigDetail){
-        if(invoicePigDetailService.save(invoicePigDetail) == null){
+        InvoicePigDetail temp = invoicePigDetailService.save(invoicePigDetail);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(invoicePigDetail);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody InvoicePigDetail invoicePigDetail){
-        if(invoicePigDetailService.save(invoicePigDetail) == null){
+        InvoicePigDetail temp = invoicePigDetailService.update(invoicePigDetail);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(invoicePigDetail);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

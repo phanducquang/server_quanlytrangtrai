@@ -25,8 +25,14 @@ public class SectionsService {
     }
 
     public Sections save(Sections section){
+        section.setDelFlag(false);
         return sectionsRepository.save(section);
     }
+
+    public Sections update(Sections section){
+        return sectionsRepository.save(section);
+    }
+
 
     public Boolean delete(Sections section){
         section.setDelFlag(true);

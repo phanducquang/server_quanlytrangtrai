@@ -25,6 +25,11 @@ public class BreedingTypeService {
     }
 
     public BreedingType save(BreedingType breedingType){
+        breedingType.setDelFlag(false);
+        return breedingTypeRepository.save(breedingType);
+    }
+
+    public BreedingType update(BreedingType breedingType){
         return breedingTypeRepository.save(breedingType);
     }
 

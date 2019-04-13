@@ -25,8 +25,14 @@ public class PartnersService {
     }
 
     public Partners save(Partners partner){
+        partner.setDelFlag(false);
         return partnersRepository.save(partner);
     }
+
+    public Partners update(Partners partner){
+        return partnersRepository.save(partner);
+    }
+
 
     public Boolean delete(Partners partner){
         partner.setDelFlag(true);

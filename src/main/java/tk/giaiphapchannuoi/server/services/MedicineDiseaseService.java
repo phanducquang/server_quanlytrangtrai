@@ -25,6 +25,11 @@ public class MedicineDiseaseService {
     }
 
     public MedicineDisease save(MedicineDisease medicineDisease){
+        medicineDisease.setDelFlag(false);
+        return medicineDiseaseRepository.save(medicineDisease);
+    }
+
+    public MedicineDisease update(MedicineDisease medicineDisease){
         return medicineDiseaseRepository.save(medicineDisease);
     }
 

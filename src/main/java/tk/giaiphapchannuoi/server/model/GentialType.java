@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "gential_type")
-public class GentialType implements Serializable {
+public class GentialType extends Auditable implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")

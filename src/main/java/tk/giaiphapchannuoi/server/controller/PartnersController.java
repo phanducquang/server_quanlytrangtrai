@@ -29,18 +29,20 @@ public class PartnersController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Partners partner){
-        if(partnersService.save(partner) == null){
+        Partners temp = partnersService.save(partner);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(partner);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Partners partner){
-        if(partnersService.save(partner) == null){
+        Partners temp = partnersService.update(partner);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(partner);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

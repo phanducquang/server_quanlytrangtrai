@@ -25,6 +25,11 @@ public class WarehousesService {
     }
 
     public Warehouses save(Warehouses warehouse){
+        warehouse.setDelFlag(false);
+        return warehousesRepository.save(warehouse);
+    }
+
+    public Warehouses update(Warehouses warehouse){
         return warehousesRepository.save(warehouse);
     }
 

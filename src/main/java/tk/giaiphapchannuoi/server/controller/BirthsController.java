@@ -30,18 +30,20 @@ public class BirthsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Births births){
-        if(birthsService.save(births) == null){
+        Births temp = birthsService.save(births);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(births);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Births births){
-        if(birthsService.save(births) == null){
+        Births temp = birthsService.update(births);
+        if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(births);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

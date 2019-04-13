@@ -29,18 +29,20 @@ public class ObjectTypeController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody ObjectType objectType){
-        if(objectTypeService.save(objectType) == null){
+        ObjectType temp = objectTypeService.save(objectType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(objectType);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody ObjectType objectType){
-        if(objectTypeService.save(objectType) == null){
+        ObjectType temp = objectTypeService.update(objectType);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(objectType);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

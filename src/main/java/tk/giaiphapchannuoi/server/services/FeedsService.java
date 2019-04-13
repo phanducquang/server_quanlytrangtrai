@@ -25,8 +25,14 @@ public class FeedsService {
     }
 
     public Feeds save(Feeds feed){
+        feed.setDelFlag(false);
         return feedsRepository.save(feed);
     }
+
+    public Feeds update(Feeds feed){
+        return feedsRepository.save(feed);
+    }
+
 
     public Boolean delete(Feeds feed){
         feed.setDelFlag(true);

@@ -25,8 +25,14 @@ public class CustomersService {
     }
 
     public Customers save(Customers customers){
+        customers.setDelFlag(false);
         return customersRepository.save(customers);
     }
+
+    public Customers update(Customers customers){
+        return customersRepository.save(customers);
+    }
+
 
     public Boolean delete(Customers customers){
         customers.setDelFlag(true);

@@ -29,18 +29,20 @@ public class SpermController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Sperm sperm){
-        if(spermService.save(sperm) == null){
+        Sperm temp = spermService.save(sperm);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(sperm);
+        return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Sperm sperm){
-        if(spermService.save(sperm) == null){
+        Sperm temp = spermService.update(sperm);
+        if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(sperm);
+        return ResponseEntity.ok(temp);
     }
 
     @DeleteMapping(value = "/")

@@ -25,8 +25,14 @@ public class RegenciesService {
     }
 
     public Regencies save(Regencies regency){
+        regency.setDelFlag(false);
         return regenciesRepository.save(regency);
     }
+
+    public Regencies update(Regencies regency){
+        return regenciesRepository.save(regency);
+    }
+
 
     public Boolean delete(Regencies regency){
         regency.setDelFlag(true);

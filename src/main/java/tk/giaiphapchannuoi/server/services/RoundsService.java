@@ -25,6 +25,11 @@ public class RoundsService {
     }
 
     public Rounds save(Rounds round){
+        round.setDelFlag(false);
+        return roundsRepository.save(round);
+    }
+
+    public Rounds update(Rounds round){
         return roundsRepository.save(round);
     }
 

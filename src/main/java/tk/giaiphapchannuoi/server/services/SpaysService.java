@@ -25,8 +25,14 @@ public class SpaysService {
     }
 
     public Spays save(Spays spays){
+        spays.setDelFlag(false);
         return spaysRepository.save(spays);
     }
+
+    public Spays update(Spays spays){
+        return spaysRepository.save(spays);
+    }
+
 
     public Boolean delete(Spays spays){
         spays.setDelFlag(true);

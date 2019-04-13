@@ -25,8 +25,14 @@ public class MatingRolesService {
     }
 
     public MatingRoles save(MatingRoles matingRole){
+        matingRole.setDelFlag(false);
         return matingRolesRepository.save(matingRole);
     }
+
+    public MatingRoles update(MatingRoles matingRole){
+        return matingRolesRepository.save(matingRole);
+    }
+
 
     public Boolean delete(MatingRoles matingRole){
         matingRole.setDelFlag(true);
