@@ -14,9 +14,10 @@ public class Foods extends Auditable implements Serializable {
 	
 	@Column(name="food_code")
 	private String foodCode;
-	
-	@Column(name="type_id")
-	private Integer typeId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="type_id")
+	private FoodType type;
 	
 	@Column(name="name")
 	private String name;
@@ -39,9 +40,9 @@ public class Foods extends Auditable implements Serializable {
 	public Foods() {
 	}
 
-	public Foods(String foodCode, Integer typeId, String name, String useFor, String guide, String description, String images, Boolean delFlag) {
+	public Foods(String foodCode, FoodType type, String name, String useFor, String guide, String description, String images, Boolean delFlag) {
 		this.foodCode = foodCode;
-		this.typeId = typeId;
+		this.type = type;
 		this.name = name;
 		this.useFor = useFor;
 		this.guide = guide;
@@ -66,12 +67,12 @@ public class Foods extends Auditable implements Serializable {
 		this.foodCode = foodCode;
 	}
 
-	public Integer getTypeId() {
-		return typeId;
+	public FoodType getType() {
+		return type;
 	}
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setType(FoodType type) {
+		this.type = type;
 	}
 
 	public String getName() {

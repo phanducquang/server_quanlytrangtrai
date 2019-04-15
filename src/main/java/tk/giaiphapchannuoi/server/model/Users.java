@@ -22,9 +22,10 @@ public class Users extends Auditable implements Serializable {
 	
 	@Column(name="email")
 	private String email;
-	
-	@Column(name="employee_id")
-	private Integer employeeId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="employee_id")
+	private Employees employee;
 	
 	@Column(name="activate")
 	private Integer activate;
@@ -47,11 +48,11 @@ public class Users extends Auditable implements Serializable {
 	public Users() {
 	}
 
-	public Users(String username, String password, String email, Integer employeeId, Integer activate, String language, String theme, Date lastActivate, Integer login, Boolean delFlag) {
+	public Users(String username, String password, String email, Employees employee, Integer activate, String language, String theme, Date lastActivate, Integer login, Boolean delFlag) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.employeeId = employeeId;
+		this.employee = employee;
 		this.activate = activate;
 		this.language = language;
 		this.theme = theme;
@@ -92,12 +93,12 @@ public class Users extends Auditable implements Serializable {
 		this.email = email;
 	}
 
-	public Integer getEmployeeId() {
-		return employeeId;
+	public Employees getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
 
 	public Integer getActivate() {

@@ -13,12 +13,14 @@ public class Employees extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="regency_id")
-	private Integer regencyId;
-	
-	@Column(name="farm_id")
-	private Integer farmId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="regency_id")
+	private Regencies regency;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="farm_id")
+	private Farms farm;
 	
 	@Column(name="name")
 	private String name;
@@ -56,9 +58,9 @@ public class Employees extends Auditable implements Serializable {
 	public Employees() {
 	}
 
-	public Employees(Integer regencyId, Integer farmId, String name, Integer gender, Date birthday, String address, String email, String cmnd, Date dateJoin, Date dateOff, String images, Integer status, Boolean delFlag) {
-		this.regencyId = regencyId;
-		this.farmId = farmId;
+	public Employees(Regencies regency, Farms farm, String name, Integer gender, Date birthday, String address, String email, String cmnd, Date dateJoin, Date dateOff, String images, Integer status, Boolean delFlag) {
+		this.regency = regency;
+		this.farm = farm;
 		this.name = name;
 		this.gender = gender;
 		this.birthday = birthday;
@@ -80,20 +82,20 @@ public class Employees extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getRegencyId() {
-		return regencyId;
+	public Regencies getRegency() {
+		return regency;
 	}
 
-	public void setRegencyId(Integer regencyId) {
-		this.regencyId = regencyId;
+	public void setRegency(Regencies regency) {
+		this.regency = regency;
 	}
 
-	public Integer getFarmId() {
-		return farmId;
+	public Farms getFarm() {
+		return farm;
 	}
 
-	public void setFarmId(Integer farmId) {
-		this.farmId = farmId;
+	public void setFarm(Farms farm) {
+		this.farm = farm;
 	}
 
 	public String getName() {

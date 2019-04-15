@@ -22,9 +22,10 @@ public class PigLogs extends Auditable implements Serializable {
 	
 	@Column(name="action_id")
 	private Integer actionId;
-	
-	@Column(name="pig_id")
-	private Integer pigId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pig_id")
+	private Pigs pig;
 	
 	@Column(name="pig_code")
 	private String pigCode;
@@ -140,11 +141,11 @@ public class PigLogs extends Auditable implements Serializable {
 	public PigLogs() {
 	}
 
-	public PigLogs(Date date, Integer actionType, Integer actionId, Integer pigId, String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float bornWeight, Integer bornStatus, Float originId, Float originWeight, String originFather, String originMother, Float receiveWeight, Float healthPoint, Integer foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatus, Integer breedingType, Integer breedStatus, Integer pregnancyStatus, Integer overviewStatus, Integer pointReview, Integer status, Integer priceCode, Boolean delFlag) {
+	public PigLogs(Date date, Integer actionType, Integer actionId, Pigs pig, String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float bornWeight, Integer bornStatus, Float originId, Float originWeight, String originFather, String originMother, Float receiveWeight, Float healthPoint, Integer foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatus, Integer breedingType, Integer breedStatus, Integer pregnancyStatus, Integer overviewStatus, Integer pointReview, Integer status, Integer priceCode, Boolean delFlag) {
 		this.date = date;
 		this.actionType = actionType;
 		this.actionId = actionId;
-		this.pigId = pigId;
+		this.pig = pig;
 		this.pigCode = pigCode;
 		this.houseId = houseId;
 		this.roundId = roundId;
@@ -216,12 +217,12 @@ public class PigLogs extends Auditable implements Serializable {
 		this.actionId = actionId;
 	}
 
-	public Integer getPigId() {
-		return pigId;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setPigId(Integer pigId) {
-		this.pigId = pigId;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
 	public String getPigCode() {

@@ -13,24 +13,31 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="warehouse_id")
-	private Integer warehouseId;
-	
-	@Column(name="medicine_id")
-	private Integer medicineId;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="warehouse_id")
+	private Warehouses warehouse;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="medicine_id")
+	private Medicines medicine;
+
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name="invoice_id")
+//	private InvoicesProduct invoice;
+
 	@Column(name="invoice_id")
-	private Integer invoiceId;
+	private Integer invoiceID;
 	
 	@Column(name="parent_id")
 	private Integer parentId;
 	
 	@Column(name="import_date")
 	private Date importDate;
-	
-	@Column(name="unit")
-	private Integer unit;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="unit")
+	private MedicineUnits unit;
 	
 	@Column(name="quantity")
 	private Float quantity;
@@ -65,10 +72,30 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	public MedicineWarehouse() {
 	}
 
-	public MedicineWarehouse(Integer warehouseId, Integer medicineId, Integer invoiceId, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
-		this.warehouseId = warehouseId;
-		this.medicineId = medicineId;
-		this.invoiceId = invoiceId;
+//	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, InvoicesProduct invoice, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
+//		this.warehouse = warehouse;
+//		this.medicine = medicine;
+//		this.invoice = invoice;
+//		this.parentId = parentId;
+//		this.importDate = importDate;
+//		this.unit = unit;
+//		this.quantity = quantity;
+//		this.total = total;
+//		this.used = used;
+//		this.remain = remain;
+//		this.manufacturer = manufacturer;
+//		this.mfgDate = mfgDate;
+//		this.expiryDate = expiryDate;
+//		this.typeUse = typeUse;
+//		this.images = images;
+//		this.delFlag = delFlag;
+//	}
+
+
+	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, Integer invoiceID, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
+		this.warehouse = warehouse;
+		this.medicine = medicine;
+		this.invoiceID = invoiceID;
 		this.parentId = parentId;
 		this.importDate = importDate;
 		this.unit = unit;
@@ -92,28 +119,37 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getWarehouseId() {
-		return warehouseId;
+	public Warehouses getWarehouse() {
+		return warehouse;
 	}
 
-	public void setWarehouseId(Integer warehouseId) {
-		this.warehouseId = warehouseId;
+	public void setWarehouse(Warehouses warehouse) {
+		this.warehouse = warehouse;
 	}
 
-	public Integer getMedicineId() {
-		return medicineId;
+	public Medicines getMedicine() {
+		return medicine;
 	}
 
-	public void setMedicineId(Integer medicineId) {
-		this.medicineId = medicineId;
+	public void setMedicine(Medicines medicine) {
+		this.medicine = medicine;
 	}
 
-	public Integer getInvoiceId() {
-		return invoiceId;
+//	public InvoicesProduct getInvoice() {
+//		return invoice;
+//	}
+//
+//	public void setInvoice(InvoicesProduct invoice) {
+//		this.invoice = invoice;
+//	}
+
+
+	public Integer getInvoiceID() {
+		return invoiceID;
 	}
 
-	public void setInvoiceId(Integer invoiceId) {
-		this.invoiceId = invoiceId;
+	public void setInvoiceID(Integer invoiceID) {
+		this.invoiceID = invoiceID;
 	}
 
 	public Integer getParentId() {
@@ -132,11 +168,11 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 		this.importDate = importDate;
 	}
 
-	public Integer getUnit() {
+	public MedicineUnits getUnit() {
 		return unit;
 	}
 
-	public void setUnit(Integer unit) {
+	public void setUnit(MedicineUnits unit) {
 		this.unit = unit;
 	}
 

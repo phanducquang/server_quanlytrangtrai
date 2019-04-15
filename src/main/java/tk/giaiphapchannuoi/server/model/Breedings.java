@@ -14,16 +14,17 @@ public class Breedings extends Auditable implements Serializable {
 	
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="pig_id")
-	private Integer pigId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pig_id")
+	private Pigs pig;
 	
 	@Column(name="date")
 	private Date date;
 	
 	@Column(name="log_id")
 	private Integer logId;
-	
+
 	@Column(name="type_id")
 	private Integer typeId;
 	
@@ -48,8 +49,8 @@ public class Breedings extends Auditable implements Serializable {
 	public Breedings() {
 	}
 
-	public Breedings(Integer pigId, Date date, Integer logId, Integer typeId, String description, Integer breedingCount, Date breedingNext, Date matingEstimate, Date matingReal, Boolean delFlag) {
-		this.pigId = pigId;
+	public Breedings(Pigs pig, Date date, Integer logId, Integer typeId, String description, Integer breedingCount, Date breedingNext, Date matingEstimate, Date matingReal, Boolean delFlag) {
+		this.pig = pig;
 		this.date = date;
 		this.logId = logId;
 		this.typeId = typeId;
@@ -69,12 +70,12 @@ public class Breedings extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getPigId() {
-		return pigId;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setPigId(Integer pigId) {
-		this.pigId = pigId;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
 	public Date getDate() {

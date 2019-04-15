@@ -19,9 +19,10 @@ public class GroupLogs extends Auditable implements Serializable {
 	
 	@Column(name="action_type")
 	private Integer actionType;
-	
-	@Column(name="group_id")
-	private Integer groupId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="group_id")
+	private Groups group;
 	
 	@Column(name="group_code")
 	private String groupCode;
@@ -65,10 +66,10 @@ public class GroupLogs extends Auditable implements Serializable {
 	public GroupLogs() {
 	}
 
-	public GroupLogs(Date date, Integer actionType, Integer groupId, String groupCode, Integer parentId, Integer roundId, Date avgBirthday, Integer quantity, String overviewStatus, Float originSumWeight, Float originAvgWeight, Integer status, Integer mark, Integer healthStatus, String description, Boolean delFlag) {
+	public GroupLogs(Date date, Integer actionType, Groups group, String groupCode, Integer parentId, Integer roundId, Date avgBirthday, Integer quantity, String overviewStatus, Float originSumWeight, Float originAvgWeight, Integer status, Integer mark, Integer healthStatus, String description, Boolean delFlag) {
 		this.date = date;
 		this.actionType = actionType;
-		this.groupId = groupId;
+		this.group = group;
 		this.groupCode = groupCode;
 		this.parentId = parentId;
 		this.roundId = roundId;
@@ -108,12 +109,12 @@ public class GroupLogs extends Auditable implements Serializable {
 		this.actionType = actionType;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
+	public Groups getGroup() {
+		return group;
 	}
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
+	public void setGroup(Groups group) {
+		this.group = group;
 	}
 
 	public String getGroupCode() {

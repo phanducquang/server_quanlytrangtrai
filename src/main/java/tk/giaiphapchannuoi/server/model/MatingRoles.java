@@ -10,15 +10,18 @@ public class MatingRoles extends Auditable implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="father_id")
-	private Integer fatherId;
-	
-	@Column(name="mother_id")
-	private Integer motherId;
-	
-	@Column(name="child_id")
-	private Integer childId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="father_id")
+	private Breeds fatherId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mother_id")
+	private Breeds motherId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="child_id")
+	private Breeds childId;
 	
 	@Column(name="birth_status_estimate")
 	private Integer birthStatusEstimate;
@@ -32,7 +35,7 @@ public class MatingRoles extends Auditable implements Serializable {
 	public MatingRoles() {
 	}
 
-	public MatingRoles(Integer fatherId, Integer motherId, Integer childId, Integer birthStatusEstimate, String description, Boolean delFlag) {
+	public MatingRoles(Breeds fatherId, Breeds motherId, Breeds childId, Integer birthStatusEstimate, String description, Boolean delFlag) {
 		this.fatherId = fatherId;
 		this.motherId = motherId;
 		this.childId = childId;
@@ -49,27 +52,27 @@ public class MatingRoles extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getFatherId() {
+	public Breeds getFatherId() {
 		return fatherId;
 	}
 
-	public void setFatherId(Integer fatherId) {
+	public void setFatherId(Breeds fatherId) {
 		this.fatherId = fatherId;
 	}
 
-	public Integer getMotherId() {
+	public Breeds getMotherId() {
 		return motherId;
 	}
 
-	public void setMotherId(Integer motherId) {
+	public void setMotherId(Breeds motherId) {
 		this.motherId = motherId;
 	}
 
-	public Integer getChildId() {
+	public Breeds getChildId() {
 		return childId;
 	}
 
-	public void setChildId(Integer childId) {
+	public void setChildId(Breeds childId) {
 		this.childId = childId;
 	}
 

@@ -11,12 +11,14 @@ public class IssuesDiseases extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="issue_id")
-	private Integer issueId;
-	
-	@Column(name="disease_id")
-	private Integer diseaseId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="issue_id")
+	private Issues issue;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="disease_id")
+	private Diseases disease;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -24,9 +26,9 @@ public class IssuesDiseases extends Auditable implements Serializable {
 	public IssuesDiseases() {
 	}
 
-	public IssuesDiseases(Integer issueId, Integer diseaseId, Boolean delFlag) {
-		this.issueId = issueId;
-		this.diseaseId = diseaseId;
+	public IssuesDiseases(Issues issue, Diseases disease, Boolean delFlag) {
+		this.issue = issue;
+		this.disease = disease;
 		this.delFlag = delFlag;
 	}
 
@@ -38,20 +40,20 @@ public class IssuesDiseases extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getIssueId() {
-		return issueId;
+	public Issues getIssue() {
+		return issue;
 	}
 
-	public void setIssueId(Integer issueId) {
-		this.issueId = issueId;
+	public void setIssue(Issues issue) {
+		this.issue = issue;
 	}
 
-	public Integer getDiseaseId() {
-		return diseaseId;
+	public Diseases getDisease() {
+		return disease;
 	}
 
-	public void setDiseaseId(Integer diseaseId) {
-		this.diseaseId = diseaseId;
+	public void setDisease(Diseases disease) {
+		this.disease = disease;
 	}
 
 	public Boolean getDelFlag() {

@@ -11,15 +11,17 @@ public class Customers extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="type_id")
-	private Integer typeId;
-	
-	@Column(name="group_id")
-	private Integer groupId;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="type_id")
+	private CustomerTypes type;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="group_id")
+	private CustomerGroups group;
+
 	@Column(name="farm_id")
-	private Integer farmId;
+	private String farmId;
 	
 	@Column(name="name")
 	private String name;
@@ -51,9 +53,9 @@ public class Customers extends Auditable implements Serializable {
 	public Customers() {
 	}
 
-	public Customers(Integer typeId, Integer groupId, Integer farmId, String name, String phone, String email, String address, String companyAddress, String fax, Integer bank, String description, Boolean delFlag) {
-		this.typeId = typeId;
-		this.groupId = groupId;
+	public Customers(CustomerTypes type, CustomerGroups group, String farmId, String name, String phone, String email, String address, String companyAddress, String fax, Integer bank, String description, Boolean delFlag) {
+		this.type = type;
+		this.group = group;
 		this.farmId = farmId;
 		this.name = name;
 		this.phone = phone;
@@ -74,27 +76,27 @@ public class Customers extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getTypeId() {
-		return typeId;
+	public CustomerTypes getType() {
+		return type;
 	}
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setType(CustomerTypes type) {
+		this.type = type;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
+	public CustomerGroups getGroup() {
+		return group;
 	}
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
+	public void setGroup(CustomerGroups group) {
+		this.group = group;
 	}
 
-	public Integer getFarmId() {
+	public String getFarmId() {
 		return farmId;
 	}
 
-	public void setFarmId(Integer farmId) {
+	public void setFarmId(String farmId) {
 		this.farmId = farmId;
 	}
 

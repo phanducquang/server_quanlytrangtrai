@@ -19,9 +19,10 @@ public class Groups extends Auditable implements Serializable {
 	
 	@Column(name="parent_id")
 	private Integer parentId;
-	
-	@Column(name="round_id")
-	private Integer roundId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="round_id")
+	private Rounds round;
 	
 	@Column(name="avg_birthday")
 	private Date avgBirthday;
@@ -40,12 +41,14 @@ public class Groups extends Auditable implements Serializable {
 	
 	@Column(name="status")
 	private Integer status;
-	
-	@Column(name="mark")
-	private Integer mark;
-	
-	@Column(name="health_status")
-	private Integer healthStatus;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mark")
+	private MarkTypes mark;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="health_status")
+	private HealthStatus healthStatus;
 	
 	@Column(name="description")
 	private String description;
@@ -56,10 +59,10 @@ public class Groups extends Auditable implements Serializable {
 	public Groups() {
 	}
 
-	public Groups(String groupCode, Integer parentId, Integer roundId, Date avgBirthday, Integer quantity, String overviewStatus, Float originSumWeight, Float originAvgWeight, Integer status, Integer mark, Integer healthStatus, String description, Boolean delFlag) {
+	public Groups(String groupCode, Integer parentId, Rounds round, Date avgBirthday, Integer quantity, String overviewStatus, Float originSumWeight, Float originAvgWeight, Integer status, MarkTypes mark, HealthStatus healthStatus, String description, Boolean delFlag) {
 		this.groupCode = groupCode;
 		this.parentId = parentId;
-		this.roundId = roundId;
+		this.round = round;
 		this.avgBirthday = avgBirthday;
 		this.quantity = quantity;
 		this.overviewStatus = overviewStatus;
@@ -96,12 +99,12 @@ public class Groups extends Auditable implements Serializable {
 		this.parentId = parentId;
 	}
 
-	public Integer getRoundId() {
-		return roundId;
+	public Rounds getRound() {
+		return round;
 	}
 
-	public void setRoundId(Integer roundId) {
-		this.roundId = roundId;
+	public void setRound(Rounds round) {
+		this.round = round;
 	}
 
 	public Date getAvgBirthday() {
@@ -152,19 +155,19 @@ public class Groups extends Auditable implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getMark() {
+	public MarkTypes getMark() {
 		return mark;
 	}
 
-	public void setMark(Integer mark) {
+	public void setMark(MarkTypes mark) {
 		this.mark = mark;
 	}
 
-	public Integer getHealthStatus() {
+	public HealthStatus getHealthStatus() {
 		return healthStatus;
 	}
 
-	public void setHealthStatus(Integer healthStatus) {
+	public void setHealthStatus(HealthStatus healthStatus) {
 		this.healthStatus = healthStatus;
 	}
 

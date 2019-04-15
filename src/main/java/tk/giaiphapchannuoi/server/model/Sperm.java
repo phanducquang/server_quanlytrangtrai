@@ -13,9 +13,10 @@ public class Sperm extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="pig_id")
-	private Integer pigId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pig_id")
+	private Pigs pig;
 	
 	@Column(name="sperm_count")
 	private Integer spermCount;
@@ -56,8 +57,8 @@ public class Sperm extends Auditable implements Serializable {
 	public Sperm() {
 	}
 
-	public Sperm(Integer pigId, Integer spermCount, Date date, Float volume, Integer doses, Integer used, Float activity, Float c, Float lifeAvg, Float dieAvg, Integer faddiness, Integer status, Boolean delFlag) {
-		this.pigId = pigId;
+	public Sperm(Pigs pig, Integer spermCount, Date date, Float volume, Integer doses, Integer used, Float activity, Float c, Float lifeAvg, Float dieAvg, Integer faddiness, Integer status, Boolean delFlag) {
+		this.pig = pig;
 		this.spermCount = spermCount;
 		this.date = date;
 		this.volume = volume;
@@ -80,12 +81,12 @@ public class Sperm extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getPigId() {
-		return pigId;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setPigId(Integer pigId) {
-		this.pigId = pigId;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
 	public Integer getSpermCount() {

@@ -15,15 +15,18 @@ public class Pigs extends Auditable implements Serializable {
 	
 	@Column(name="pig_code")
 	private String pigCode;
-	
-	@Column(name="house_id")
-	private Integer houseId;
-	
-	@Column(name="round_id")
-	private Integer roundId;
-	
-	@Column(name="breed_id")
-	private Integer breedId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="house_id")
+	private Houses house;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="round_id")
+	private Rounds round;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="breed_id")
+	private Breeds breed;
 	
 	@Column(name="gender")
 	private Integer gender;
@@ -54,9 +57,10 @@ public class Pigs extends Auditable implements Serializable {
 	
 	@Column(name="health_point")
 	private Float healthPoint;
-	
-	@Column(name="foot")
-	private Integer foot;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="foot")
+	private FootType foot;
 	
 	@Column(name="function_udder")
 	private Integer functionUdder;
@@ -96,27 +100,34 @@ public class Pigs extends Auditable implements Serializable {
 	
 	@Column(name="images")
 	private String images;
-	
-	@Column(name="health_status")
-	private Integer healthStatus;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="health_status")
+	private HealthStatus healthStatus;
+
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name="breeding_type")
+//	private BreedingType breedingType;
+
 	@Column(name="breeding_type")
 	private Integer breedingType;
 	
 	@Column(name="breed_status")
 	private Integer breedStatus;
-	
-	@Column(name="pregnancy_status")
-	private Integer pregnancyStatus;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pregnancy_status")
+	private PregnancyStatus pregnancyStatus;
 
 	@Column(name="point_review")
 	private Integer point_review;
 	
 	@Column(name="status")
 	private Integer status;
-	
-	@Column(name="price_code")
-	private Integer priceCode;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="price_code")
+	private PriceCodes priceCode;
 
 	@Column(name="overview_status")
 	private Integer overviewStatus;
@@ -127,11 +138,52 @@ public class Pigs extends Auditable implements Serializable {
 	public Pigs() {
 	}
 
-	public Pigs(String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatus, Integer breedingType, Integer breedStatus, Integer pregnancyStatus, Integer point_review, Integer status, Integer priceCode, Integer overviewStatus, Boolean delFlag) {
+//	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, BreedingType breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+//		this.pigCode = pigCode;
+//		this.house = house;
+//		this.round = round;
+//		this.breed = breed;
+//		this.gender = gender;
+//		this.birthday = birthday;
+//		this.born_weight = born_weight;
+//		this.bornStatus = bornStatus;
+//		this.originId = originId;
+//		this.originFather = originFather;
+//		this.originMother = originMother;
+//		this.originWeight = originWeight;
+//		this.receiveWeight = receiveWeight;
+//		this.healthPoint = healthPoint;
+//		this.foot = foot;
+//		this.functionUdder = functionUdder;
+//		this.totalUdder = totalUdder;
+//		this.gential = gential;
+//		this.description = description;
+//		this.fcr = fcr;
+//		this.adg = adg;
+//		this.bf = bf;
+//		this.filet = filet;
+//		this.longBack = longBack;
+//		this.longBody = longBody;
+//		this.index = index;
+//		this.parities = parities;
+//		this.images = images;
+//		this.healthStatus = healthStatus;
+//		this.breedingType = breedingType;
+//		this.breedStatus = breedStatus;
+//		this.pregnancyStatus = pregnancyStatus;
+//		this.point_review = point_review;
+//		this.status = status;
+//		this.priceCode = priceCode;
+//		this.overviewStatus = overviewStatus;
+//		this.delFlag = delFlag;
+//	}
+
+
+	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
 		this.pigCode = pigCode;
-		this.houseId = houseId;
-		this.roundId = roundId;
-		this.breedId = breedId;
+		this.house = house;
+		this.round = round;
+		this.breed = breed;
 		this.gender = gender;
 		this.birthday = birthday;
 		this.born_weight = born_weight;
@@ -183,28 +235,28 @@ public class Pigs extends Auditable implements Serializable {
 		this.pigCode = pigCode;
 	}
 
-	public Integer getHouseId() {
-		return houseId;
+	public Houses getHouse() {
+		return house;
 	}
 
-	public void setHouseId(Integer houseId) {
-		this.houseId = houseId;
+	public void setHouse(Houses house) {
+		this.house = house;
 	}
 
-	public Integer getRoundId() {
-		return roundId;
+	public Rounds getRound() {
+		return round;
 	}
 
-	public void setRoundId(Integer roundId) {
-		this.roundId = roundId;
+	public void setRound(Rounds round) {
+		this.round = round;
 	}
 
-	public Integer getBreedId() {
-		return breedId;
+	public Breeds getBreed() {
+		return breed;
 	}
 
-	public void setBreedId(Integer breedId) {
-		this.breedId = breedId;
+	public void setBreed(Breeds breed) {
+		this.breed = breed;
 	}
 
 	public Integer getGender() {
@@ -287,11 +339,11 @@ public class Pigs extends Auditable implements Serializable {
 		this.healthPoint = healthPoint;
 	}
 
-	public Integer getFoot() {
+	public FootType getFoot() {
 		return foot;
 	}
 
-	public void setFoot(Integer foot) {
+	public void setFoot(FootType foot) {
 		this.foot = foot;
 	}
 
@@ -399,13 +451,22 @@ public class Pigs extends Auditable implements Serializable {
 		this.images = images;
 	}
 
-	public Integer getHealthStatus() {
+	public HealthStatus getHealthStatus() {
 		return healthStatus;
 	}
 
-	public void setHealthStatus(Integer healthStatus) {
+	public void setHealthStatus(HealthStatus healthStatus) {
 		this.healthStatus = healthStatus;
 	}
+
+//	public BreedingType getBreedingType() {
+//		return breedingType;
+//	}
+//
+//	public void setBreedingType(BreedingType breedingType) {
+//		this.breedingType = breedingType;
+//	}
+
 
 	public Integer getBreedingType() {
 		return breedingType;
@@ -423,11 +484,11 @@ public class Pigs extends Auditable implements Serializable {
 		this.breedStatus = breedStatus;
 	}
 
-	public Integer getPregnancyStatus() {
+	public PregnancyStatus getPregnancyStatus() {
 		return pregnancyStatus;
 	}
 
-	public void setPregnancyStatus(Integer pregnancyStatus) {
+	public void setPregnancyStatus(PregnancyStatus pregnancyStatus) {
 		this.pregnancyStatus = pregnancyStatus;
 	}
 
@@ -447,11 +508,11 @@ public class Pigs extends Auditable implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getPriceCode() {
+	public PriceCodes getPriceCode() {
 		return priceCode;
 	}
 
-	public void setPriceCode(Integer priceCode) {
+	public void setPriceCode(PriceCodes priceCode) {
 		this.priceCode = priceCode;
 	}
 

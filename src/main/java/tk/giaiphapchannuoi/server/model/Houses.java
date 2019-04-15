@@ -12,9 +12,10 @@ public class Houses extends Auditable implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="section_id")
-	private Integer sectionId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="section_id")
+	private Sections section;
 	
 	@Column(name="type_id")
 	private Integer typeId;
@@ -43,8 +44,8 @@ public class Houses extends Auditable implements Serializable {
 	public Houses() {
 	}
 
-	public Houses(Integer sectionId, Integer typeId, String houseCode, String name, String description, String position, Integer manager, Date founding, Boolean delFlag) {
-		this.sectionId = sectionId;
+	public Houses(Sections section, Integer typeId, String houseCode, String name, String description, String position, Integer manager, Date founding, Boolean delFlag) {
+		this.section = section;
 		this.typeId = typeId;
 		this.houseCode = houseCode;
 		this.name = name;
@@ -63,12 +64,12 @@ public class Houses extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getSectionId() {
-		return sectionId;
+	public Sections getSection() {
+		return section;
 	}
 
-	public void setSectionId(Integer sectionId) {
-		this.sectionId = sectionId;
+	public void setSection(Sections section) {
+		this.section = section;
 	}
 
 	public Integer getTypeId() {

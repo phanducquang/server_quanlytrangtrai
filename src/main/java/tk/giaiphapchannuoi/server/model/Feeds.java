@@ -22,9 +22,10 @@ public class Feeds extends Auditable implements Serializable {
 	
 	@Column(name="object_quantity")
 	private Integer objectQuantity;
-	
-	@Column(name="food_warehouse_id")
-	private Integer foodWarehouseId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="food_warehouse_id")
+	private FoodWarehouse foodWarehouse;
 	
 	@Column(name="unit")
 	private Integer unit;
@@ -40,9 +41,10 @@ public class Feeds extends Auditable implements Serializable {
 	
 	@Column(name="date")
 	private Date date;
-	
-	@Column(name="employee_id")
-	private Integer employeeId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="employee_id")
+	private Employees employee;
 	
 	@Column(name="description")
 	private String description;
@@ -53,17 +55,17 @@ public class Feeds extends Auditable implements Serializable {
 	public Feeds() {
 	}
 
-	public Feeds(Integer objectType, Integer objectId, Integer objectQuantity, Integer foodWarehouseId, Integer unit, Float quantity, Float total, Float avg, Date date, Integer employeeId, String description, Boolean delFlag) {
+	public Feeds(Integer objectType, Integer objectId, Integer objectQuantity, FoodWarehouse foodWarehouse, Integer unit, Float quantity, Float total, Float avg, Date date, Employees employee, String description, Boolean delFlag) {
 		this.objectType = objectType;
 		this.objectId = objectId;
 		this.objectQuantity = objectQuantity;
-		this.foodWarehouseId = foodWarehouseId;
+		this.foodWarehouse = foodWarehouse;
 		this.unit = unit;
 		this.quantity = quantity;
 		this.total = total;
 		this.avg = avg;
 		this.date = date;
-		this.employeeId = employeeId;
+		this.employee = employee;
 		this.description = description;
 		this.delFlag = delFlag;
 	}
@@ -100,12 +102,12 @@ public class Feeds extends Auditable implements Serializable {
 		this.objectQuantity = objectQuantity;
 	}
 
-	public Integer getFoodWarehouseId() {
-		return foodWarehouseId;
+	public FoodWarehouse getFoodWarehouse() {
+		return foodWarehouse;
 	}
 
-	public void setFoodWarehouseId(Integer foodWarehouseId) {
-		this.foodWarehouseId = foodWarehouseId;
+	public void setFoodWarehouse(FoodWarehouse foodWarehouse) {
+		this.foodWarehouse = foodWarehouse;
 	}
 
 	public Integer getUnit() {
@@ -148,12 +150,12 @@ public class Feeds extends Auditable implements Serializable {
 		this.date = date;
 	}
 
-	public Integer getEmployeeId() {
-		return employeeId;
+	public Employees getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
 
 	public String getDescription() {

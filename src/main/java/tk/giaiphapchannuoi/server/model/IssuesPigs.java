@@ -16,18 +16,21 @@ public class IssuesPigs extends Auditable implements Serializable {
 	
 	@Column(name="date")
 	private Date date;
-	
-	@Column(name="pig_id")
-	private Integer pigId;
-	
-	@Column(name="issue_id")
-	private Integer issueId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pig_id")
+	private Pigs pig;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="issue_id")
+	private Issues issue;
 	
 	@Column(name="quantity")
 	private Integer quantity;
-	
-	@Column(name="employee_id")
-	private Integer employeeId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="employee_id")
+	private Employees employee;
 	
 	@Column(name="description")
 	private String description;
@@ -44,12 +47,12 @@ public class IssuesPigs extends Auditable implements Serializable {
 	public IssuesPigs() {
 	}
 
-	public IssuesPigs(Date date, Integer pigId, Integer issueId, Integer quantity, Integer employeeId, String description, String images, Integer status, Boolean delFlag) {
+	public IssuesPigs(Date date, Pigs pig, Issues issue, Integer quantity, Employees employee, String description, String images, Integer status, Boolean delFlag) {
 		this.date = date;
-		this.pigId = pigId;
-		this.issueId = issueId;
+		this.pig = pig;
+		this.issue = issue;
 		this.quantity = quantity;
-		this.employeeId = employeeId;
+		this.employee = employee;
 		this.description = description;
 		this.images = images;
 		this.status = status;
@@ -72,20 +75,20 @@ public class IssuesPigs extends Auditable implements Serializable {
 		this.date = date;
 	}
 
-	public Integer getPigId() {
-		return pigId;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setPigId(Integer pigId) {
-		this.pigId = pigId;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
-	public Integer getIssueId() {
-		return issueId;
+	public Issues getIssue() {
+		return issue;
 	}
 
-	public void setIssueId(Integer issueId) {
-		this.issueId = issueId;
+	public void setIssue(Issues issue) {
+		this.issue = issue;
 	}
 
 	public Integer getQuantity() {
@@ -96,12 +99,12 @@ public class IssuesPigs extends Auditable implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Integer getEmployeeId() {
-		return employeeId;
+	public Employees getEmployee() {
+		return employee;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
 
 	public String getDescription() {

@@ -12,11 +12,13 @@ public class RolePermission extends Auditable implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "role_id")
-	private Integer roleId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id")
+	private Roles role;
 
-	@Column(name = "group_id")
-	private Integer groupId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "group_id")
+	private GroupPermission groupId;
 
 	@Column(name = "params")
 	private Integer params;
@@ -33,8 +35,8 @@ public class RolePermission extends Auditable implements Serializable {
 	public RolePermission() {
 	}
 
-	public RolePermission(Integer roleId, Integer groupId, Integer params, Integer show, Integer order, Boolean delFlag) {
-		this.roleId = roleId;
+	public RolePermission(Roles role, GroupPermission groupId, Integer params, Integer show, Integer order, Boolean delFlag) {
+		this.role = role;
 		this.groupId = groupId;
 		this.params = params;
 		this.show = show;
@@ -50,19 +52,19 @@ public class RolePermission extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public Roles getRole() {
+		return role;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setRole(Roles role) {
+		this.role = role;
 	}
 
-	public Integer getGroupId() {
+	public GroupPermission getGroupId() {
 		return groupId;
 	}
 
-	public void setGroupId(Integer groupId) {
+	public void setGroupId(GroupPermission groupId) {
 		this.groupId = groupId;
 	}
 

@@ -17,8 +17,9 @@ public class Sections extends Auditable implements Serializable {
 	@Column(name="type_id")
 	private Integer typeId;
 
-	@Column(name = "farm_id")
-	private Integer farmId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "farm_id")
+	private Farms farm;
 	
 	@Column(name="name")
 	private String name;
@@ -38,9 +39,9 @@ public class Sections extends Auditable implements Serializable {
 	public Sections() {
 	}
 
-	public Sections(Integer typeId, Integer farmId, String name, String description, Integer manager, Date founding, Boolean delFlag) {
+	public Sections(Integer typeId, Farms farm, String name, String description, Integer manager, Date founding, Boolean delFlag) {
 		this.typeId = typeId;
-		this.farmId = farmId;
+		this.farm = farm;
 		this.name = name;
 		this.description = description;
 		this.manager = manager;
@@ -64,12 +65,12 @@ public class Sections extends Auditable implements Serializable {
 		this.typeId = typeId;
 	}
 
-	public Integer getFarmId() {
-		return farmId;
+	public Farms getFarm() {
+		return farm;
 	}
 
-	public void setFarmId(Integer farmId) {
-		this.farmId = farmId;
+	public void setFarm(Farms farm) {
+		this.farm = farm;
 	}
 
 	public String getName() {

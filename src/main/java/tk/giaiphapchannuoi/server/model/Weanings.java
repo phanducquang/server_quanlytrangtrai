@@ -13,9 +13,10 @@ public class Weanings extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="pig_id")
-	private Integer pigId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pig_id")
+	private Pigs pig;
 	
 	@Column(name="date")
 	private Date date;
@@ -35,8 +36,8 @@ public class Weanings extends Auditable implements Serializable {
 	public Weanings() {
 	}
 
-	public Weanings(Integer pigId, Date date, Integer logId, Float sumChildWeight, Integer quantity, Boolean delFlag) {
-		this.pigId = pigId;
+	public Weanings(Pigs pig, Date date, Integer logId, Float sumChildWeight, Integer quantity, Boolean delFlag) {
+		this.pig = pig;
 		this.date = date;
 		this.logId = logId;
 		this.sumChildWeight = sumChildWeight;
@@ -52,12 +53,12 @@ public class Weanings extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getPigId() {
-		return pigId;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setPigId(Integer pigId) {
-		this.pigId = pigId;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
 	public Date getDate() {

@@ -11,16 +11,21 @@ public class FoodWarehouse extends Auditable implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
-	
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="warehouse_id")
-	private Integer warehouseId;
-	
-	@Column(name="food_id")
-	private Integer foodId;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="warehouse_id")
+	private Warehouses warehouse;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="food_id")
+	private Foods food;
+
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name="invoice_id")
+//	private InvoicesProduct invoice;
+
 	@Column(name="invoice_id")
 	private Integer invoiceId;
 	
@@ -63,9 +68,28 @@ public class FoodWarehouse extends Auditable implements Serializable {
 	public FoodWarehouse() {
 	}
 
-	public FoodWarehouse(Integer warehouseId, Integer foodId, Integer invoiceId, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
-		this.warehouseId = warehouseId;
-		this.foodId = foodId;
+//	public FoodWarehouse(Warehouses warehouse, Foods food, InvoicesProduct invoice, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
+//		this.warehouse = warehouse;
+//		this.food = food;
+//		this.invoice = invoice;
+//		this.parentId = parentId;
+//		this.importDate = importDate;
+//		this.unit = unit;
+//		this.quantity = quantity;
+//		this.total = total;
+//		this.used = used;
+//		this.remain = remain;
+//		this.manufacturer = manufacturer;
+//		this.mfgDate = mfgDate;
+//		this.expiryDate = expiryDate;
+//		this.images = images;
+//		this.delFlag = delFlag;
+//	}
+
+
+	public FoodWarehouse(Warehouses warehouse, Foods food, Integer invoiceId, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
+		this.warehouse = warehouse;
+		this.food = food;
 		this.invoiceId = invoiceId;
 		this.parentId = parentId;
 		this.importDate = importDate;
@@ -89,21 +113,29 @@ public class FoodWarehouse extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getWarehouseId() {
-		return warehouseId;
+	public Warehouses getWarehouse() {
+		return warehouse;
 	}
 
-	public void setWarehouseId(Integer warehouseId) {
-		this.warehouseId = warehouseId;
+	public void setWarehouse(Warehouses warehouse) {
+		this.warehouse = warehouse;
 	}
 
-	public Integer getFoodId() {
-		return foodId;
+	public Foods getFood() {
+		return food;
 	}
 
-	public void setFoodId(Integer foodId) {
-		this.foodId = foodId;
+	public void setFood(Foods food) {
+		this.food = food;
 	}
+
+//	public InvoicesProduct getInvoice() {
+//		return invoice;
+//	}
+//
+//	public void setInvoice(InvoicesProduct invoice) {
+//		this.invoice = invoice;
+//	}
 
 	public Integer getInvoiceId() {
 		return invoiceId;

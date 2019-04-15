@@ -13,15 +13,17 @@ public class Matings extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="mother_id")
-	private Integer motherId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mother_id")
+	private Pigs mother;
 	
 	@Column(name="father_id")
 	private Integer fatherId;
-	
-	@Column(name="sperm_id")
-	private Integer spermId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="sperm_id")
+	private Sperm sperm;
 	
 	@Column(name="date")
 	private Date date;
@@ -47,10 +49,10 @@ public class Matings extends Auditable implements Serializable {
 	public Matings() {
 	}
 
-	public Matings(Integer motherId, Integer fatherId, Integer spermId, Date date, Integer logId, Integer childId, Date birthEstimate, Integer birthStatusEstimate, Integer employeeId, Boolean delFlag) {
-		this.motherId = motherId;
+	public Matings(Pigs mother, Integer fatherId, Sperm sperm, Date date, Integer logId, Integer childId, Date birthEstimate, Integer birthStatusEstimate, Integer employeeId, Boolean delFlag) {
+		this.mother = mother;
 		this.fatherId = fatherId;
-		this.spermId = spermId;
+		this.sperm = sperm;
 		this.date = date;
 		this.logId = logId;
 		this.childId = childId;
@@ -68,12 +70,12 @@ public class Matings extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getMotherId() {
-		return motherId;
+	public Pigs getMother() {
+		return mother;
 	}
 
-	public void setMotherId(Integer motherId) {
-		this.motherId = motherId;
+	public void setMother(Pigs mother) {
+		this.mother = mother;
 	}
 
 	public Integer getFatherId() {
@@ -84,12 +86,12 @@ public class Matings extends Auditable implements Serializable {
 		this.fatherId = fatherId;
 	}
 
-	public Integer getSpermId() {
-		return spermId;
+	public Sperm getSperm() {
+		return sperm;
 	}
 
-	public void setSpermId(Integer spermId) {
-		this.spermId = spermId;
+	public void setSperm(Sperm sperm) {
+		this.sperm = sperm;
 	}
 
 	public Date getDate() {

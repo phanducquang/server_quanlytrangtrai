@@ -13,9 +13,10 @@ public class Spays extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="pig_id")
-	private Integer pigId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="pig_id")
+	private Pigs pig;
 	
 	@Column(name="date")
 	private Date date;
@@ -32,8 +33,8 @@ public class Spays extends Auditable implements Serializable {
 	public Spays() {
 	}
 
-	public Spays(Integer pigId, Date date, Integer logId, String description, Boolean delFlag) {
-		this.pigId = pigId;
+	public Spays(Pigs pig, Date date, Integer logId, String description, Boolean delFlag) {
+		this.pig = pig;
 		this.date = date;
 		this.logId = logId;
 		this.description = description;
@@ -48,12 +49,12 @@ public class Spays extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getPigId() {
-		return pigId;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setPigId(Integer pigId) {
-		this.pigId = pigId;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
 	public Date getDate() {

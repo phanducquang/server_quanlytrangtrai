@@ -13,9 +13,10 @@ public class Farms extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="type_id")
-	private Integer typeId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="type_id")
+	private FarmTypes type;
 	
 	@Column(name="address")
 	private String address;
@@ -41,8 +42,8 @@ public class Farms extends Auditable implements Serializable {
 	public Farms() {
 	}
 
-	public Farms(Integer typeId, String address, Float area, Integer totalPig, Date founding, Integer manager, String description, Boolean delFlag) {
-		this.typeId = typeId;
+	public Farms(FarmTypes type, String address, Float area, Integer totalPig, Date founding, Integer manager, String description, Boolean delFlag) {
+		this.type = type;
 		this.address = address;
 		this.area = area;
 		this.totalPig = totalPig;
@@ -60,12 +61,12 @@ public class Farms extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getTypeId() {
-		return typeId;
+	public FarmTypes getType() {
+		return type;
 	}
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setType(FarmTypes type) {
+		this.type = type;
 	}
 
 	public String getAddress() {

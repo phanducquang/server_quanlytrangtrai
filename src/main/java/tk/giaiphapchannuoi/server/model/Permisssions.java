@@ -14,9 +14,10 @@ public class Permisssions extends Auditable implements Serializable {
 	
 	@Column(name="name")
 	private String name;
-	
-	@Column(name="group_id")
-	private Integer groupId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="group_id")
+	private GroupPermission group;
 	
 	@Column(name="show")
 	private Integer show;
@@ -39,9 +40,9 @@ public class Permisssions extends Auditable implements Serializable {
 	public Permisssions() {
 	}
 
-	public Permisssions(String name, Integer groupId, Integer show, Integer objectType, String description, String code, Integer order, Boolean delFlag) {
+	public Permisssions(String name, GroupPermission group, Integer show, Integer objectType, String description, String code, Integer order, Boolean delFlag) {
 		this.name = name;
-		this.groupId = groupId;
+		this.group = group;
 		this.show = show;
 		this.objectType = objectType;
 		this.description = description;
@@ -66,12 +67,12 @@ public class Permisssions extends Auditable implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
+	public GroupPermission getGroup() {
+		return group;
 	}
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
+	public void setGroup(GroupPermission group) {
+		this.group = group;
 	}
 
 	public Integer getShow() {

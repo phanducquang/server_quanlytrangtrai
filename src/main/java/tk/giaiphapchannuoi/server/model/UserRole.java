@@ -11,12 +11,14 @@ public class UserRole extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="user_id")
-	private Integer userid;
-	
-	@Column(name="role_id")
-	private Integer roleId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="user_id")
+	private Users user;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="role_id")
+	private Roles role;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -24,9 +26,9 @@ public class UserRole extends Auditable implements Serializable {
 	public UserRole() {
 	}
 
-	public UserRole(Integer userid, Integer roleId, Boolean delFlag) {
-		this.userid = userid;
-		this.roleId = roleId;
+	public UserRole(Users user, Roles role, Boolean delFlag) {
+		this.user = user;
+		this.role = role;
 		this.delFlag = delFlag;
 	}
 
@@ -38,20 +40,20 @@ public class UserRole extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getUserid() {
-		return userid;
+	public Users getUser() {
+		return user;
 	}
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setUser(Users user) {
+		this.user = user;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public Roles getRole() {
+		return role;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setRole(Roles role) {
+		this.role = role;
 	}
 
 	public Boolean getDelFlag() {

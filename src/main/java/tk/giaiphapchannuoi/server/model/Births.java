@@ -14,9 +14,10 @@ public class Births extends Auditable implements Serializable {
 	
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="mating_id")
-	private Integer matingId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="mating_id")
+	private Matings mating;
 	
 	@Column(name="date")
 	private Date date;
@@ -60,8 +61,8 @@ public class Births extends Auditable implements Serializable {
 	public Births() {
 	}
 
-	public Births(Integer matingId, Date date, Integer logId, Integer parities, Integer borning, Float fetalWeight, Integer selected, Integer dieBeforeBorning, Integer dieBorning, Integer dieBlack, Integer defect, Integer smallRemove, Integer remain, Boolean delFlag) {
-		this.matingId = matingId;
+	public Births(Matings mating, Date date, Integer logId, Integer parities, Integer borning, Float fetalWeight, Integer selected, Integer dieBeforeBorning, Integer dieBorning, Integer dieBlack, Integer defect, Integer smallRemove, Integer remain, Boolean delFlag) {
+		this.mating = mating;
 		this.date = date;
 		this.logId = logId;
 		this.parities = parities;
@@ -85,12 +86,12 @@ public class Births extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getMatingId() {
-		return matingId;
+	public Matings getMating() {
+		return mating;
 	}
 
-	public void setMatingId(Integer matingId) {
-		this.matingId = matingId;
+	public void setMating(Matings mating) {
+		this.mating = mating;
 	}
 
 	public Date getDate() {

@@ -11,9 +11,10 @@ public class InvoicesProductDetail extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="invoice_id")
-	private Integer invoiceId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="invoice_id")
+	private InvoicesProduct invoice;
 	
 	@Column(name="object_type")
 	private Integer objectType;
@@ -27,8 +28,8 @@ public class InvoicesProductDetail extends Auditable implements Serializable {
 	public InvoicesProductDetail() {
 	}
 
-	public InvoicesProductDetail(Integer invoiceId, Integer objectType, Integer objectId, Boolean delFlag) {
-		this.invoiceId = invoiceId;
+	public InvoicesProductDetail(InvoicesProduct invoice, Integer objectType, Integer objectId, Boolean delFlag) {
+		this.invoice = invoice;
 		this.objectType = objectType;
 		this.objectId = objectId;
 		this.delFlag = delFlag;
@@ -42,12 +43,12 @@ public class InvoicesProductDetail extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getInvoiceId() {
-		return invoiceId;
+	public InvoicesProduct getInvoice() {
+		return invoice;
 	}
 
-	public void setInvoiceId(Integer invoiceId) {
-		this.invoiceId = invoiceId;
+	public void setInvoice(InvoicesProduct invoice) {
+		this.invoice = invoice;
 	}
 
 	public Integer getObjectType() {

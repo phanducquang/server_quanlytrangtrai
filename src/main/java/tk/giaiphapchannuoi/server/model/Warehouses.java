@@ -11,9 +11,10 @@ public class Warehouses extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="type_id")
-	private Integer typeId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="type_id")
+	private WarehouseType type;
 	
 	@Column(name="group_id")
 	private Integer groupId;
@@ -39,8 +40,8 @@ public class Warehouses extends Auditable implements Serializable {
 	public Warehouses() {
 	}
 
-	public Warehouses(Integer typeId, Integer groupId, Integer unitId, Integer unitType, String name, String description, Integer manager, Boolean delFlag) {
-		this.typeId = typeId;
+	public Warehouses(WarehouseType type, Integer groupId, Integer unitId, Integer unitType, String name, String description, Integer manager, Boolean delFlag) {
+		this.type = type;
 		this.groupId = groupId;
 		this.unitId = unitId;
 		this.unitType = unitType;
@@ -58,12 +59,12 @@ public class Warehouses extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getTypeId() {
-		return typeId;
+	public WarehouseType getType() {
+		return type;
 	}
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
+	public void setType(WarehouseType type) {
+		this.type = type;
 	}
 
 	public Integer getGroupId() {
