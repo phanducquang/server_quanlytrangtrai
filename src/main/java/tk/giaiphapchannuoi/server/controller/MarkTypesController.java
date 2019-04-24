@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/marktypes")
+@RequestMapping(value = "/api/marktypes")
 public class MarkTypesController {
 
     @Autowired

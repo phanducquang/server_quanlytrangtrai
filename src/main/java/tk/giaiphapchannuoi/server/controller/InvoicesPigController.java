@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/invoicespig")
+@RequestMapping(value = "/api/invoicespig")
 public class InvoicesPigController {
 
     @Autowired

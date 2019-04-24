@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/breedingtype")
+@RequestMapping(value = "/api/breedingtype")
 public class BreedingTypeController {
 
     @Autowired

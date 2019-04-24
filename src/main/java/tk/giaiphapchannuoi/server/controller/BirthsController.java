@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/births")
+@RequestMapping(value = "/api/births")
 public class BirthsController {
 
     @Autowired

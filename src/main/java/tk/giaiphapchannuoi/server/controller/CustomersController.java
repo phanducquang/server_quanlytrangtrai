@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/customers")
+@RequestMapping(value = "/api/customers")
 public class CustomersController {
 
     @Autowired

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/pricecodes")
+@RequestMapping(value = "/api/pricecodes")
 public class PriceCodesController {
 
     @Autowired

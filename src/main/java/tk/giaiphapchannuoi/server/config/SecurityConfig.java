@@ -74,6 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/users/**")
                         .hasRole("input/medicine")
+                    .antMatchers("/api/**")
+                        .hasRole("admin")
                     .anyRequest()
                         .hasAnyRole("ADMIN","USER");
 

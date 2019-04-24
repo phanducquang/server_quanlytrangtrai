@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/matings")
+@RequestMapping(value = "/api/matings")
 public class MatingsController {
 
     @Autowired

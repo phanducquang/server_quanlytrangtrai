@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/warehouses")
+@RequestMapping(value = "/api/warehouses")
 public class WarehousesController {
 
     @Autowired

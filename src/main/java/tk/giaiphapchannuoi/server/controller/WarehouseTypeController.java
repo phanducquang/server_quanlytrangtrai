@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/warehousetype")
+@RequestMapping(value = "/api/warehousetype")
 public class WarehouseTypeController {
 
     @Autowired
