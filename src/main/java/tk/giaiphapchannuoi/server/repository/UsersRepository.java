@@ -11,4 +11,6 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     Optional<Users> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
     List<Users> findAllByDelFlag(Boolean delFlag);
+
+    Optional<Users> findByUsernameAndDelFlag(String username, Boolean delFlag);
 }

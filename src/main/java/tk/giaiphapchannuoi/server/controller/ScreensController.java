@@ -4,32 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tk.giaiphapchannuoi.server.model.UserRole;
-import tk.giaiphapchannuoi.server.services.UserRoleService;
+import tk.giaiphapchannuoi.server.model.Screens;
+import tk.giaiphapchannuoi.server.services.ScreensService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/userrole")
-public class UserRoleController {
+@RequestMapping(value = "/screens")
+public class ScreensController {
 
     @Autowired
-    UserRoleService userRoleService;
+    ScreensService screensService;
 
     @GetMapping(value = "/{id}")
-    public Optional<UserRole> findById(@PathVariable Integer id){
-        return userRoleService.findbyid(id);
+    public Optional<Screens> findById(@PathVariable Integer id){
+        return screensService.findbyid(id);
     }
 
     @GetMapping(value = "/list")
-    public List<UserRole> findAll(){
-        return userRoleService.findall();
+    public List<Screens> findAll(){
+        return screensService.findall();
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Object> insert(@RequestBody UserRole userRole){
-        UserRole temp = userRoleService.save(userRole);
+    public ResponseEntity<Object> insert(@RequestBody Screens screen){
+        Screens temp = screensService.save(screen);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -37,8 +37,8 @@ public class UserRoleController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<Object> update(@RequestBody UserRole userRole){
-        UserRole temp = userRoleService.update(userRole);
+    public ResponseEntity<Object> update(@RequestBody Screens screen){
+        Screens temp = screensService.update(screen);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -46,7 +46,7 @@ public class UserRoleController {
     }
 
     @DeleteMapping(value = "/")
-    public Boolean delete(@RequestBody UserRole userRole){
-        return userRoleService.delete(userRole);
+    public Boolean delete(@RequestBody Screens screen){
+        return screensService.delete(screen);
     }
 }

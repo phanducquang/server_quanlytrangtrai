@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="roles")
-public class Roles extends Auditable implements Serializable {
+@Table(name="permissions")
+public class Permissions extends Auditable implements Serializable {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
@@ -14,22 +14,27 @@ public class Roles extends Auditable implements Serializable {
 	
 	@Column(name="name")
 	private String name;
-	
+
 	@Column(name="code")
 	private String code;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "screen_id")
+	private Screens screen;
+
 	@Column(name="description")
 	private String description;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 
-	public Roles() {
+	public Permissions() {
 	}
 
-	public Roles(String name, String code, String description, Boolean delFlag) {
+	public Permissions(String name, String code, Screens screen, String description, Boolean delFlag) {
 		this.name = name;
 		this.code = code;
+		this.screen = screen;
 		this.description = description;
 		this.delFlag = delFlag;
 	}
@@ -50,12 +55,12 @@ public class Roles extends Auditable implements Serializable {
 		this.name = name;
 	}
 
-	public String getCode() {
-		return code;
+	public Screens getScreen() {
+		return screen;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setScreen(Screens screen) {
+		this.screen = screen;
 	}
 
 	public String getDescription() {
@@ -64,6 +69,14 @@ public class Roles extends Auditable implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Boolean getDelFlag() {

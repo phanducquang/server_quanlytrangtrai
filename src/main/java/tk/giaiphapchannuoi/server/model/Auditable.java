@@ -45,4 +45,5 @@ abstract class Auditable{
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
 }

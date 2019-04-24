@@ -17,17 +17,8 @@ public class RolePermission extends Auditable implements Serializable {
 	private Roles role;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "group_id")
-	private GroupPermission groupId;
-
-	@Column(name = "params")
-	private Integer params;
-
-	@Column(name = "show")
-	private Integer show;
-
-	@Column(name = "num_order")
-	private Integer order;
+	@JoinColumn(name = "permission_id")
+	private Permissions permission;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -35,12 +26,9 @@ public class RolePermission extends Auditable implements Serializable {
 	public RolePermission() {
 	}
 
-	public RolePermission(Roles role, GroupPermission groupId, Integer params, Integer show, Integer order, Boolean delFlag) {
+	public RolePermission(Roles role, Permissions permission, Boolean delFlag) {
 		this.role = role;
-		this.groupId = groupId;
-		this.params = params;
-		this.show = show;
-		this.order = order;
+		this.permission = permission;
 		this.delFlag = delFlag;
 	}
 
@@ -60,36 +48,12 @@ public class RolePermission extends Auditable implements Serializable {
 		this.role = role;
 	}
 
-	public GroupPermission getGroupId() {
-		return groupId;
+	public Permissions getPermission() {
+		return permission;
 	}
 
-	public void setGroupId(GroupPermission groupId) {
-		this.groupId = groupId;
-	}
-
-	public Integer getParams() {
-		return params;
-	}
-
-	public void setParams(Integer params) {
-		this.params = params;
-	}
-
-	public Integer getShow() {
-		return show;
-	}
-
-	public void setShow(Integer show) {
-		this.show = show;
-	}
-
-	public Integer getOrder() {
-		return order;
-	}
-
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setPermission(Permissions permission) {
+		this.permission = permission;
 	}
 
 	public Boolean getDelFlag() {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tk.giaiphapchannuoi.server.model.Permisssions;
+import tk.giaiphapchannuoi.server.model.Permissions;
 import tk.giaiphapchannuoi.server.services.PermissionService;
 
 import java.util.List;
@@ -18,18 +18,18 @@ public class PermissionController {
     PermissionService permissionService;
 
     @GetMapping(value = "/{id}")
-    public Optional<Permisssions> findById(@PathVariable Integer id){
+    public Optional<Permissions> findById(@PathVariable Integer id){
         return permissionService.findbyid(id);
     }
 
     @GetMapping(value = "/list")
-    public List<Permisssions> findAll(){
+    public List<Permissions> findAll(){
         return permissionService.findall();
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Object> insert(@RequestBody Permisssions permisssion){
-        Permisssions temp = permissionService.save(permisssion);
+    public ResponseEntity<Object> insert(@RequestBody Permissions permisssion){
+        Permissions temp = permissionService.save(permisssion);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -37,8 +37,8 @@ public class PermissionController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<Object> update(@RequestBody Permisssions permisssion){
-        Permisssions temp = permissionService.update(permisssion);
+    public ResponseEntity<Object> update(@RequestBody Permissions permisssion){
+        Permissions temp = permissionService.update(permisssion);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -46,7 +46,7 @@ public class PermissionController {
     }
 
     @DeleteMapping(value = "/")
-    public Boolean delete(@RequestBody Permisssions permisssion){
+    public Boolean delete(@RequestBody Permissions permisssion){
         return permissionService.delete(permisssion);
     }
 }

@@ -45,6 +45,15 @@ public class UsersController {
         return ResponseEntity.ok(temp);
     }
 
+    @PutMapping(value = "/update_password")
+    public ResponseEntity<Object> updatePassword(@RequestBody Users user){
+        Users temp = usersService.updatePassword(user);
+        if(temp == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(temp);
+    }
+
     @DeleteMapping(value = "/")
     public Boolean delete(@RequestBody Users user){
         return usersService.delete(user);

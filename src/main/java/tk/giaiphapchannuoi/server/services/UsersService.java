@@ -1,6 +1,7 @@
 package tk.giaiphapchannuoi.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Users;
@@ -16,6 +17,9 @@ public class UsersService {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public List<Users> findall(){
         return usersRepository.findAllByDelFlag(false);
     }
@@ -26,6 +30,12 @@ public class UsersService {
 
     public Users save(Users user){
         user.setDelFlag(false);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return usersRepository.save(user);
+    }
+
+    public Users updatePassword(Users user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return usersRepository.save(user);
     }
 
