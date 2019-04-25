@@ -16,23 +16,15 @@ public class Warehouses extends Auditable implements Serializable {
 	@JoinColumn(name="type_id")
 	private WarehouseType type;
 	
-	@Column(name="group_id")
-	private Integer groupId;
-	
-	@Column(name="unit_id")
-	private Integer unitId;
-	
-	@Column(name="unit_type")
-	private Integer unitType;
-	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="description")
 	private String description;
-	
-	@Column(name="manager")
-	private Integer manager;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="manager")
+	private Employees manager;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -40,11 +32,8 @@ public class Warehouses extends Auditable implements Serializable {
 	public Warehouses() {
 	}
 
-	public Warehouses(WarehouseType type, Integer groupId, Integer unitId, Integer unitType, String name, String description, Integer manager, Boolean delFlag) {
+	public Warehouses(WarehouseType type, String name, String description, Employees manager, Boolean delFlag) {
 		this.type = type;
-		this.groupId = groupId;
-		this.unitId = unitId;
-		this.unitType = unitType;
 		this.name = name;
 		this.description = description;
 		this.manager = manager;
@@ -67,30 +56,6 @@ public class Warehouses extends Auditable implements Serializable {
 		this.type = type;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
-	public Integer getUnitId() {
-		return unitId;
-	}
-
-	public void setUnitId(Integer unitId) {
-		this.unitId = unitId;
-	}
-
-	public Integer getUnitType() {
-		return unitType;
-	}
-
-	public void setUnitType(Integer unitType) {
-		this.unitType = unitType;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -107,11 +72,11 @@ public class Warehouses extends Auditable implements Serializable {
 		this.description = description;
 	}
 
-	public Integer getManager() {
+	public Employees getManager() {
 		return manager;
 	}
 
-	public void setManager(Integer manager) {
+	public void setManager(Employees manager) {
 		this.manager = manager;
 	}
 

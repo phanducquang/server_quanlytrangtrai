@@ -22,13 +22,13 @@ public class PigsDTO implements Serializable {
 //	private Houses house;
 
 	@Column(name="house_id")
-	private Integer house;
+	private Integer houseId;
 
 	@Column(name="round_id")
-	private Integer round;
+	private Integer roundId;
 
 	@Column(name="breed_id")
-	private Integer breed;
+	private Integer breedId;
 	
 	@Column(name="gender")
 	private Integer gender;
@@ -61,7 +61,7 @@ public class PigsDTO implements Serializable {
 	private Float healthPoint;
 
 	@Column(name="foot")
-	private Integer foot;
+	private Integer footTypeId;
 	
 	@Column(name="function_udder")
 	private Integer functionUdder;
@@ -70,7 +70,7 @@ public class PigsDTO implements Serializable {
 	private Integer totalUdder;
 	
 	@Column(name="gential")
-	private Integer gential;
+	private Integer gentialTypeId;
 	
 	@Column(name="description")
 	private String description;
@@ -103,7 +103,7 @@ public class PigsDTO implements Serializable {
 	private String images;
 
 	@Column(name="health_status")
-	private Integer healthStatus;
+	private Integer healthStatusId;
 
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name="breeding_type")
@@ -116,7 +116,7 @@ public class PigsDTO implements Serializable {
 	private Integer breedStatus;
 
 	@Column(name="pregnancy_status")
-	private Integer pregnancyStatus;
+	private Integer pregnancyStatusId;
 
 	@Column(name="point_review")
 	private Integer point_review;
@@ -125,7 +125,7 @@ public class PigsDTO implements Serializable {
 	private Integer status;
 
 	@Column(name="price_code")
-	private Integer priceCode;
+	private Integer priceCodeId;
 
 	@Column(name="overview_status")
 	private Integer overviewStatus;
@@ -176,13 +176,12 @@ public class PigsDTO implements Serializable {
 //		this.delFlag = delFlag;
 //	}
 
-
-	public PigsDTO(Integer id, String pigCode, Integer house, Integer round, Integer breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatus, Integer breedingType, Integer breedStatus, Integer pregnancyStatus, Integer point_review, Integer status, Integer priceCode, Integer overviewStatus, Boolean delFlag) {
+	public PigsDTO(Integer id, String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer status, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
 		this.id = id;
 		this.pigCode = pigCode;
-		this.house = house;
-		this.round = round;
-		this.breed = breed;
+		this.houseId = houseId;
+		this.roundId = roundId;
+		this.breedId = breedId;
 		this.gender = gender;
 		this.birthday = birthday;
 		this.born_weight = born_weight;
@@ -193,10 +192,10 @@ public class PigsDTO implements Serializable {
 		this.originWeight = originWeight;
 		this.receiveWeight = receiveWeight;
 		this.healthPoint = healthPoint;
-		this.foot = foot;
+		this.footTypeId = footTypeId;
 		this.functionUdder = functionUdder;
 		this.totalUdder = totalUdder;
-		this.gential = gential;
+		this.gentialTypeId = gentialTypeId;
 		this.description = description;
 		this.fcr = fcr;
 		this.adg = adg;
@@ -207,13 +206,13 @@ public class PigsDTO implements Serializable {
 		this.index = index;
 		this.parities = parities;
 		this.images = images;
-		this.healthStatus = healthStatus;
+		this.healthStatusId = healthStatusId;
 		this.breedingType = breedingType;
 		this.breedStatus = breedStatus;
-		this.pregnancyStatus = pregnancyStatus;
+		this.pregnancyStatusId = pregnancyStatusId;
 		this.point_review = point_review;
 		this.status = status;
-		this.priceCode = priceCode;
+		this.priceCodeId = priceCodeId;
 		this.overviewStatus = overviewStatus;
 		this.delFlag = delFlag;
 	}
@@ -234,28 +233,28 @@ public class PigsDTO implements Serializable {
 		this.pigCode = pigCode;
 	}
 
-	public Integer getHouse() {
-		return house;
+	public Integer getHouseId() {
+		return houseId;
 	}
 
-	public void setHouse(Integer house) {
-		this.house = house;
+	public void setHouseId(Integer houseId) {
+		this.houseId = houseId;
 	}
 
-	public Integer getRound() {
-		return round;
+	public Integer getRoundId() {
+		return roundId;
 	}
 
-	public void setRound(Integer round) {
-		this.round = round;
+	public void setRoundId(Integer roundId) {
+		this.roundId = roundId;
 	}
 
-	public Integer getBreed() {
-		return breed;
+	public Integer getBreedId() {
+		return breedId;
 	}
 
-	public void setBreed(Integer breed) {
-		this.breed = breed;
+	public void setBreedId(Integer breedId) {
+		this.breedId = breedId;
 	}
 
 	public Integer getGender() {
@@ -338,12 +337,12 @@ public class PigsDTO implements Serializable {
 		this.healthPoint = healthPoint;
 	}
 
-	public Integer getFoot() {
-		return foot;
+	public Integer getFootTypeId() {
+		return footTypeId;
 	}
 
-	public void setFoot(Integer foot) {
-		this.foot = foot;
+	public void setFootTypeId(Integer footTypeId) {
+		this.footTypeId = footTypeId;
 	}
 
 	public Integer getFunctionUdder() {
@@ -362,12 +361,12 @@ public class PigsDTO implements Serializable {
 		this.totalUdder = totalUdder;
 	}
 
-	public Integer getGential() {
-		return gential;
+	public Integer getGentialTypeId() {
+		return gentialTypeId;
 	}
 
-	public void setGential(Integer gential) {
-		this.gential = gential;
+	public void setGentialTypeId(Integer gentialTypeId) {
+		this.gentialTypeId = gentialTypeId;
 	}
 
 	public String getDescription() {
@@ -450,22 +449,13 @@ public class PigsDTO implements Serializable {
 		this.images = images;
 	}
 
-	public Integer getHealthStatus() {
-		return healthStatus;
+	public Integer getHealthStatusId() {
+		return healthStatusId;
 	}
 
-	public void setHealthStatus(Integer healthStatus) {
-		this.healthStatus = healthStatus;
+	public void setHealthStatusId(Integer healthStatusId) {
+		this.healthStatusId = healthStatusId;
 	}
-
-//	public BreedingType getBreedingType() {
-//		return breedingType;
-//	}
-//
-//	public void setBreedingType(BreedingType breedingType) {
-//		this.breedingType = breedingType;
-//	}
-
 
 	public Integer getBreedingType() {
 		return breedingType;
@@ -483,12 +473,12 @@ public class PigsDTO implements Serializable {
 		this.breedStatus = breedStatus;
 	}
 
-	public Integer getPregnancyStatus() {
-		return pregnancyStatus;
+	public Integer getPregnancyStatusId() {
+		return pregnancyStatusId;
 	}
 
-	public void setPregnancyStatus(Integer pregnancyStatus) {
-		this.pregnancyStatus = pregnancyStatus;
+	public void setPregnancyStatusId(Integer pregnancyStatusId) {
+		this.pregnancyStatusId = pregnancyStatusId;
 	}
 
 	public Integer getPoint_review() {
@@ -507,12 +497,12 @@ public class PigsDTO implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getPriceCode() {
-		return priceCode;
+	public Integer getPriceCodeId() {
+		return priceCodeId;
 	}
 
-	public void setPriceCode(Integer priceCode) {
-		this.priceCode = priceCode;
+	public void setPriceCodeId(Integer priceCodeId) {
+		this.priceCodeId = priceCodeId;
 	}
 
 	public Integer getOverviewStatus() {
