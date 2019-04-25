@@ -3,7 +3,9 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.model.Pigs;
+import tk.giaiphapchannuoi.server.repository.PigsDTORepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
 
 import java.util.List;
@@ -16,8 +18,11 @@ public class PigsService {
     @Autowired
     PigsRepository pigsRepository;
 
-    public List<Pigs> findall(){
-        return pigsRepository.findAllByDelFlag(false);
+    @Autowired
+    PigsDTORepository pigsDTORepository;
+
+    public List<PigsDTO> findall(){
+        return pigsDTORepository.findAllByDelFlag(false);
     }
 
     public Optional<Pigs> findbyid(Integer id){

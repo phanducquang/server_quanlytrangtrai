@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.services.PigsService;
 
@@ -23,7 +24,7 @@ public class PigsController {
     }
 
     @GetMapping(value = "/list")
-    public List<Pigs> findAll(){
+    public List<PigsDTO> findAll(){
         return pigsService.findall();
     }
 
