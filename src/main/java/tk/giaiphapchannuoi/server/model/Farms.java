@@ -17,6 +17,9 @@ public class Farms extends Auditable implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="type_id")
 	private FarmTypes type;
+
+	@Column(name = "name")
+	private String name;
 	
 	@Column(name="address")
 	private String address;
@@ -42,8 +45,9 @@ public class Farms extends Auditable implements Serializable {
 	public Farms() {
 	}
 
-	public Farms(FarmTypes type, String address, Float area, Integer totalPig, Date founding, Integer manager, String description, Boolean delFlag) {
+	public Farms(FarmTypes type, String name, String address, Float area, Integer totalPig, Date founding, Integer manager, String description, Boolean delFlag) {
 		this.type = type;
+		this.name = name;
 		this.address = address;
 		this.area = area;
 		this.totalPig = totalPig;
@@ -67,6 +71,14 @@ public class Farms extends Auditable implements Serializable {
 
 	public void setType(FarmTypes type) {
 		this.type = type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getAddress() {
