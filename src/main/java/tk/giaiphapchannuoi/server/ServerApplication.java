@@ -6,9 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
 public class ServerApplication {
@@ -17,13 +14,14 @@ public class ServerApplication {
         SpringApplication.run(ServerApplication.class, args);
     }
 
+    // Cau hinh cho phep tien mien cua server va client khac nhau (vuot qua loi CORS)
     @Bean
     public CorsFilter corsFilter() {
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         //config.setAllowCredentials(true); // you USUALLY want this
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin("*");//Cho phep nhung dia chi nao duoc giao tiep vơi nhau.
         config.addAllowedHeader("*");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("HEAD");
@@ -35,15 +33,5 @@ public class ServerApplication {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurerAdapter() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/auth/login").allowedOrigins("http://localhost:8100");
-//            }
-//        };
-//    }
 
 }
