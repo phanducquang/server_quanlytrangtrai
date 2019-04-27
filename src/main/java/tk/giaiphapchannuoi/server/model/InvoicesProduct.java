@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class InvoicesProduct extends Auditable implements Serializable {
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
 	

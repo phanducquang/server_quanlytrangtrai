@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name="pregnancy_status")
 public class PregnancyStatus extends Auditable implements Serializable {
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	
 	@Column(name="id")
 	private Integer id;
