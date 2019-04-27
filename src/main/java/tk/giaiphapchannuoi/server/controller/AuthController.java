@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.model.ApiResponse;
 import tk.giaiphapchannuoi.server.model.JwtAuthenticationResponse;
 import tk.giaiphapchannuoi.server.model.LoginRequest;
 import tk.giaiphapchannuoi.server.repository.UsersRepository;
@@ -45,6 +46,12 @@ public class AuthController {
 
         String jwt = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+    }
+
+    @GetMapping(value = "/check_login")
+    public ResponseEntity<?> checkLogin() {
+        ApiResponse apiResponse = new ApiResponse(true,"success");
+        return ResponseEntity.ok(apiResponse);
     }
 
 }

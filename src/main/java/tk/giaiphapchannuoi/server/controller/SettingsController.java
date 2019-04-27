@@ -61,6 +61,9 @@ public class SettingsController {
     @Autowired
     MarkTypesService markTypesService;
 
+    @Autowired
+    RolesService rolesService;
+
     @GetMapping(value = "/list")
     public Settings findAll(){
         Settings settings = new Settings();
@@ -80,6 +83,7 @@ public class SettingsController {
         settings.setGentialType(gentialTypeService.findall());
         settings.setIssues(issuesService.findall());
         settings.setMarkTypes(markTypesService.findall());
+        settings.setRoles(rolesService.findall());
         return settings;
     }
 }

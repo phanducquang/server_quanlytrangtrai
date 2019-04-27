@@ -22,12 +22,13 @@ public class Settings {
     private List<GentialType> gentialType;
     private List<Issues> issues;
     private List<MarkTypes> markTypes;
+    private List<Roles> roles;
 
 
     public Settings() {
     }
 
-    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<MarkTypes> markTypes) {
+    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<MarkTypes> markTypes, List<Roles> roles) {
         this.pregnancyStatus = pregnancyStatus;
         this.breeds = breeds;
         this.breedingType = breedingType;
@@ -44,6 +45,7 @@ public class Settings {
         this.gentialType = gentialType;
         this.issues = issues;
         this.markTypes = markTypes;
+        this.roles = roles;
     }
 
     public List<PregnancyStatus> getPregnancyStatus() {
@@ -172,5 +174,13 @@ public class Settings {
 
     public void setMarkTypes(List<MarkTypes> markTypes) {
         this.markTypes = markTypes;
+    }
+
+    public List<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Roles> roles) {
+        this.roles = roles;
     }
 }
