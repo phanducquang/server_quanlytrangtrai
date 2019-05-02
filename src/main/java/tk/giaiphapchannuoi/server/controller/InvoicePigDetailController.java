@@ -22,6 +22,11 @@ public class InvoicePigDetailController {
         return invoicePigDetailService.findbyid(id);
     }
 
+    @GetMapping(value = "/invoice/{id}")
+    public List<InvoicePigDetail> findByInvoice(@PathVariable Integer id){
+        return invoicePigDetailService.findbyinvoice(id);
+    }
+
     @GetMapping(value = "/list")
     public List<InvoicePigDetail> findAll(){
         return invoicePigDetailService.findall();
