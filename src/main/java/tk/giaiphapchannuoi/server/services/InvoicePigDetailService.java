@@ -3,10 +3,13 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTO;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
+import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.repository.InvoicePigDetailRepository;
 import tk.giaiphapchannuoi.server.repository.InvoicesPigRepository;
+import tk.giaiphapchannuoi.server.repository.PigsRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +23,9 @@ public class InvoicePigDetailService {
 
     @Autowired
     InvoicesPigRepository invoicesPigRepository;
+
+    @Autowired
+    PigsRepository pigsRepository;
 
     public List<InvoicePigDetail> findall(){
         return invoicePigDetailRepository.findAllByDelFlag(false);
@@ -37,6 +43,16 @@ public class InvoicePigDetailService {
     public InvoicePigDetail save(InvoicePigDetail invoicePigDetail){
         invoicePigDetail.setDelFlag(false);
         return invoicePigDetailRepository.save(invoicePigDetail);
+    }
+
+    @Transactional
+    public PigsInvoicePigDetailDTO savePigsInvoicePigDetail(PigsInvoicePigDetailDTO pigsInvoicePigDetailDTO){
+        pigsInvoicePigDetailDTO.getPigs().setDelFlag(false);
+        pigsInvoicePigDetailDTO.getInvoicePigDetail().setDelFlag(false);
+        Pigs pigs = pigsRepository.save(pigsInvoicePigDetailDTO.getPigs());
+        InvoicePigDetail invoicePigDetail = save(pigsInvoicePigDetailDTO.getInvoicePigDetail());
+        PigsInvoicePigDetailDTO temp = new PigsInvoicePigDetailDTO(pigs,invoicePigDetail);
+        return temp;
     }
 
     public InvoicePigDetail update(InvoicePigDetail invoicePigDetail){
