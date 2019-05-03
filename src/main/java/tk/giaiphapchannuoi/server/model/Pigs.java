@@ -67,9 +67,10 @@ public class Pigs extends Auditable implements Serializable {
 	
 	@Column(name="total_udder")
 	private Integer totalUdder;
-	
-	@Column(name="gential")
-	private Integer gential;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="gential")
+	private GentialType gentialType;
 	
 	@Column(name="description")
 	private String description;
@@ -179,7 +180,7 @@ public class Pigs extends Auditable implements Serializable {
 //	}
 
 
-	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
 		this.pigCode = pigCode;
 		this.house = house;
 		this.round = round;
@@ -197,7 +198,7 @@ public class Pigs extends Auditable implements Serializable {
 		this.foot = foot;
 		this.functionUdder = functionUdder;
 		this.totalUdder = totalUdder;
-		this.gential = gential;
+		this.gentialType = gentialType;
 		this.description = description;
 		this.fcr = fcr;
 		this.adg = adg;
@@ -363,12 +364,12 @@ public class Pigs extends Auditable implements Serializable {
 		this.totalUdder = totalUdder;
 	}
 
-	public Integer getGential() {
-		return gential;
+	public GentialType getGentialType() {
+		return gentialType;
 	}
 
-	public void setGential(Integer gential) {
-		this.gential = gential;
+	public void setGentialType(GentialType gentialType) {
+		this.gentialType = gentialType;
 	}
 
 	public String getDescription() {
