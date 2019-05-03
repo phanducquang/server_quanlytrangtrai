@@ -16,15 +16,17 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	
 	@Column(name="invoice_no")
 	private String invoiceNo;
-	
-	@Column(name="source_id")
-	private Integer sourceId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="source_id")
+	private Partners sourceId;
 	
 	@Column(name="source_manager_name")
 	private String sourceManagerName;
-	
-	@Column(name="destination_id")
-	private Integer destinationId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="destination_id")
+	private Farms destinationId;
 	
 	@Column(name="destination_manager")
 	private Integer destinationManager;
@@ -47,7 +49,7 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	public InvoicesProduct() {
 	}
 
-	public InvoicesProduct(String invoiceNo, Integer sourceId, String sourceManagerName, Integer destinationId, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
+	public InvoicesProduct(String invoiceNo, Partners sourceId, String sourceManagerName, Farms destinationId, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
 		this.invoiceNo = invoiceNo;
 		this.sourceId = sourceId;
 		this.sourceManagerName = sourceManagerName;
@@ -76,11 +78,11 @@ public class InvoicesProduct extends Auditable implements Serializable {
 		this.invoiceNo = invoiceNo;
 	}
 
-	public Integer getSourceId() {
+	public Partners getSourceId() {
 		return sourceId;
 	}
 
-	public void setSourceId(Integer sourceId) {
+	public void setSourceId(Partners sourceId) {
 		this.sourceId = sourceId;
 	}
 
@@ -92,11 +94,11 @@ public class InvoicesProduct extends Auditable implements Serializable {
 		this.sourceManagerName = sourceManagerName;
 	}
 
-	public Integer getDestinationId() {
+	public Farms getDestinationId() {
 		return destinationId;
 	}
 
-	public void setDestinationId(Integer destinationId) {
+	public void setDestinationId(Farms destinationId) {
 		this.destinationId = destinationId;
 	}
 
