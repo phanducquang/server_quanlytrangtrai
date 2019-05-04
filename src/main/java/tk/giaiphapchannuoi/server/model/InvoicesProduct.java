@@ -17,16 +17,19 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	@Column(name="invoice_no")
 	private String invoiceNo;
 
+	@Column(name = "type")
+	private String type;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="source_id")
-	private Partners sourceId;
+	private Partners source;
 	
 	@Column(name="source_manager_name")
 	private String sourceManagerName;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="destination_id")
-	private Farms destinationId;
+	private Farms destination;
 	
 	@Column(name="destination_manager")
 	private Integer destinationManager;
@@ -49,11 +52,12 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	public InvoicesProduct() {
 	}
 
-	public InvoicesProduct(String invoiceNo, Partners sourceId, String sourceManagerName, Farms destinationId, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
+	public InvoicesProduct(String invoiceNo, String type, Partners source, String sourceManagerName, Farms destination, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
 		this.invoiceNo = invoiceNo;
-		this.sourceId = sourceId;
+		this.type = type;
+		this.source = source;
 		this.sourceManagerName = sourceManagerName;
-		this.destinationId = destinationId;
+		this.destination = destination;
 		this.destinationManager = destinationManager;
 		this.destinationManagerName = destinationManagerName;
 		this.price = price;
@@ -78,12 +82,20 @@ public class InvoicesProduct extends Auditable implements Serializable {
 		this.invoiceNo = invoiceNo;
 	}
 
-	public Partners getSourceId() {
-		return sourceId;
+	public String getType() {
+		return type;
 	}
 
-	public void setSourceId(Partners sourceId) {
-		this.sourceId = sourceId;
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Partners getSource() {
+		return source;
+	}
+
+	public void setSource(Partners source) {
+		this.source = source;
 	}
 
 	public String getSourceManagerName() {
@@ -94,12 +106,12 @@ public class InvoicesProduct extends Auditable implements Serializable {
 		this.sourceManagerName = sourceManagerName;
 	}
 
-	public Farms getDestinationId() {
-		return destinationId;
+	public Farms getDestination() {
+		return destination;
 	}
 
-	public void setDestinationId(Farms destinationId) {
-		this.destinationId = destinationId;
+	public void setDestination(Farms destination) {
+		this.destination = destination;
 	}
 
 	public Integer getDestinationManager() {
