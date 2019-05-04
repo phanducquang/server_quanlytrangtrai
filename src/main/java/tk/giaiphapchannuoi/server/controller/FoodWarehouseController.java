@@ -22,6 +22,11 @@ public class FoodWarehouseController {
         return foodWarehouseService.findbyid(id);
     }
 
+    @GetMapping(value = "/invoice/{invoiceId}")
+    public List<FoodWarehouse> findByInvoice(@PathVariable Integer invoiceId){
+        return foodWarehouseService.findbyinvoices(invoiceId);
+    }
+
     @GetMapping(value = "/list")
     public List<FoodWarehouse> findAll(){
         return foodWarehouseService.findall();

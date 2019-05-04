@@ -24,6 +24,10 @@ public class FoodWarehouseService {
         return foodWarehouseRepository.findByIdAndDelFlag(id,false);
     }
 
+    public List<FoodWarehouse> findbyinvoices(Integer invoiceId){
+        return foodWarehouseRepository.findByInvoiceIdAndDelFlag(invoiceId,false);
+    }
+
     public FoodWarehouse save(FoodWarehouse foodWarehouse){
         foodWarehouse.setDelFlag(false);
         return foodWarehouseRepository.save(foodWarehouse);

@@ -11,4 +11,6 @@ public interface FoodWarehouseRepository extends JpaRepository<FoodWarehouse, In
     Optional<FoodWarehouse> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
     List<FoodWarehouse> findAllByDelFlag(Boolean delFlag);
+
+    List<FoodWarehouse> findByInvoiceIdAndDelFlag(Integer invoiceId, Boolean delFlag);
 }
