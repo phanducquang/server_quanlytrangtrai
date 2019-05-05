@@ -4,32 +4,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tk.giaiphapchannuoi.server.model.Groups;
-import tk.giaiphapchannuoi.server.services.GroupsService;
+import tk.giaiphapchannuoi.server.model.Status;
+import tk.giaiphapchannuoi.server.services.StatusService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/groups")
-public class GroupsController {
+@RequestMapping(value = "/api/status")
+public class StatusController {
 
     @Autowired
-    GroupsService groupsService;
+    StatusService statusService;
 
     @GetMapping(value = "/{id}")
-    public Optional<Groups> findById(@PathVariable Integer id){
-        return groupsService.findbyid(id);
+    public Optional<Status> findById(@PathVariable Integer id){
+        return statusService.findbyid(id);
     }
 
     @GetMapping(value = "/list")
-    public List<Groups> findAll(){
-        return groupsService.findall();
+    public List<Status> findAll(){
+        return statusService.findall();
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Object> insert(@RequestBody Groups group){
-        Groups temp = groupsService.save(group);
+    public ResponseEntity<Object> insert(@RequestBody Status status){
+        Status temp = statusService.save(status);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -37,8 +37,8 @@ public class GroupsController {
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<Object> update(@RequestBody Groups group){
-        Groups temp = groupsService.update(group);
+    public ResponseEntity<Object> update(@RequestBody Status status){
+        Status temp = statusService.update(status);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -46,7 +46,7 @@ public class GroupsController {
     }
 
     @DeleteMapping(value = "/")
-    public Boolean delete(@RequestBody Groups group){
-        return groupsService.delete(group);
+    public Boolean delete(@RequestBody Status status){
+        return statusService.delete(status);
     }
 }

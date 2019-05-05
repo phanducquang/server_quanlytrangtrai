@@ -22,12 +22,9 @@ public class FoodWarehouse extends Auditable implements Serializable {
 	@JoinColumn(name="food_id")
 	private Foods food;
 
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name="invoice_id")
-//	private InvoicesProduct invoice;
-
-	@Column(name="invoice_id")
-	private Integer invoiceId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="invoice_id")
+	private InvoicesProduct invoice;
 	
 	@Column(name="parent_id")
 	private Integer parentId;
@@ -40,9 +37,15 @@ public class FoodWarehouse extends Auditable implements Serializable {
 	
 	@Column(name="quantity")
 	private Float quantity;
-	
-	@Column(name="total")
-	private Float total;
+
+	@Column(name="unit_price")
+	private Float unitPrice;
+
+	@Column(name="total_price")
+	private Float totalPrice;
+
+//	@Column(name="total")
+//	private Float total;
 	
 	@Column(name="used")
 	private Float used;
@@ -68,34 +71,16 @@ public class FoodWarehouse extends Auditable implements Serializable {
 	public FoodWarehouse() {
 	}
 
-//	public FoodWarehouse(Warehouses warehouse, Foods food, InvoicesProduct invoice, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
-//		this.warehouse = warehouse;
-//		this.food = food;
-//		this.invoice = invoice;
-//		this.parentId = parentId;
-//		this.importDate = importDate;
-//		this.unit = unit;
-//		this.quantity = quantity;
-//		this.total = total;
-//		this.used = used;
-//		this.remain = remain;
-//		this.manufacturer = manufacturer;
-//		this.mfgDate = mfgDate;
-//		this.expiryDate = expiryDate;
-//		this.images = images;
-//		this.delFlag = delFlag;
-//	}
-
-
-	public FoodWarehouse(Warehouses warehouse, Foods food, Integer invoiceId, Integer parentId, Date importDate, Integer unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
+	public FoodWarehouse(Warehouses warehouse, Foods food, InvoicesProduct invoice, Integer parentId, Date importDate, Integer unit, Float quantity, Float unitPrice, Float totalPrice, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
 		this.warehouse = warehouse;
 		this.food = food;
-		this.invoiceId = invoiceId;
+		this.invoice = invoice;
 		this.parentId = parentId;
 		this.importDate = importDate;
 		this.unit = unit;
 		this.quantity = quantity;
-		this.total = total;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
 		this.used = used;
 		this.remain = remain;
 		this.manufacturer = manufacturer;
@@ -129,20 +114,12 @@ public class FoodWarehouse extends Auditable implements Serializable {
 		this.food = food;
 	}
 
-//	public InvoicesProduct getInvoice() {
-//		return invoice;
-//	}
-//
-//	public void setInvoice(InvoicesProduct invoice) {
-//		this.invoice = invoice;
-//	}
-
-	public Integer getInvoiceId() {
-		return invoiceId;
+	public InvoicesProduct getInvoice() {
+		return invoice;
 	}
 
-	public void setInvoiceId(Integer invoiceId) {
-		this.invoiceId = invoiceId;
+	public void setInvoice(InvoicesProduct invoice) {
+		this.invoice = invoice;
 	}
 
 	public Integer getParentId() {
@@ -177,12 +154,20 @@ public class FoodWarehouse extends Auditable implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Float getTotal() {
-		return total;
+	public Float getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setTotal(Float total) {
-		this.total = total;
+	public void setUnitPrice(Float unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public Float getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Float totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public Float getUsed() {

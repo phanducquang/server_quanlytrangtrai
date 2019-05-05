@@ -3,7 +3,9 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.giaiphapchannuoi.server.model.InvoicesProduct;
 import tk.giaiphapchannuoi.server.model.MedicineWarehouse;
+import tk.giaiphapchannuoi.server.repository.InvoicesProductRepository;
 import tk.giaiphapchannuoi.server.repository.MedicineWarehouseRepository;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class MedicineWarehouseService {
     @Autowired
     MedicineWarehouseRepository medicineWarehouseRepository;
 
+    @Autowired
+    InvoicesProductRepository invoicesProductRepository;
+
     public List<MedicineWarehouse> findall(){
         return medicineWarehouseRepository.findAllByDelFlag(false);
     }
@@ -25,7 +30,8 @@ public class MedicineWarehouseService {
     }
 
     public List<MedicineWarehouse> findbyinvoice(Integer invoiceId){
-        return medicineWarehouseRepository.findByInvoiceIDAndDelFlag(invoiceId,false);
+        Optional<InvoicesProduct> invoicesProduct = invoicesProductRepository.findByIdAndDelFlag(invoiceId, false);
+        return medicineWarehouseRepository.findByInvoiceAndDelFlag(invoicesProduct.get(),false);
     }
 
     public MedicineWarehouse save(MedicineWarehouse medicineWarehouse){

@@ -31,6 +31,9 @@ public class Medicines extends Auditable implements Serializable {
 	@Column(name="description")
 	private String description;
 
+//	@Column(name = "images")
+//	private String image;
+
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 

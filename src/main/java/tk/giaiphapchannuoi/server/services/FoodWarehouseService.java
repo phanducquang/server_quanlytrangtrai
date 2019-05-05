@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.FoodWarehouse;
+import tk.giaiphapchannuoi.server.model.InvoicesProduct;
 import tk.giaiphapchannuoi.server.repository.FoodWarehouseRepository;
+import tk.giaiphapchannuoi.server.repository.InvoicesProductRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,9 @@ public class FoodWarehouseService {
     @Autowired
     FoodWarehouseRepository foodWarehouseRepository;
 
+    @Autowired
+    InvoicesProductRepository invoicesProductRepository;
+
     public List<FoodWarehouse> findall(){
         return foodWarehouseRepository.findAllByDelFlag(false);
     }
@@ -25,7 +30,8 @@ public class FoodWarehouseService {
     }
 
     public List<FoodWarehouse> findbyinvoices(Integer invoiceId){
-        return foodWarehouseRepository.findByInvoiceIdAndDelFlag(invoiceId,false);
+        Optional<InvoicesProduct> invoicesProduct = invoicesProductRepository.findByIdAndDelFlag(invoiceId, false);
+        return foodWarehouseRepository.findByInvoiceAndDelFlag(invoicesProduct.get(),false);
     }
 
     public FoodWarehouse save(FoodWarehouse foodWarehouse){

@@ -17,8 +17,8 @@ public class Houses extends Auditable implements Serializable {
 	@JoinColumn(name="section_id")
 	private Sections section;
 	
-	@Column(name="type_id")
-	private Integer typeId;
+//	@Column(name="type_id")
+//	private Integer typeId;
 	
 	@Column(name="house_code")
 	private String houseCode;
@@ -32,8 +32,8 @@ public class Houses extends Auditable implements Serializable {
 	@Column(name="position")
 	private String position;
 	
-	@Column(name="manager")
-	private Integer manager;
+	@Column(name="status")
+	private String status;
 	
 	@Column(name="founding")
 	private Date founding;
@@ -44,14 +44,13 @@ public class Houses extends Auditable implements Serializable {
 	public Houses() {
 	}
 
-	public Houses(Sections section, Integer typeId, String houseCode, String name, String description, String position, Integer manager, Date founding, Boolean delFlag) {
+	public Houses(Sections section, String houseCode, String name, String description, String position, String status, Date founding, Boolean delFlag) {
 		this.section = section;
-		this.typeId = typeId;
 		this.houseCode = houseCode;
 		this.name = name;
 		this.description = description;
 		this.position = position;
-		this.manager = manager;
+		this.status = status;
 		this.founding = founding;
 		this.delFlag = delFlag;
 	}
@@ -72,13 +71,13 @@ public class Houses extends Auditable implements Serializable {
 		this.section = section;
 	}
 
-	public Integer getTypeId() {
-		return typeId;
-	}
-
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
-	}
+//	public Integer getTypeId() {
+//		return typeId;
+//	}
+//
+//	public void setTypeId(Integer typeId) {
+//		this.typeId = typeId;
+//	}
 
 	public String getHouseCode() {
 		return houseCode;
@@ -112,12 +111,12 @@ public class Houses extends Auditable implements Serializable {
 		this.position = position;
 	}
 
-	public Integer getManager() {
-		return manager;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setManager(Integer manager) {
-		this.manager = manager;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Date getFounding() {

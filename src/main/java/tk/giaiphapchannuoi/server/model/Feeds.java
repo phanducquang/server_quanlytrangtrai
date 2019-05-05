@@ -13,15 +13,10 @@ public class Feeds extends Auditable implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
-	
-	@Column(name="object_type")
-	private Integer objectType;
-	
-	@Column(name="object_id")
-	private Integer objectId;
-	
-	@Column(name="object_quantity")
-	private Integer objectQuantity;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="object_id")
+	private Pigs pig;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="food_warehouse_id")
@@ -32,12 +27,6 @@ public class Feeds extends Auditable implements Serializable {
 	
 	@Column(name="quantity")
 	private Float quantity;
-	
-	@Column(name="total")
-	private Float total;
-	
-	@Column(name="avg")
-	private Float avg;
 	
 	@Column(name="date")
 	private Date date;
@@ -55,15 +44,11 @@ public class Feeds extends Auditable implements Serializable {
 	public Feeds() {
 	}
 
-	public Feeds(Integer objectType, Integer objectId, Integer objectQuantity, FoodWarehouse foodWarehouse, Integer unit, Float quantity, Float total, Float avg, Date date, Employees employee, String description, Boolean delFlag) {
-		this.objectType = objectType;
-		this.objectId = objectId;
-		this.objectQuantity = objectQuantity;
+	public Feeds(Pigs pig, FoodWarehouse foodWarehouse, Integer unit, Float quantity, Date date, Employees employee, String description, Boolean delFlag) {
+		this.pig = pig;
 		this.foodWarehouse = foodWarehouse;
 		this.unit = unit;
 		this.quantity = quantity;
-		this.total = total;
-		this.avg = avg;
 		this.date = date;
 		this.employee = employee;
 		this.description = description;
@@ -78,28 +63,12 @@ public class Feeds extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getObjectType() {
-		return objectType;
+	public Pigs getPig() {
+		return pig;
 	}
 
-	public void setObjectType(Integer objectType) {
-		this.objectType = objectType;
-	}
-
-	public Integer getObjectId() {
-		return objectId;
-	}
-
-	public void setObjectId(Integer objectId) {
-		this.objectId = objectId;
-	}
-
-	public Integer getObjectQuantity() {
-		return objectQuantity;
-	}
-
-	public void setObjectQuantity(Integer objectQuantity) {
-		this.objectQuantity = objectQuantity;
+	public void setPig(Pigs pig) {
+		this.pig = pig;
 	}
 
 	public FoodWarehouse getFoodWarehouse() {
@@ -124,22 +93,6 @@ public class Feeds extends Auditable implements Serializable {
 
 	public void setQuantity(Float quantity) {
 		this.quantity = quantity;
-	}
-
-	public Float getTotal() {
-		return total;
-	}
-
-	public void setTotal(Float total) {
-		this.total = total;
-	}
-
-	public Float getAvg() {
-		return avg;
-	}
-
-	public void setAvg(Float avg) {
-		this.avg = avg;
 	}
 
 	public Date getDate() {

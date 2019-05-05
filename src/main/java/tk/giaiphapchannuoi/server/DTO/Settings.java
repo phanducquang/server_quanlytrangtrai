@@ -21,14 +21,15 @@ public class Settings {
     private List<FootType> footType;
     private List<GentialType> gentialType;
     private List<Issues> issues;
-    private List<MarkTypes> markTypes;
+    private List<Rounds> rounds;
+    private List<Status> status;
     private List<Roles> roles;
 
 
     public Settings() {
     }
 
-    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<MarkTypes> markTypes, List<Roles> roles) {
+    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<Rounds> rounds, List<Status> status, List<Roles> roles) {
         this.pregnancyStatus = pregnancyStatus;
         this.breeds = breeds;
         this.breedingType = breedingType;
@@ -44,7 +45,8 @@ public class Settings {
         this.footType = footType;
         this.gentialType = gentialType;
         this.issues = issues;
-        this.markTypes = markTypes;
+        this.rounds = rounds;
+        this.status = status;
         this.roles = roles;
     }
 
@@ -168,12 +170,20 @@ public class Settings {
         this.issues = issues;
     }
 
-    public List<MarkTypes> getMarkTypes() {
-        return markTypes;
+    public List<Rounds> getRounds() {
+        return rounds;
     }
 
-    public void setMarkTypes(List<MarkTypes> markTypes) {
-        this.markTypes = markTypes;
+    public void setRounds(List<Rounds> rounds) {
+        this.rounds = rounds;
+    }
+
+    public List<Status> getStatus() {
+        return status;
+    }
+
+    public void setStatus(List<Status> status) {
+        this.status = status;
     }
 
     public List<Roles> getRoles() {

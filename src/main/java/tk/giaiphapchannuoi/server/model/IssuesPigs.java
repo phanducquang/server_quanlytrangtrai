@@ -25,8 +25,8 @@ public class IssuesPigs extends Auditable implements Serializable {
 	@JoinColumn(name="issue_id")
 	private Issues issue;
 	
-	@Column(name="quantity")
-	private Integer quantity;
+//	@Column(name="quantity")
+//	private Integer quantity;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="employee_id")
@@ -47,11 +47,10 @@ public class IssuesPigs extends Auditable implements Serializable {
 	public IssuesPigs() {
 	}
 
-	public IssuesPigs(Date date, Pigs pig, Issues issue, Integer quantity, Employees employee, String description, String images, Integer status, Boolean delFlag) {
+	public IssuesPigs(Date date, Pigs pig, Issues issue, Employees employee, String description, String images, Integer status, Boolean delFlag) {
 		this.date = date;
 		this.pig = pig;
 		this.issue = issue;
-		this.quantity = quantity;
 		this.employee = employee;
 		this.description = description;
 		this.images = images;
@@ -91,13 +90,13 @@ public class IssuesPigs extends Auditable implements Serializable {
 		this.issue = issue;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+//	public Integer getQuantity() {
+//		return quantity;
+//	}
+//
+//	public void setQuantity(Integer quantity) {
+//		this.quantity = quantity;
+//	}
 
 	public Employees getEmployee() {
 		return employee;

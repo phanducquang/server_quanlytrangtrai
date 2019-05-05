@@ -22,12 +22,12 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	@JoinColumn(name="medicine_id")
 	private Medicines medicine;
 
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name="invoice_id")
-//	private InvoicesProduct invoice;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="invoice_id")
+	private InvoicesProduct invoice;
 
-	@Column(name="invoice_id")
-	private Integer invoiceID;
+//	@Column(name="invoice_id")
+//	private Integer invoiceID;
 	
 	@Column(name="parent_id")
 	private Integer parentId;
@@ -41,9 +41,15 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	
 	@Column(name="quantity")
 	private Float quantity;
-	
-	@Column(name="total")
-	private Float total;
+
+	@Column(name="unit_price")
+	private Float unitPrice;
+
+	@Column(name="total_price")
+	private Float totalPrice;
+
+//	@Column(name="total")
+//	private Float total;
 	
 	@Column(name="used")
 	private Float used;
@@ -60,8 +66,8 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	@Column(name="expiry_date")
 	private Date expiryDate;
 	
-	@Column(name="type_use")
-	private String typeUse;
+//	@Column(name="type_use")
+//	private String typeUse;
 	
 	@Column(name="images")
 	private String images;
@@ -72,41 +78,21 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	public MedicineWarehouse() {
 	}
 
-//	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, InvoicesProduct invoice, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
-//		this.warehouse = warehouse;
-//		this.medicine = medicine;
-//		this.invoice = invoice;
-//		this.parentId = parentId;
-//		this.importDate = importDate;
-//		this.unit = unit;
-//		this.quantity = quantity;
-//		this.total = total;
-//		this.used = used;
-//		this.remain = remain;
-//		this.manufacturer = manufacturer;
-//		this.mfgDate = mfgDate;
-//		this.expiryDate = expiryDate;
-//		this.typeUse = typeUse;
-//		this.images = images;
-//		this.delFlag = delFlag;
-//	}
-
-
-	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, Integer invoiceID, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String typeUse, String images, Boolean delFlag) {
+	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, InvoicesProduct invoice, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float unitPrice, Float totalPrice, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
 		this.warehouse = warehouse;
 		this.medicine = medicine;
-		this.invoiceID = invoiceID;
+		this.invoice = invoice;
 		this.parentId = parentId;
 		this.importDate = importDate;
 		this.unit = unit;
 		this.quantity = quantity;
-		this.total = total;
+		this.unitPrice = unitPrice;
+		this.totalPrice = totalPrice;
 		this.used = used;
 		this.remain = remain;
 		this.manufacturer = manufacturer;
 		this.mfgDate = mfgDate;
 		this.expiryDate = expiryDate;
-		this.typeUse = typeUse;
 		this.images = images;
 		this.delFlag = delFlag;
 	}
@@ -135,21 +121,12 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 		this.medicine = medicine;
 	}
 
-//	public InvoicesProduct getInvoice() {
-//		return invoice;
-//	}
-//
-//	public void setInvoice(InvoicesProduct invoice) {
-//		this.invoice = invoice;
-//	}
-
-
-	public Integer getInvoiceID() {
-		return invoiceID;
+	public InvoicesProduct getInvoice() {
+		return invoice;
 	}
 
-	public void setInvoiceID(Integer invoiceID) {
-		this.invoiceID = invoiceID;
+	public void setInvoice(InvoicesProduct invoice) {
+		this.invoice = invoice;
 	}
 
 	public Integer getParentId() {
@@ -184,12 +161,20 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Float getTotal() {
-		return total;
+	public Float getUnitPrice() {
+		return unitPrice;
 	}
 
-	public void setTotal(Float total) {
-		this.total = total;
+	public void setUnitPrice(Float unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public Float getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Float totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public Float getUsed() {
@@ -232,13 +217,13 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 		this.expiryDate = expiryDate;
 	}
 
-	public String getTypeUse() {
-		return typeUse;
-	}
-
-	public void setTypeUse(String typeUse) {
-		this.typeUse = typeUse;
-	}
+//	public String getTypeUse() {
+//		return typeUse;
+//	}
+//
+//	public void setTypeUse(String typeUse) {
+//		this.typeUse = typeUse;
+//	}
 
 	public String getImages() {
 		return images;

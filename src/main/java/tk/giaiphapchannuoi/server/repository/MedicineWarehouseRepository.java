@@ -1,6 +1,7 @@
 package tk.giaiphapchannuoi.server.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import tk.giaiphapchannuoi.server.model.InvoicesProduct;
 import tk.giaiphapchannuoi.server.model.MedicineWarehouse;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface MedicineWarehouseRepository extends JpaRepository<MedicineWareh
 
     List<MedicineWarehouse> findAllByDelFlag(Boolean delFlag);
 
-    List<MedicineWarehouse> findByInvoiceIDAndDelFlag(Integer invoiceId, Boolean dellFlag);
+    List<MedicineWarehouse> findByInvoiceAndDelFlag(InvoicesProduct invoicesProduct, Boolean delFlag);
 }

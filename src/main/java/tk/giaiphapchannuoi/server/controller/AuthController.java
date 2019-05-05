@@ -54,4 +54,10 @@ public class AuthController {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @GetMapping(value = "/keepawake")
+    public ResponseEntity<?> keepAwake() {
+        ApiResponse apiResponse = new ApiResponse(true,"success");
+        return ResponseEntity.ok(apiResponse);
+    }
+
 }

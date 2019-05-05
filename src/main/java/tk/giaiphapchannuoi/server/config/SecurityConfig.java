@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/auth/login")
+                    .antMatchers("/auth/login","/auth/keepawake")
                         .permitAll()
                     .antMatchers("/users/**")
                         .hasRole("input/medicine")

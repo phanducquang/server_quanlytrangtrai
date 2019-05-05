@@ -20,11 +20,8 @@ public class Rounds extends Auditable implements Serializable {
 	@Column(name="to_")
 	private Date to;
 	
-	@Column(name="number_of_pig")
-	private Integer numberOfPig;
-	
-	@Column(name="birth_id")
-	private Integer birthId;
+//	@Column(name="number_of_pig")
+//	private Integer numberOfPig;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -32,11 +29,9 @@ public class Rounds extends Auditable implements Serializable {
 	public Rounds() {
 	}
 
-	public Rounds(Date from, Date to, Integer numberOfPig, Integer birthId, Boolean delFlag) {
+	public Rounds(Date from, Date to, Boolean delFlag) {
 		this.from = from;
 		this.to = to;
-		this.numberOfPig = numberOfPig;
-		this.birthId = birthId;
 		this.delFlag = delFlag;
 	}
 
@@ -64,21 +59,13 @@ public class Rounds extends Auditable implements Serializable {
 		this.to = to;
 	}
 
-	public Integer getNumberOfPig() {
-		return numberOfPig;
-	}
-
-	public void setNumberOfPig(Integer numberOfPig) {
-		this.numberOfPig = numberOfPig;
-	}
-
-	public Integer getBirthId() {
-		return birthId;
-	}
-
-	public void setBirthId(Integer birthId) {
-		this.birthId = birthId;
-	}
+//	public Integer getNumberOfPig() {
+//		return numberOfPig;
+//	}
+//
+//	public void setNumberOfPig(Integer numberOfPig) {
+//		this.numberOfPig = numberOfPig;
+//	}
 
 	public Boolean getDelFlag() {
 		return delFlag;
