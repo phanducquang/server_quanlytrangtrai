@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "heath_status")
+@Table(name = "health_status")
 public class HealthStatus extends Auditable implements Serializable {
 
     @Id
