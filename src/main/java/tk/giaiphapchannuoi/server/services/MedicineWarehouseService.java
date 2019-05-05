@@ -24,6 +24,10 @@ public class MedicineWarehouseService {
         return medicineWarehouseRepository.findByIdAndDelFlag(id,false);
     }
 
+    public List<MedicineWarehouse> findbyinvoice(Integer invoiceId){
+        return medicineWarehouseRepository.findByInvoiceIDAndDelFlag(invoiceId,false);
+    }
+
     public MedicineWarehouse save(MedicineWarehouse medicineWarehouse){
         medicineWarehouse.setDelFlag(false);
         return medicineWarehouseRepository.save(medicineWarehouse);

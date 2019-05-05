@@ -11,4 +11,6 @@ public interface MedicineWarehouseRepository extends JpaRepository<MedicineWareh
     Optional<MedicineWarehouse> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
     List<MedicineWarehouse> findAllByDelFlag(Boolean delFlag);
+
+    List<MedicineWarehouse> findByInvoiceIDAndDelFlag(Integer invoiceId, Boolean dellFlag);
 }
