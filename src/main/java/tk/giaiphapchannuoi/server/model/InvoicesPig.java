@@ -71,10 +71,13 @@ public class InvoicesPig extends Auditable implements Serializable {
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 
+	@Column(name = "status")
+	private String status;
+
 	public InvoicesPig() {
 	}
 
-	public InvoicesPig(String invoiceNo, Integer invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag) {
+	public InvoicesPig(String invoiceNo, Integer invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceType = invoiceType;
 		this.sourceId = sourceId;
@@ -94,6 +97,7 @@ public class InvoicesPig extends Auditable implements Serializable {
 		this.exportDate = exportDate;
 		this.description = description;
 		this.delFlag = delFlag;
+		this.status = status;
 	}
 
 	public Integer getId() {
@@ -254,5 +258,13 @@ public class InvoicesPig extends Auditable implements Serializable {
 
 	public void setDelFlag(Boolean delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

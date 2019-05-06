@@ -13,6 +13,7 @@ public class Settings {
     private List<Diseases> diseases;
     private List<FarmTypes> farmTypes;
     private List<FoodType> foodType;
+    private List<FoodUnits> foodUnits;
     private List<Foods> foods;
     private List<MedicineType> medicineType;
     private List<MedicineUnits> medicineUnits;
@@ -29,7 +30,7 @@ public class Settings {
     public Settings() {
     }
 
-    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<Rounds> rounds, List<Status> status, List<Roles> roles) {
+    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<FoodUnits> foodUnits, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<Rounds> rounds, List<Status> status, List<Roles> roles) {
         this.pregnancyStatus = pregnancyStatus;
         this.breeds = breeds;
         this.breedingType = breedingType;
@@ -37,6 +38,7 @@ public class Settings {
         this.diseases = diseases;
         this.farmTypes = farmTypes;
         this.foodType = foodType;
+        this.foodUnits = foodUnits;
         this.foods = foods;
         this.medicineType = medicineType;
         this.medicineUnits = medicineUnits;
@@ -104,6 +106,14 @@ public class Settings {
 
     public void setFoodType(List<FoodType> foodType) {
         this.foodType = foodType;
+    }
+
+    public List<FoodUnits> getFoodUnits() {
+        return foodUnits;
+    }
+
+    public void setFoodUnits(List<FoodUnits> foodUnits) {
+        this.foodUnits = foodUnits;
     }
 
     public List<Foods> getFoods() {

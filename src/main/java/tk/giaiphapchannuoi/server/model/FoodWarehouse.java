@@ -31,9 +31,10 @@ public class FoodWarehouse extends Auditable implements Serializable {
 	
 	@Column(name="import_date")
 	private Date importDate;
-	
-	@Column(name="unit")
-	private Integer unit;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="unit")
+	private FoodUnits unit;
 	
 	@Column(name="quantity")
 	private Float quantity;
@@ -71,7 +72,7 @@ public class FoodWarehouse extends Auditable implements Serializable {
 	public FoodWarehouse() {
 	}
 
-	public FoodWarehouse(Warehouses warehouse, Foods food, InvoicesProduct invoice, Integer parentId, Date importDate, Integer unit, Float quantity, Float unitPrice, Float totalPrice, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
+	public FoodWarehouse(Warehouses warehouse, Foods food, InvoicesProduct invoice, Integer parentId, Date importDate, FoodUnits unit, Float quantity, Float unitPrice, Float totalPrice, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
 		this.warehouse = warehouse;
 		this.food = food;
 		this.invoice = invoice;
@@ -138,11 +139,11 @@ public class FoodWarehouse extends Auditable implements Serializable {
 		this.importDate = importDate;
 	}
 
-	public Integer getUnit() {
+	public FoodUnits getUnit() {
 		return unit;
 	}
 
-	public void setUnit(Integer unit) {
+	public void setUnit(FoodUnits unit) {
 		this.unit = unit;
 	}
 
