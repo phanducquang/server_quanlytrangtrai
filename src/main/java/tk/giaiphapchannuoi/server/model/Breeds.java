@@ -21,9 +21,6 @@ public class Breeds extends Auditable implements Serializable {
 	@Column(name="symbol")
 	private String symbol;
 	
-	@Column(name="code")
-	private String code;
-	
 	@Column(name="level")
 	private Integer level;
 	
@@ -39,11 +36,10 @@ public class Breeds extends Auditable implements Serializable {
 	public Breeds() {
 	}
 
-	public Breeds(String name, String lineCode, String symbol, String code, Integer level, Integer line, String description, Boolean delFlag) {
+	public Breeds(String name, String lineCode, String symbol, Integer level, Integer line, String description, Boolean delFlag) {
 		this.name = name;
 		this.lineCode = lineCode;
 		this.symbol = symbol;
-		this.code = code;
 		this.level = level;
 		this.line = line;
 		this.description = description;
@@ -80,14 +76,6 @@ public class Breeds extends Auditable implements Serializable {
 
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 	public Integer getLevel() {
