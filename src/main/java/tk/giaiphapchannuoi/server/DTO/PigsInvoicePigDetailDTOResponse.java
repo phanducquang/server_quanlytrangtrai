@@ -1,25 +1,26 @@
 package tk.giaiphapchannuoi.server.DTO;
 
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
+import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.model.Pigs;
 
-public class PigsInvoicePigDetailDTO {
-    private Pigs pigs;
+public class PigsInvoicePigDetailDTOResponse {
+    private PigsDTO pigs;
     private InvoicePigDetail invoicePigDetail;
 
-    public PigsInvoicePigDetailDTO() {
+    public PigsInvoicePigDetailDTOResponse() {
     }
 
-    public PigsInvoicePigDetailDTO(Pigs pigs, InvoicePigDetail invoicePigDetail) {
+    public PigsInvoicePigDetailDTOResponse(PigsDTO pigs, InvoicePigDetail invoicePigDetail) {
         this.pigs = pigs;
         this.invoicePigDetail = invoicePigDetail;
     }
 
-    public Pigs getPigs() {
+    public PigsDTO getPigs() {
         return pigs;
     }
 
-    public void setPigs(Pigs pigs) {
+    public void setPigs(PigsDTO pigs) {
         this.pigs = pigs;
     }
 

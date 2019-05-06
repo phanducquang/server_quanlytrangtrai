@@ -16,8 +16,8 @@ public class InvoicePigDetail extends Auditable implements Serializable {
 	@JoinColumn(name="invoice_id")
 	private InvoicesPig invoice;
 	
-	@Column(name="object_type")
-	private Integer objectType;
+//	@Column(name="object_type")
+//	private Integer objectType;
 	
 	@Column(name="object_id")
 	private Integer objectId;
@@ -28,9 +28,8 @@ public class InvoicePigDetail extends Auditable implements Serializable {
 	public InvoicePigDetail() {
 	}
 
-	public InvoicePigDetail(InvoicesPig invoice, Integer objectType, Integer objectId, Boolean delFlag) {
+	public InvoicePigDetail(InvoicesPig invoice, Integer objectId, Boolean delFlag) {
 		this.invoice = invoice;
-		this.objectType = objectType;
 		this.objectId = objectId;
 		this.delFlag = delFlag;
 	}
@@ -49,14 +48,6 @@ public class InvoicePigDetail extends Auditable implements Serializable {
 
 	public void setInvoice(InvoicesPig invoice) {
 		this.invoice = invoice;
-	}
-
-	public Integer getObjectType() {
-		return objectType;
-	}
-
-	public void setObjectType(Integer objectType) {
-		this.objectType = objectType;
 	}
 
 	public Integer getObjectId() {

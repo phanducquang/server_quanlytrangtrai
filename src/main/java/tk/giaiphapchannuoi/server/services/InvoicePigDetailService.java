@@ -3,7 +3,9 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTO;
+import tk.giaiphapchannuoi.server.DTO.PigsDTO;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTORequest;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.model.Pigs;
@@ -46,13 +48,18 @@ public class InvoicePigDetailService {
     }
 
     @Transactional
-    public PigsInvoicePigDetailDTO savePigsInvoicePigDetail(PigsInvoicePigDetailDTO pigsInvoicePigDetailDTO){
-        pigsInvoicePigDetailDTO.getPigs().setDelFlag(false);
-        pigsInvoicePigDetailDTO.getInvoicePigDetail().setDelFlag(false);
-        Pigs pigs = pigsRepository.save(pigsInvoicePigDetailDTO.getPigs());
-        InvoicePigDetail invoicePigDetail = save(pigsInvoicePigDetailDTO.getInvoicePigDetail());
-        PigsInvoicePigDetailDTO temp = new PigsInvoicePigDetailDTO(pigs,invoicePigDetail);
-        return temp;
+    public PigsInvoicePigDetailDTOResponse savePigsInvoicePigDetail(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
+        pigsInvoicePigDetailDTORequest.getPigs().setDelFlag(false);
+        Pigs pigs = pigsRepository.save(pigsInvoicePigDetailDTORequest.getPigs());
+        InvoicePigDetail temp = new InvoicePigDetail();
+        temp.setDelFlag(false);
+        temp.setInvoice(pigsInvoicePigDetailDTORequest.getInvoicesPig());
+        temp.setObjectId(pigs.getId());
+
+        InvoicePigDetail invoicePigDetail = save(temp);
+        PigsDTO pigsDTO = new PigsDTO(pigs.getId(),pigs.getPigCode(),pigs.getHouse().getId(),pigs.getRound().getId(),pigs.getBreed().getId(),pigs.getGender(),pigs.getBirthday(),pigs.getBorn_weight(),pigs.getBornStatus(),pigs.getOriginId(),pigs.getOriginFather(), pigs.getOriginMother(),pigs.getOriginWeight(),pigs.getReceiveWeight(), pigs.getHealthPoint(),pigs.getFoot().getId(),pigs.getFunctionUdder(),pigs.getTotalUdder(),pigs.getGentialType().getId(), pigs.getDescription(),pigs.getFcr(),pigs.getAdg(),pigs.getBf(),pigs.getFilet(),pigs.getLongBack(),pigs.getLongBody(),pigs.getIndex(),pigs.getParities(),pigs.getImages(),pigs.getHealthStatus().getId(),pigs.getBreedingType(),pigs.getBreedStatus(),pigs.getPregnancyStatus().getId(),pigs.getPoint_review(),pigs.getStatus().getId(),pigs.getPriceCode().getId(),pigs.getOverviewStatus(),pigs.getDelFlag());
+        PigsInvoicePigDetailDTOResponse response = new PigsInvoicePigDetailDTOResponse(pigsDTO,invoicePigDetail);
+        return response;
     }
 
     public InvoicePigDetail update(InvoicePigDetail invoicePigDetail){

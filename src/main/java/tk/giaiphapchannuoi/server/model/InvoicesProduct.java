@@ -17,8 +17,8 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	@Column(name="invoice_no")
 	private String invoiceNo;
 
-	@Column(name = "type")
-	private String type;
+	@Column(name = "invoice_type")
+	private String invoiceType;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="source_id")
@@ -52,9 +52,9 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	public InvoicesProduct() {
 	}
 
-	public InvoicesProduct(String invoiceNo, String type, Partners source, String sourceManagerName, Farms destination, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
+	public InvoicesProduct(String invoiceNo, String invoiceType, Partners source, String sourceManagerName, Farms destination, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
 		this.invoiceNo = invoiceNo;
-		this.type = type;
+		this.invoiceType = invoiceType;
 		this.source = source;
 		this.sourceManagerName = sourceManagerName;
 		this.destination = destination;
@@ -82,12 +82,12 @@ public class InvoicesProduct extends Auditable implements Serializable {
 		this.invoiceNo = invoiceNo;
 	}
 
-	public String getType() {
-		return type;
+	public String getInvoiceType() {
+		return invoiceType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
 	}
 
 	public Partners getSource() {

@@ -122,9 +122,10 @@ public class Pigs extends Auditable implements Serializable {
 
 	@Column(name="point_review")
 	private Integer point_review;
-	
-	@Column(name="status")
-	private Integer status;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="status")
+	private Status status;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="price_code")
@@ -180,7 +181,7 @@ public class Pigs extends Auditable implements Serializable {
 //	}
 
 
-	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
 		this.pigCode = pigCode;
 		this.house = house;
 		this.round = round;
@@ -501,11 +502,11 @@ public class Pigs extends Auditable implements Serializable {
 		this.point_review = point_review;
 	}
 
-	public Integer getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 

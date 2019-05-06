@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTO;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTORequest;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.services.InvoicePigDetailService;
 
@@ -45,9 +46,9 @@ public class InvoicePigDetailController {
 
     @Transactional
     @PostMapping(value = "/pigsinvoicepigdetail/")
-    public ResponseEntity<Object> insertPig_PigInvoiceDetail(@RequestBody PigsInvoicePigDetailDTO pigsInvoicePigDetailDTO){
+    public ResponseEntity<Object> insertPig_PigInvoiceDetail(@RequestBody PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
 
-        PigsInvoicePigDetailDTO temp = invoicePigDetailService.savePigsInvoicePigDetail(pigsInvoicePigDetailDTO);
+        PigsInvoicePigDetailDTOResponse temp = invoicePigDetailService.savePigsInvoicePigDetail(pigsInvoicePigDetailDTORequest);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
