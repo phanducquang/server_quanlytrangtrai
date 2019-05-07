@@ -122,7 +122,7 @@ public class PigsDTO implements Serializable {
 	private Integer point_review;
 	
 	@Column(name="status")
-	private Integer status;
+	private Integer statusId;
 
 	@Column(name="price_code")
 	private Integer priceCodeId;
@@ -176,7 +176,8 @@ public class PigsDTO implements Serializable {
 //		this.delFlag = delFlag;
 //	}
 
-	public PigsDTO(Integer id, String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer status, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
+
+	public PigsDTO(Integer id, String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer statusId, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
 		this.id = id;
 		this.pigCode = pigCode;
 		this.houseId = houseId;
@@ -211,7 +212,7 @@ public class PigsDTO implements Serializable {
 		this.breedStatus = breedStatus;
 		this.pregnancyStatusId = pregnancyStatusId;
 		this.point_review = point_review;
-		this.status = status;
+		this.statusId = statusId;
 		this.priceCodeId = priceCodeId;
 		this.overviewStatus = overviewStatus;
 		this.delFlag = delFlag;
@@ -489,12 +490,12 @@ public class PigsDTO implements Serializable {
 		this.point_review = point_review;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public Integer getStatusId() {
+		return statusId;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setStatusId(Integer statusId) {
+		this.statusId = statusId;
 	}
 
 	public Integer getPriceCodeId() {
