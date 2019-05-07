@@ -3,6 +3,7 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.model.Pigs;
@@ -43,6 +44,7 @@ public class PigsController {
         return ResponseEntity.ok(pigsDTO);
     }
 
+    @Transactional
     @SuppressWarnings("Duplicates")
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Pigs pig){
@@ -55,6 +57,7 @@ public class PigsController {
         return ResponseEntity.ok(pigsDTO);
     }
 
+    @Transactional
     @DeleteMapping(value = "/")
     public Boolean delete(@RequestBody Pigs pig){
         return pigsService.delete(pig);

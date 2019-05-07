@@ -81,8 +81,19 @@ public class InvoicePigDetailService {
         return invoicePigDetailRepository.save(invoicePigDetail);
     }
 
+    @Transactional
     public Boolean delete(InvoicePigDetail invoicePigDetail){
         invoicePigDetail.setDelFlag(true);
+        //Lay thong tin cua pig
+        Pigs pig = pigsRepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false).get();
+        //Thuc hien duyet tim invoice lien quan den pig de thay doi total_weight
+        InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoicePigDetail.getInvoice().getId(),false).get();
+        //gan Total_Weight = Total_Weight - receive_weight cua heo xoa
+        invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
+        invoicesPigRepository.save(invoicesPig);
+        //Xoa heo
+        pig.setDelFlag(true);
+        pigsRepository.save(pig);
         if(invoicePigDetailRepository.save(invoicePigDetail) != null){
             return true;
         }

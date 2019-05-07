@@ -14,4 +14,6 @@ public interface InvoicePigDetailRepository extends JpaRepository<InvoicePigDeta
     List<InvoicePigDetail> findAllByDelFlag(Boolean delFlag);
 
     List<InvoicePigDetail> findByInvoiceAndDelFlag(InvoicesPig invoicesPig,Boolean delFlag);
+
+    List<InvoicePigDetail> findByObjectIdAndDelFlag(Integer pigId, Boolean delFlag);
 }
