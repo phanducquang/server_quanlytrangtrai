@@ -57,6 +57,21 @@ public class InvoicePigDetailService {
         temp.setObjectId(pigs.getId());
 
         InvoicePigDetail invoicePigDetail = save(temp);
+        InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(pigsInvoicePigDetailDTORequest.getInvoicesPig().getId(),false).get();
+
+        if(invoicesPig.getQuantity()!=null){
+            invoicesPig.setQuantity(invoicesPig.getQuantity() + 1);
+        }else{
+            invoicesPig.setQuantity(1);
+        }
+
+        if(invoicesPig.getTotalWeight()!=null){
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() + pigs.getOriginWeight());
+        }else{
+            invoicesPig.setTotalWeight(1f);
+        }
+
+        invoicesPigRepository.save(invoicesPig);
         PigsDTO pigsDTO = new PigsDTO(pigs.getId(),pigs.getPigCode(),pigs.getHouse().getId(),pigs.getRound().getId(),pigs.getBreed().getId(),pigs.getGender(),pigs.getBirthday(),pigs.getBorn_weight(),pigs.getBornStatus(),pigs.getOriginId(),pigs.getOriginFather(), pigs.getOriginMother(),pigs.getOriginWeight(),pigs.getReceiveWeight(), pigs.getHealthPoint(),pigs.getFoot().getId(),pigs.getFunctionUdder(),pigs.getTotalUdder(),pigs.getGentialType().getId(), pigs.getDescription(),pigs.getFcr(),pigs.getAdg(),pigs.getBf(),pigs.getFilet(),pigs.getLongBack(),pigs.getLongBody(),pigs.getIndex(),pigs.getParities(),pigs.getImages(),pigs.getHealthStatus().getId(),pigs.getBreedingType(),pigs.getBreedStatus(),pigs.getPregnancyStatus().getId(),pigs.getPoint_review(),pigs.getStatus().getId(),pigs.getPriceCode().getId(),pigs.getOverviewStatus(),pigs.getDelFlag());
         PigsInvoicePigDetailDTOResponse response = new PigsInvoicePigDetailDTOResponse(pigsDTO,invoicePigDetail);
         return response;

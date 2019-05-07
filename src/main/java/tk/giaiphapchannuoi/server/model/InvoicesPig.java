@@ -18,7 +18,7 @@ public class InvoicesPig extends Auditable implements Serializable {
 	private String invoiceNo;
 	
 	@Column(name="invoice_type")
-	private Integer invoiceType;
+	private String invoiceType;
 	
 	@Column(name="source_id")
 	private Integer sourceId;
@@ -77,7 +77,7 @@ public class InvoicesPig extends Auditable implements Serializable {
 	public InvoicesPig() {
 	}
 
-	public InvoicesPig(String invoiceNo, Integer invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status) {
+	public InvoicesPig(String invoiceNo, String invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceType = invoiceType;
 		this.sourceId = sourceId;
@@ -116,11 +116,11 @@ public class InvoicesPig extends Auditable implements Serializable {
 		this.invoiceNo = invoiceNo;
 	}
 
-	public Integer getInvoiceType() {
+	public String getInvoiceType() {
 		return invoiceType;
 	}
 
-	public void setInvoiceType(Integer invoiceType) {
+	public void setInvoiceType(String invoiceType) {
 		this.invoiceType = invoiceType;
 	}
 
