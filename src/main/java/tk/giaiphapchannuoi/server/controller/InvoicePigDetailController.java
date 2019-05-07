@@ -64,6 +64,7 @@ public class InvoicePigDetailController {
         return ResponseEntity.ok(temp);
     }
 
+    @Transactional
     @DeleteMapping(value = "/")
     public Boolean delete(@RequestBody InvoicePigDetail invoicePigDetail){
         return invoicePigDetailService.delete(invoicePigDetail);
