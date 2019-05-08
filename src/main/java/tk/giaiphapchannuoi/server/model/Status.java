@@ -12,6 +12,9 @@ public class Status extends Auditable implements Serializable {
     @Column(name="id")
     private Integer id;
 
+    @Column(name = "code")
+    private Integer code;
+
     @Column(name="name")
     private String name;
 
@@ -27,7 +30,8 @@ public class Status extends Auditable implements Serializable {
     public Status() {
     }
 
-    public Status(String name, Integer previousStatus, String description, Boolean delFlag) {
+    public Status(Integer code, String name, Integer previousStatus, String description, Boolean delFlag) {
+        this.code = code;
         this.name = name;
         this.previousStatus = previousStatus;
         this.description = description;
@@ -40,6 +44,14 @@ public class Status extends Auditable implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public String getName() {
