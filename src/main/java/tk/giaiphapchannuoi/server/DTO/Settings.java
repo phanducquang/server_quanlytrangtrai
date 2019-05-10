@@ -25,12 +25,13 @@ public class Settings {
     private List<Rounds> rounds;
     private List<Status> status;
     private List<Roles> roles;
+    private List<MatingRoles> matingRoles;
 
 
     public Settings() {
     }
 
-    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<FoodUnits> foodUnits, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<Rounds> rounds, List<Status> status, List<Roles> roles) {
+    public Settings(List<PregnancyStatus> pregnancyStatus, List<Breeds> breeds, List<BreedingType> breedingType, List<HealthStatus> healthStatus, List<Diseases> diseases, List<FarmTypes> farmTypes, List<FoodType> foodType, List<FoodUnits> foodUnits, List<Foods> foods, List<MedicineType> medicineType, List<MedicineUnits> medicineUnits, List<Medicines> medicines, List<PriceCodes> priceCodes, List<FootType> footType, List<GentialType> gentialType, List<Issues> issues, List<Rounds> rounds, List<Status> status, List<Roles> roles, List<MatingRoles> matingRoles) {
         this.pregnancyStatus = pregnancyStatus;
         this.breeds = breeds;
         this.breedingType = breedingType;
@@ -50,6 +51,7 @@ public class Settings {
         this.rounds = rounds;
         this.status = status;
         this.roles = roles;
+        this.matingRoles = matingRoles;
     }
 
     public List<PregnancyStatus> getPregnancyStatus() {
@@ -202,5 +204,13 @@ public class Settings {
 
     public void setRoles(List<Roles> roles) {
         this.roles = roles;
+    }
+
+    public List<MatingRoles> getMatingRoles() {
+        return matingRoles;
+    }
+
+    public void setMatingRoles(List<MatingRoles> matingRoles) {
+        this.matingRoles = matingRoles;
     }
 }

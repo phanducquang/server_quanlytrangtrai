@@ -70,6 +70,9 @@ public class SettingsController {
     @Autowired
     FoodUnitsService foodUnitsService;
 
+    @Autowired
+    MatingRolesService matingRolesService;
+
     @GetMapping(value = "/list")
     public Settings findAll(){
         Settings settings = new Settings();
@@ -92,6 +95,7 @@ public class SettingsController {
         settings.setStatus(statusService.findall());
         settings.setRoles(rolesService.findall());
         settings.setFoodUnits(foodUnitsService.findall());
+        settings.setMatingRoles(matingRolesService.findall());
         return settings;
     }
 }
