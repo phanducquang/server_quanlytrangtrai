@@ -13,15 +13,15 @@ public class MatingRoles extends Auditable implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="father_id")
-	private Breeds fatherId;
+	private Breeds father;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="mother_id")
-	private Breeds motherId;
+	private Breeds mother;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="child_id")
-	private Breeds childId;
+	private Breeds child;
 	
 	@Column(name="birth_status_estimate")
 	private Integer birthStatusEstimate;
@@ -35,10 +35,10 @@ public class MatingRoles extends Auditable implements Serializable {
 	public MatingRoles() {
 	}
 
-	public MatingRoles(Breeds fatherId, Breeds motherId, Breeds childId, Integer birthStatusEstimate, String description, Boolean delFlag) {
-		this.fatherId = fatherId;
-		this.motherId = motherId;
-		this.childId = childId;
+	public MatingRoles(Breeds father, Breeds mother, Breeds child, Integer birthStatusEstimate, String description, Boolean delFlag) {
+		this.father = father;
+		this.mother = mother;
+		this.child = child;
 		this.birthStatusEstimate = birthStatusEstimate;
 		this.description = description;
 		this.delFlag = delFlag;
@@ -52,28 +52,28 @@ public class MatingRoles extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public Breeds getFatherId() {
-		return fatherId;
+	public Breeds getFather() {
+		return father;
 	}
 
-	public void setFatherId(Breeds fatherId) {
-		this.fatherId = fatherId;
+	public void setFather(Breeds father) {
+		this.father = father;
 	}
 
-	public Breeds getMotherId() {
-		return motherId;
+	public Breeds getMother() {
+		return mother;
 	}
 
-	public void setMotherId(Breeds motherId) {
-		this.motherId = motherId;
+	public void setMother(Breeds mother) {
+		this.mother = mother;
 	}
 
-	public Breeds getChildId() {
-		return childId;
+	public Breeds getChild() {
+		return child;
 	}
 
-	public void setChildId(Breeds childId) {
-		this.childId = childId;
+	public void setChild(Breeds child) {
+		this.child = child;
 	}
 
 	public Integer getBirthStatusEstimate() {
