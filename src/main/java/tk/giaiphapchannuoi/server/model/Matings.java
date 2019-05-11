@@ -17,19 +17,20 @@ public class Matings extends Auditable implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="mother_id")
 	private Pigs mother;
-	
-	@Column(name="father_id")
-	private Integer fatherId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="sperm_id")
-	private Sperm sperm;
+	@JoinColumn(name="father_id")
+	private Pigs father;
+
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name="sperm_id")
+//	private Sperm sperm;
 	
 	@Column(name="date")
 	private Date date;
 	
-	@Column(name="log_id")
-	private Integer logId;
+//	@Column(name="log_id")
+//	private Integer logId;
 	
 	@Column(name="child_id")
 	private Integer childId;
@@ -37,8 +38,8 @@ public class Matings extends Auditable implements Serializable {
 	@Column(name="birth_estimate")
 	private Date birthEstimate;
 	
-	@Column(name="birth_status_estimate")
-	private Integer birthStatusEstimate;
+//	@Column(name="birth_status_estimate")
+//	private Integer birthStatusEstimate;
 	
 	@Column(name="employee_id")
 	private Integer employeeId;
@@ -49,15 +50,12 @@ public class Matings extends Auditable implements Serializable {
 	public Matings() {
 	}
 
-	public Matings(Pigs mother, Integer fatherId, Sperm sperm, Date date, Integer logId, Integer childId, Date birthEstimate, Integer birthStatusEstimate, Integer employeeId, Boolean delFlag) {
+	public Matings(Pigs mother, Pigs father, Date date, Integer childId, Date birthEstimate, Integer employeeId, Boolean delFlag) {
 		this.mother = mother;
-		this.fatherId = fatherId;
-		this.sperm = sperm;
+		this.father = father;
 		this.date = date;
-		this.logId = logId;
 		this.childId = childId;
 		this.birthEstimate = birthEstimate;
-		this.birthStatusEstimate = birthStatusEstimate;
 		this.employeeId = employeeId;
 		this.delFlag = delFlag;
 	}
@@ -78,20 +76,12 @@ public class Matings extends Auditable implements Serializable {
 		this.mother = mother;
 	}
 
-	public Integer getFatherId() {
-		return fatherId;
+	public Pigs getFather() {
+		return father;
 	}
 
-	public void setFatherId(Integer fatherId) {
-		this.fatherId = fatherId;
-	}
-
-	public Sperm getSperm() {
-		return sperm;
-	}
-
-	public void setSperm(Sperm sperm) {
-		this.sperm = sperm;
+	public void setFather(Pigs father) {
+		this.father = father;
 	}
 
 	public Date getDate() {
@@ -100,14 +90,6 @@ public class Matings extends Auditable implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Integer getLogId() {
-		return logId;
-	}
-
-	public void setLogId(Integer logId) {
-		this.logId = logId;
 	}
 
 	public Integer getChildId() {
@@ -124,14 +106,6 @@ public class Matings extends Auditable implements Serializable {
 
 	public void setBirthEstimate(Date birthEstimate) {
 		this.birthEstimate = birthEstimate;
-	}
-
-	public Integer getBirthStatusEstimate() {
-		return birthStatusEstimate;
-	}
-
-	public void setBirthStatusEstimate(Integer birthStatusEstimate) {
-		this.birthStatusEstimate = birthStatusEstimate;
 	}
 
 	public Integer getEmployeeId() {
