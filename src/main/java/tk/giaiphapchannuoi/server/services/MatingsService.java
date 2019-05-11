@@ -33,7 +33,6 @@ public class MatingsService {
         return matingsRepository.save(mating);
     }
 
-
     public Boolean delete(Matings mating){
         mating.setDelFlag(true);
         if(matingsRepository.save(mating) != null){

@@ -43,9 +43,9 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        Integer employeeId = userRepository.findByUsernameAndDelFlag(loginRequest.getUsername(), false).get().getEmployee().getId();
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, employeeId));
     }
 
     @GetMapping(value = "/check_login")

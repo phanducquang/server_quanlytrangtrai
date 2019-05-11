@@ -28,6 +28,10 @@ public class UsersService {
         return usersRepository.findByIdAndDelFlag(id,false);
     }
 
+    public Optional<Users> findbyusername(String username){
+        return usersRepository.findByUsernameAndDelFlag(username,false);
+    }
+
     public Users save(Users user){
         user.setDelFlag(false);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
