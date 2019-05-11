@@ -31,6 +31,9 @@ public class BreedingsController {
     @Transactional
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Breedings breedings){
+        List<Breedings> breedingsList = breedingsService.findallbypig(breedings.getPig().getId());
+        int i = breedingsList.size();
+        breedings.setBreedingCount(i+1);
         Breedings temp = breedingsService.save(breedings);
         if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

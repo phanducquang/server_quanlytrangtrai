@@ -24,6 +24,7 @@ public class MatingsService {
         return matingsRepository.findByIdAndDelFlag(id,false);
     }
 
+    @Transactional
     public Matings save(Matings mating){
         mating.setDelFlag(false);
         return matingsRepository.save(mating);

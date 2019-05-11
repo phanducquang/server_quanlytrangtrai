@@ -38,8 +38,8 @@ public class Matings extends Auditable implements Serializable {
 	@Column(name="birth_estimate")
 	private Date birthEstimate;
 	
-//	@Column(name="birth_status_estimate")
-//	private Integer birthStatusEstimate;
+	@Column(name="status")
+	private String status;
 	
 	@Column(name="employee_id")
 	private Integer employeeId;
@@ -50,12 +50,13 @@ public class Matings extends Auditable implements Serializable {
 	public Matings() {
 	}
 
-	public Matings(Pigs mother, Pigs father, Date date, Integer childId, Date birthEstimate, Integer employeeId, Boolean delFlag) {
+	public Matings(Pigs mother, Pigs father, Date date, Integer childId, Date birthEstimate, String status, Integer employeeId, Boolean delFlag) {
 		this.mother = mother;
 		this.father = father;
 		this.date = date;
 		this.childId = childId;
 		this.birthEstimate = birthEstimate;
+		this.status = status;
 		this.employeeId = employeeId;
 		this.delFlag = delFlag;
 	}
@@ -106,6 +107,14 @@ public class Matings extends Auditable implements Serializable {
 
 	public void setBirthEstimate(Date birthEstimate) {
 		this.birthEstimate = birthEstimate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Integer getEmployeeId() {
