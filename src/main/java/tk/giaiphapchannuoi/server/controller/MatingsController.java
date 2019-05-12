@@ -55,9 +55,9 @@ public class MatingsController {
         List<MatingDetails> matingDetails = new ArrayList<MatingDetails>();
         for (MatingDetails matingDetail :
                 matingDetailsList) {
-            if (matingDetail.getMating()==null){
+//            if (matingDetail.getMating()==null){
                 matingDetail.setMating(mating);
-            }
+//            }
             matingDetails.add(matingDetailsService.save(matingDetail));
         }
         MatingsMatingDetailsDTO temp = new MatingsMatingDetailsDTO();
