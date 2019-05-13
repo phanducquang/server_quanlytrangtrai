@@ -6,10 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Breedings;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.model.Status;
+import tk.giaiphapchannuoi.server.model.Users;
 import tk.giaiphapchannuoi.server.repository.BreedingsRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
 import tk.giaiphapchannuoi.server.repository.StatusRepository;
+import tk.giaiphapchannuoi.server.repository.UsersRepository;
+import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +30,29 @@ public class BreedingsService {
     @Autowired
     StatusRepository statusRepository;
 
+    @Autowired
+    UsersRepository usersRepository;
+
     public List<Breedings> findall(){
-        return breedingsRepository.findAllByDelFlag(false);
+        List<Breedings> breedingsList = breedingsRepository.findAllByDelFlag(false);
+        List<Breedings> breedingsListReturn = new ArrayList<>();
+
+        //Lay userId thong qua bien public từ class JwtAuthenticationFilter
+        int UserId = JwtAuthenticationFilter.userIdGlobal;
+        //Xac dinh farm id bang cach lay thong tin user => lay thong tin employee => lay thong tin farm
+        int FarmIdFromUser = usersRepository.findByIdAndDelFlag(UserId,false).get().getEmployee().getFarm().getId();
+
+        if (FarmIdFromUser != 0) {
+            for (Breedings breeding :
+                    breedingsList) {
+                if (breeding.getPig().getHouse().getSection().getFarm().getId() == FarmIdFromUser) {
+                    breedingsListReturn.add(breeding);
+                }
+            }
+            return breedingsListReturn;
+        }else {
+            return breedingsList;
+        }
     }
 
     public List<Breedings> findallbypig(Integer id){
