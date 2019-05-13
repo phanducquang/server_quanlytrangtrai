@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.InvoicesProduct;
 import tk.giaiphapchannuoi.server.model.MedicineWarehouse;
+import tk.giaiphapchannuoi.server.model.Warehouses;
 import tk.giaiphapchannuoi.server.repository.InvoicesProductRepository;
 import tk.giaiphapchannuoi.server.repository.MedicineWarehouseRepository;
+import tk.giaiphapchannuoi.server.repository.WarehousesRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,9 @@ public class MedicineWarehouseService {
     @Autowired
     InvoicesProductRepository invoicesProductRepository;
 
+    @Autowired
+    WarehousesRepository warehousesRepository;
+
     public List<MedicineWarehouse> findall(){
         return medicineWarehouseRepository.findAllByDelFlag(false);
     }
@@ -32,6 +37,11 @@ public class MedicineWarehouseService {
     public List<MedicineWarehouse> findbyinvoice(Integer invoiceId){
         Optional<InvoicesProduct> invoicesProduct = invoicesProductRepository.findByIdAndDelFlag(invoiceId, false);
         return medicineWarehouseRepository.findByInvoiceAndDelFlag(invoicesProduct.get(),false);
+    }
+
+    public List<MedicineWarehouse> findbywarehouse(Integer warehouseId){
+        Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(warehouseId, false);
+        return medicineWarehouseRepository.findByWarehouseAndDelFlag(warehouse.get(),false);
     }
 
     public MedicineWarehouse save(MedicineWarehouse medicineWarehouse){
