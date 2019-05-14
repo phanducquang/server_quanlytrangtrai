@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.IssuesPigs;
 import tk.giaiphapchannuoi.server.services.IssuesPigsService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +29,16 @@ public class IssuesPigsController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Object> insert(@RequestBody IssuesPigs issuesPig){
-        IssuesPigs temp = issuesPigsService.save(issuesPig);
-        if(temp == null){
+    public ResponseEntity<Object> insert(@RequestBody List<IssuesPigs> issuesPigsList){
+        List<IssuesPigs> issuesPigs = new ArrayList<>();
+        for (IssuesPigs issuesPig :
+                issuesPigsList) {
+            issuesPigs.add(issuesPigsService.save(issuesPig));
+        }
+        if(issuesPigs.size() > 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(temp);
+        return ResponseEntity.ok(issuesPigs);
     }
 
     @PutMapping(value = "/")
