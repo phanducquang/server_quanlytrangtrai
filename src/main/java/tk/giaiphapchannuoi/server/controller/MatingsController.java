@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.DTO.MatingsMatingDetailsDTO;
 import tk.giaiphapchannuoi.server.model.MatingDetails;
 import tk.giaiphapchannuoi.server.model.Matings;
+import tk.giaiphapchannuoi.server.model.Pigs;
+import tk.giaiphapchannuoi.server.model.Status;
 import tk.giaiphapchannuoi.server.services.MatingDetailsService;
 import tk.giaiphapchannuoi.server.services.MatingsService;
+import tk.giaiphapchannuoi.server.services.PigsService;
+import tk.giaiphapchannuoi.server.services.StatusService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,12 @@ public class MatingsController {
 
     @Autowired
     MatingDetailsService matingDetailsService;
+
+    @Autowired
+    PigsService pigsService;
+
+    @Autowired
+    StatusService statusService;
 
     @GetMapping(value = "/{id}")
     public Optional<Matings> findById(@PathVariable Integer id){
@@ -49,6 +59,17 @@ public class MatingsController {
     public ResponseEntity<Object> insert(@RequestBody MatingsMatingDetailsDTO matingsMatingDetailsDTO){
         //Luu thong tin mating sau khi luu mating tu request
         Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
+        //Cap nhat status heo
+        Pigs pigs = pigsService.findbyid(mating.getMother().getId()).get();
+        if (mating.getStatus() == "processing"){
+            Status status = statusService.findbycode(11).get();
+            pigs.setStatus(status);
+            pigsService.update(pigs);
+        }else if(mating.getStatus() == "finish"){
+            Status status = statusService.findbycode(2).get();
+            pigs.setStatus(status);
+            pigsService.update(pigs);
+        }
         //Lay danh sach mating detail tu request
         List<MatingDetails> matingDetailsList = matingsMatingDetailsDTO.getMatingDetail();
         //Tao danh sach mating detail de luu thong tin mating detail sau khi luu vao db

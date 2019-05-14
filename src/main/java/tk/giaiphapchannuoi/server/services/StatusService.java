@@ -24,6 +24,11 @@ public class StatusService {
         return statusRepository.findByIdAndDelFlag(id,false);
     }
 
+    public Optional<Status> findbycode(Integer code){
+        return statusRepository.findByCodeAndDelFlag(code,false);
+    }
+
+
     public Status save(Status sperm){
         sperm.setDelFlag(false);
         return statusRepository.save(sperm);
