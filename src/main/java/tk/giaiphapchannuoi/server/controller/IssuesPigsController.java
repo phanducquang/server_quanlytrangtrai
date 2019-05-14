@@ -35,7 +35,7 @@ public class IssuesPigsController {
                 issuesPigsList) {
             issuesPigs.add(issuesPigsService.save(issuesPig));
         }
-        if(issuesPigs.size() > 0){
+        if(issuesPigs.size() == 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(issuesPigs);
