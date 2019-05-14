@@ -61,11 +61,11 @@ public class MatingsController {
         Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
         //Cap nhat status heo
         Pigs pigs = pigsService.findbyid(mating.getMother().getId()).get();
-        if (mating.getStatus() == "processing"){
+        if (mating.getStatus().equals("processing")){
             Status status = statusService.findbycode(11).get();
             pigs.setStatus(status);
             pigsService.update(pigs);
-        }else if(mating.getStatus() == "finish"){
+        }else if(mating.getStatus().equals("finish")){
             Status status = statusService.findbycode(2).get();
             pigs.setStatus(status);
             pigsService.update(pigs);
