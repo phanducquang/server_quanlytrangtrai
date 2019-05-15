@@ -55,7 +55,7 @@ public class MatingsController {
         return ResponseEntity.ok(temp);
     }
 
-    @GetMapping(value = "/matingsmatingdetails/")
+    @GetMapping(value = "/matingsmatingdetails/list")
     public ListMatingsMatingDetailsDTO findListMatingsMatingDetails(){
         ListMatingsMatingDetailsDTO listMatingsMatingDetailsDTO = new ListMatingsMatingDetailsDTO() ;
         listMatingsMatingDetailsDTO.setMatings(matingsService.findall());
