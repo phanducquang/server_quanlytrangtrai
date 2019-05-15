@@ -3,7 +3,9 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.model.Sperm;
+import tk.giaiphapchannuoi.server.repository.PigsRepository;
 import tk.giaiphapchannuoi.server.repository.SpermRepository;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public class SpermService {
     @Autowired
     SpermRepository spermRepository;
 
+    @Autowired
+    PigsService pigsService;
+
     public List<Sperm> findall(){
         return spermRepository.findAllByDelFlag(false);
     }
@@ -23,6 +28,12 @@ public class SpermService {
     public Optional<Sperm> findbyid(Integer id){
         return spermRepository.findByIdAndDelFlag(id,false);
     }
+
+    public List<Sperm> findbypig(Integer pigId){
+        Pigs pig = pigsService.findbyid(pigId).get();
+        return spermRepository.findByPigAndDelFlag(pig,false);
+    }
+
 
     public Sperm save(Sperm sperm){
         sperm.setDelFlag(false);

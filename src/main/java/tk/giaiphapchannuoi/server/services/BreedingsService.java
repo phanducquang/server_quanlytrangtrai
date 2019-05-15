@@ -72,7 +72,8 @@ public class BreedingsService {
         //pre_status o day la code cua status goc
         Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
         pig.setStatus(status);
-        pigsRepository.save(pig);
+        Pigs temp = pigsRepository.save(pig);
+        breedings.setPig(temp);
         return breedingsRepository.save(breedings);
     }
 

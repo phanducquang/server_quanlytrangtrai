@@ -59,17 +59,7 @@ public class MatingsController {
     public ResponseEntity<Object> insert(@RequestBody MatingsMatingDetailsDTO matingsMatingDetailsDTO){
         //Luu thong tin mating sau khi luu mating tu request
         Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
-        //Cap nhat status heo
-        Pigs pigs = pigsService.findbyid(mating.getMother().getId()).get();
-        if (mating.getStatus().equals("processing")){
-            Status status = statusService.findbycode(11).get();
-            pigs.setStatus(status);
-            pigsService.update(pigs);
-        }else if(mating.getStatus().equals("finish")){
-            Status status = statusService.findbycode(2).get();
-            pigs.setStatus(status);
-            pigsService.update(pigs);
-        }
+
         //Lay danh sach mating detail tu request
         List<MatingDetails> matingDetailsList = matingsMatingDetailsDTO.getMatingDetail();
         //Tao danh sach mating detail de luu thong tin mating detail sau khi luu vao db
