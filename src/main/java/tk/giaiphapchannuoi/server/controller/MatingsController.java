@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.DTO.ListMatingsMatingDetailsDTO;
 import tk.giaiphapchannuoi.server.DTO.MatingsMatingDetailsDTO;
 import tk.giaiphapchannuoi.server.model.MatingDetails;
 import tk.giaiphapchannuoi.server.model.Matings;
@@ -54,9 +55,17 @@ public class MatingsController {
         return ResponseEntity.ok(temp);
     }
 
+    @GetMapping(value = "/matingsmatingdetails/")
+    public ListMatingsMatingDetailsDTO findListMatingsMatingDetails(){
+        ListMatingsMatingDetailsDTO listMatingsMatingDetailsDTO = new ListMatingsMatingDetailsDTO() ;
+        listMatingsMatingDetailsDTO.setMatings(matingsService.findall());
+        listMatingsMatingDetailsDTO.setMatingDetails(matingDetailsService.findall());
+        return listMatingsMatingDetailsDTO;
+    }
+
     @Transactional
     @PostMapping(value = "/matingsmatingdetails/")
-    public ResponseEntity<Object> insert(@RequestBody MatingsMatingDetailsDTO matingsMatingDetailsDTO){
+    public ResponseEntity<Object> insertMatingsMatingDetails(@RequestBody MatingsMatingDetailsDTO matingsMatingDetailsDTO){
         //Luu thong tin mating sau khi luu mating tu request
         Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
 

@@ -25,6 +25,15 @@ public class BirthsService {
     }
 
     public Births save(Births births){
+        int dem = 0 ;
+        List<Births> birthsList = findall();
+        for (Births temp :
+                birthsList) {
+            if(temp.getMating().getMother().getId().equals(births.getMating().getMother().getId())){
+                dem++;
+            }
+        }
+        births.setParities(dem);
         births.setDelFlag(false);
         return birthsRepository.save(births);
     }
