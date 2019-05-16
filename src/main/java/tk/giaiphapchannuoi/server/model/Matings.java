@@ -18,9 +18,8 @@ public class Matings extends Auditable implements Serializable {
 	@JoinColumn(name="mother_id")
 	private Pigs mother;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="father_id")
-	private Pigs father;
+	@Column(name="father_id")
+	private Integer fatherId;
 
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name="sperm_id")
@@ -29,8 +28,8 @@ public class Matings extends Auditable implements Serializable {
 	@Column(name="date")
 	private Date date;
 	
-//	@Column(name="log_id")
-//	private Integer logId;
+	@Column(name="type")
+	private String type;
 	
 	@Column(name="child_id")
 	private Integer childId;
@@ -50,10 +49,11 @@ public class Matings extends Auditable implements Serializable {
 	public Matings() {
 	}
 
-	public Matings(Pigs mother, Pigs father, Date date, Integer childId, Date birthEstimate, String status, Integer employeeId, Boolean delFlag) {
+	public Matings(Pigs mother, Integer fatherId, Date date, String type, Integer childId, Date birthEstimate, String status, Integer employeeId, Boolean delFlag) {
 		this.mother = mother;
-		this.father = father;
+		this.fatherId = fatherId;
 		this.date = date;
+		this.type = type;
 		this.childId = childId;
 		this.birthEstimate = birthEstimate;
 		this.status = status;
@@ -77,12 +77,12 @@ public class Matings extends Auditable implements Serializable {
 		this.mother = mother;
 	}
 
-	public Pigs getFather() {
-		return father;
+	public Integer getFatherId() {
+		return fatherId;
 	}
 
-	public void setFather(Pigs father) {
-		this.father = father;
+	public void setFatherId(Integer fatherId) {
+		this.fatherId = fatherId;
 	}
 
 	public Date getDate() {
@@ -91,6 +91,14 @@ public class Matings extends Auditable implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Integer getChildId() {

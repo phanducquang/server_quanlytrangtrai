@@ -37,9 +37,14 @@ public class MatingsService {
         return matingsRepository.findByIdAndDelFlag(id,false);
     }
 
-    public List<Matings> findbypig(Integer pigId){
-        Pigs pig = pigsService.findbyid(pigId).get();
-        return matingsRepository.findByMotherAndDelFlag(pig,false);
+    public List<Matings> findbypig(Integer objId){// objId: mother (pig), father (pig), breed
+        Optional<Pigs> pig = pigsService.findbyid(objId);
+        if (pig.isPresent()){
+            Pigs temp = pig.get();
+            return matingsRepository.findByMotherAndDelFlag(temp,false);
+        }else{
+            return matingsRepository.findByFatherIdAndDelFlag(objId, false);
+        }
     }
 
 
