@@ -38,15 +38,9 @@ public class MatingsService {
     }
 
     public List<Matings> findbypig(Integer objId){// objId: mother (pig), father (pig), breed
-        Optional<Pigs> pig = pigsService.findbyid(objId);
-        if (pig.isPresent()){
-            Pigs temp = pig.get();
-            return matingsRepository.findByMotherAndDelFlag(temp,false);
-        }else{
-            return matingsRepository.findByFatherIdAndDelFlag(objId, false);
-        }
+        Pigs pig = pigsService.findbyid(objId).get();
+            return matingsRepository.findByMotherOrFatherIdAndDelFlag(pig, objId,false);
     }
-
 
     @Transactional
     public Matings save(Matings mating){

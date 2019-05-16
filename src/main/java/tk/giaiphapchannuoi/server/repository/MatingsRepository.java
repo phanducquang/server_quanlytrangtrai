@@ -13,7 +13,7 @@ public interface MatingsRepository extends JpaRepository<Matings, Integer> {
 
     List<Matings> findAllByDelFlag(Boolean delFlag);
 
-    List<Matings> findByMotherAndDelFlag(Pigs mother, Boolean delFlag);
+    List<Matings> findByMotherOrFatherIdAndDelFlag(Pigs mother, Integer fatherId, Boolean delFlag);
 
-    List<Matings> findByFatherIdAndDelFlag(Integer father, Boolean delFlag);
+//    List<Matings> findByFatherIdAndDelFlag(Integer father, Boolean delFlag);
 }
