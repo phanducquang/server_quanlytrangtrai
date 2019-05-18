@@ -49,12 +49,12 @@ public class MatingsService {
         //Cap nhat status heo
         Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
         if (mating.getStatus().equals("processing")){
-            Status status = statusRepository.findByCodeAndDelFlag(11,false).get();
+            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(11,0,false).get();
             pigs.setStatus(status);
             //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating
             mating_temp.setMother(pigsService.update(pigs));
         }else if(mating.getStatus().equals("finish")){
-            Status status = statusRepository.findByCodeAndDelFlag(2,false).get();
+            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(2, 0,false).get();
             pigs.setStatus(status);
             //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating
             mating_temp.setMother(pigsService.update(pigs));
@@ -62,8 +62,18 @@ public class MatingsService {
         return mating_temp;
     }
 
+    @Transactional
     public Matings update(Matings mating){
-        return matingsRepository.save(mating);
+        Matings mating_temp = matingsRepository.save(mating);
+        //Cap nhat status heo
+        if (mating.getStatus().equals("abortion")){
+            Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
+            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(4, 0,false).get();
+            pigs.setStatus(status);
+            //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating
+            mating_temp.setMother(pigsService.update(pigs));
+        }
+        return mating_temp;
     }
 
     public Boolean delete(Matings mating){

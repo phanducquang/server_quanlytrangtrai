@@ -1,5 +1,7 @@
 package tk.giaiphapchannuoi.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,14 +22,17 @@ public class Pigs extends Auditable implements Serializable {
 	@JoinColumn(name="house_id")
 	private Houses house;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)//bỏ
 	@JoinColumn(name="round_id")
 	private Rounds round;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="breed_id")
 	private Breeds breed;
-	
+
+	@Column(name="birth_id")
+	private Integer birthId;
+
 	@Column(name="gender")
 	private Integer gender;
 	
@@ -140,52 +145,12 @@ public class Pigs extends Auditable implements Serializable {
 	public Pigs() {
 	}
 
-//	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, BreedingType breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
-//		this.pigCode = pigCode;
-//		this.house = house;
-//		this.round = round;
-//		this.breed = breed;
-//		this.gender = gender;
-//		this.birthday = birthday;
-//		this.born_weight = born_weight;
-//		this.bornStatus = bornStatus;
-//		this.originId = originId;
-//		this.originFather = originFather;
-//		this.originMother = originMother;
-//		this.originWeight = originWeight;
-//		this.receiveWeight = receiveWeight;
-//		this.healthPoint = healthPoint;
-//		this.foot = foot;
-//		this.functionUdder = functionUdder;
-//		this.totalUdder = totalUdder;
-//		this.gential = gential;
-//		this.description = description;
-//		this.fcr = fcr;
-//		this.adg = adg;
-//		this.bf = bf;
-//		this.filet = filet;
-//		this.longBack = longBack;
-//		this.longBody = longBody;
-//		this.index = index;
-//		this.parities = parities;
-//		this.images = images;
-//		this.healthStatus = healthStatus;
-//		this.breedingType = breedingType;
-//		this.breedStatus = breedStatus;
-//		this.pregnancyStatus = pregnancyStatus;
-//		this.point_review = point_review;
-//		this.status = status;
-//		this.priceCode = priceCode;
-//		this.overviewStatus = overviewStatus;
-//		this.delFlag = delFlag;
-//	}
-
-
-	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer birthId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
 		this.pigCode = pigCode;
 		this.house = house;
 		this.round = round;
 		this.breed = breed;
+		this.birthId = birthId;
 		this.gender = gender;
 		this.birthday = birthday;
 		this.born_weight = born_weight;
@@ -247,6 +212,14 @@ public class Pigs extends Auditable implements Serializable {
 
 	public Rounds getRound() {
 		return round;
+	}
+
+	public Integer getBirthId() {
+		return birthId;
+	}
+
+	public void setBirthId(Integer birthId) {
+		this.birthId = birthId;
 	}
 
 	public void setRound(Rounds round) {

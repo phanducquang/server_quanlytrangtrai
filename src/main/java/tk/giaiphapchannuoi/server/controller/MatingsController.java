@@ -90,6 +90,7 @@ public class MatingsController {
     }
 
 
+    @Transactional
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody Matings mating){
         Matings temp = matingsService.update(mating);

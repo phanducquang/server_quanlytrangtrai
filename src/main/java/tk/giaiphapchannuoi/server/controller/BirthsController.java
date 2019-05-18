@@ -3,6 +3,7 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.Births;
 import tk.giaiphapchannuoi.server.services.BirthsService;
@@ -29,6 +30,7 @@ public class BirthsController {
         return birthsService.findall();
     }
 
+    @Transactional
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Births births){
         Births temp = birthsService.save(births);

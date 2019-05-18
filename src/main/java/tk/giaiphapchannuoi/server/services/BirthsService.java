@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Births;
+import tk.giaiphapchannuoi.server.model.Matings;
 import tk.giaiphapchannuoi.server.repository.BirthsRepository;
+import tk.giaiphapchannuoi.server.repository.MatingsRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,9 @@ public class BirthsService {
     @Autowired
     BirthsRepository birthsRepository;
 
+    @Autowired
+    MatingsRepository matingsRepository;
+
     public List<Births> findall(){
         return birthsRepository.findAllByDelFlag(false);
     }
@@ -24,6 +29,7 @@ public class BirthsService {
         return birthsRepository.findByIdAndDelFlag(id, false);
     }
 
+    @Transactional
     public Births save(Births births){
         int dem = 0 ;
         List<Births> birthsList = findall();
@@ -33,6 +39,9 @@ public class BirthsService {
                 dem++;
             }
         }
+        Matings matings = matingsRepository.findByIdAndDelFlag(births.getMating().getId(),false).get();
+        matings.setStatus("borned");
+        matingsRepository.save(matings);
         births.setParities(dem);
         births.setDelFlag(false);
         return birthsRepository.save(births);
