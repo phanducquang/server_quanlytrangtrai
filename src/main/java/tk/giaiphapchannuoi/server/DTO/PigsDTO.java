@@ -27,6 +27,9 @@ public class PigsDTO implements Serializable {
 	@Column(name="round_id")
 	private Integer roundId;
 
+	@Column(name = "birth_id")
+	private Integer birthId;
+
 	@Column(name="breed_id")
 	private Integer breedId;
 	
@@ -177,11 +180,12 @@ public class PigsDTO implements Serializable {
 //	}
 
 
-	public PigsDTO(Integer id, String pigCode, Integer houseId, Integer roundId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer statusId, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
+	public PigsDTO(Integer id, String pigCode, Integer houseId, Integer roundId, Integer birthId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer statusId, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
 		this.id = id;
 		this.pigCode = pigCode;
 		this.houseId = houseId;
 		this.roundId = roundId;
+		this.birthId = birthId;
 		this.breedId = breedId;
 		this.gender = gender;
 		this.birthday = birthday;
@@ -248,6 +252,14 @@ public class PigsDTO implements Serializable {
 
 	public void setRoundId(Integer roundId) {
 		this.roundId = roundId;
+	}
+
+	public Integer getBirthId() {
+		return birthId;
+	}
+
+	public void setBirthId(Integer birthId) {
+		this.birthId = birthId;
 	}
 
 	public Integer getBreedId() {
