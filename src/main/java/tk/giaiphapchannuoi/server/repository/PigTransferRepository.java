@@ -11,7 +11,9 @@ public interface PigTransferRepository extends JpaRepository<PigTransfer, Intege
 
     Optional<PigTransfer> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
-    Optional<PigTransfer> findByPigAndDelFlag(Pigs pig, Boolean delFlag);
+    Optional<PigTransfer> findByPigAndStatusAndDelFlag(Pigs pig, String status, Boolean delFlag);
+
+    List<PigTransfer> findByPigAndDelFlag(Pigs pig, Boolean delFlag);
 
     List<PigTransfer> findAllByDelFlag(Boolean delFlag);
 
