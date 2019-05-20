@@ -66,9 +66,15 @@ public class MatingsService {
     public Matings update(Matings mating){
         Matings mating_temp = matingsRepository.save(mating);
         //Cap nhat status heo
-        if (mating.getStatus().equals("abortion")){
+        if (mating.getStatus().equals("abort")){
             Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
             Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(4, 0,false).get();
+            pigs.setStatus(status);
+            //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating
+            mating_temp.setMother(pigsService.update(pigs));
+        } else if(mating.getStatus().equals("farrow")){
+            Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
+            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(5, 0,false).get();
             pigs.setStatus(status);
             //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating
             mating_temp.setMother(pigsService.update(pigs));
