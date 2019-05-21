@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Users;
 import tk.giaiphapchannuoi.server.repository.UsersRepository;
+import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,12 @@ public class UsersService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    public Integer getFarmId(){
+        Users user = findbyid(JwtAuthenticationFilter.userIdGlobal).get();
+        Integer farmId = user.getEmployee().getFarm().getId();
+        return farmId;
+    }
 
     public List<Users> findall(){
         return usersRepository.findAllByDelFlag(false);
