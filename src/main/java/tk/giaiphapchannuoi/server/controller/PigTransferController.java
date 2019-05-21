@@ -3,7 +3,6 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.PigTransfer;
 import tk.giaiphapchannuoi.server.services.PigTransferService;
@@ -23,9 +22,19 @@ public class PigTransferController {
         return pigTransferService.findbyid(id);
     }
 
-    @GetMapping(value = "/pig/{pigId}")
-    public Optional<PigTransfer> findByPig(@PathVariable Integer pigId){
-        return pigTransferService.findbypigandstatus(pigId);
+    @GetMapping(value = "/pigwaiting/{pigId}")
+    public PigTransfer findByPig(@PathVariable Integer pigId){
+        return pigTransferService.findbypigandstatuswaiting(pigId);
+    }
+
+    @GetMapping(value = "/pigfinish/{pigId}")
+    public List<PigTransfer> findByPigFinish(@PathVariable Integer pigId){
+        return pigTransferService.findbypigandstatusfinish(pigId);
+    }
+
+    @GetMapping(value = "/allpigwaiting/")
+    public List<PigTransfer> findAllByStatusWaiting(@PathVariable Integer pigId){
+        return pigTransferService.findbypigandstatusfinish(pigId);
     }
 
     @GetMapping(value = "/listpig/{pigId}")

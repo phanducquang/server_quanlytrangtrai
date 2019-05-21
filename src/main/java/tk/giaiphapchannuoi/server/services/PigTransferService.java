@@ -29,9 +29,33 @@ public class PigTransferService {
         return pigTransferRepository.findByIdAndDelFlag(id,false);
     }
 
-    public Optional<PigTransfer> findbypigandstatus(Integer pigId){
+    public PigTransfer findbypigandstatuswaiting(Integer pigId){
+        Pigs pig = pigsRepository.findByIdAndDelFlag(pigId,false).get();
+        List<PigTransfer> pigTransferList = pigTransferRepository.findByPigAndStatusAndDelFlag(pig, "waiting",false);
+        PigTransfer temp =  new PigTransfer();
+        for (PigTransfer p :
+                pigTransferList) {
+            temp.setId(p.getId());
+            temp.setFromFarm(p.getFromFarm());
+            temp.setToFarm(p.getToFarm());
+            temp.setPig(p.getPig());
+            temp.setStatus(p.getStatus());
+            temp.setDate(p.getDate());
+            temp.setDelFlag(p.getDelFlag());
+            temp.setCreatedAt(p.getCreatedAt());
+            temp.setUpdatedAt(p.getUpdatedAt());
+        }
+        return temp;
+    }
+
+    public List<PigTransfer> findbypigandstatusfinish(Integer pigId){
         Pigs pig = pigsRepository.findByIdAndDelFlag(pigId,false).get();
         return pigTransferRepository.findByPigAndStatusAndDelFlag(pig, "finish",false);
+    }
+
+    public List<PigTransfer> findallbystatuswaiting(Integer pigId){
+        Pigs pig = pigsRepository.findByIdAndDelFlag(pigId,false).get();
+        return pigTransferRepository.findByStatusAndDelFlag("waiting",false);
     }
 
     public List<PigTransfer> findbypig(Integer pigId){

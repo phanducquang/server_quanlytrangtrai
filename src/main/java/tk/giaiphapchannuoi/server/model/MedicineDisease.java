@@ -13,8 +13,8 @@ public class MedicineDisease extends Auditable implements Serializable {
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="medicine_warehouse_id")
-	private MedicineWarehouse medicineWarehouse;
+	@JoinColumn(name="medicine__id")
+	private Medicines medicine;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="disease_id")
@@ -26,8 +26,8 @@ public class MedicineDisease extends Auditable implements Serializable {
 	public MedicineDisease() {
 	}
 
-	public MedicineDisease(MedicineWarehouse medicineWarehouse, Diseases disease, Boolean delFlag) {
-		this.medicineWarehouse = medicineWarehouse;
+	public MedicineDisease(Medicines medicine, Diseases disease, Boolean delFlag) {
+		this.medicine = medicine;
 		this.disease = disease;
 		this.delFlag = delFlag;
 	}
@@ -40,12 +40,12 @@ public class MedicineDisease extends Auditable implements Serializable {
 		this.id = id;
 	}
 
-	public MedicineWarehouse getMedicineWarehouse() {
-		return medicineWarehouse;
+	public Medicines getMedicine() {
+		return medicine;
 	}
 
-	public void setMedicineWarehouse(MedicineWarehouse medicineWarehouse) {
-		this.medicineWarehouse = medicineWarehouse;
+	public void setMedicine(Medicines medicine) {
+		this.medicine = medicine;
 	}
 
 	public Diseases getDisease() {
