@@ -9,9 +9,11 @@ import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.model.Pigs;
+import tk.giaiphapchannuoi.server.model.Status;
 import tk.giaiphapchannuoi.server.repository.InvoicePigDetailRepository;
 import tk.giaiphapchannuoi.server.repository.InvoicesPigRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
+import tk.giaiphapchannuoi.server.repository.StatusRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,9 @@ public class InvoicePigDetailService {
 
     @Autowired
     PigsRepository pigsRepository;
+
+    @Autowired
+    StatusRepository statusRepository;
 
     public List<InvoicePigDetail> findall(){
         return invoicePigDetailRepository.findAllByDelFlag(false);
@@ -103,6 +108,12 @@ public class InvoicePigDetailService {
     @Transactional
     public Boolean deleteonlyinvoicedetail(InvoicePigDetail invoicePigDetail){
         invoicePigDetail.setDelFlag(true);
+        //Lay thong tin cua pig
+        Pigs pig = pigsRepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false).get();
+        //Cap nhat status ve pre_status
+        Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(pig.getStatus().getPreviousStatus(), 0,false).get();
+        pig.setStatus(status);
+        pigsRepository.save(pig);
         if(invoicePigDetailRepository.save(invoicePigDetail) != null){
             return true;
         }
