@@ -99,4 +99,13 @@ public class InvoicePigDetailService {
         }
         return false;
     }
+
+    @Transactional
+    public Boolean deleteonlyinvoicedetail(InvoicePigDetail invoicePigDetail){
+        invoicePigDetail.setDelFlag(true);
+        if(invoicePigDetailRepository.save(invoicePigDetail) != null){
+            return true;
+        }
+        return false;
+    }
 }

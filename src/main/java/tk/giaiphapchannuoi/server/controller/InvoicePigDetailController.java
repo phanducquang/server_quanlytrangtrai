@@ -69,4 +69,10 @@ public class InvoicePigDetailController {
     public Boolean delete(@RequestBody InvoicePigDetail invoicePigDetail){
         return invoicePigDetailService.delete(invoicePigDetail);
     }
+
+    @Transactional
+    @DeleteMapping(value = "/onlyinvoicedetail")
+    public Boolean deleteonlyinvoicedetail(@RequestBody InvoicePigDetail invoicePigDetail){
+        return invoicePigDetailService.deleteonlyinvoicedetail(invoicePigDetail);
+    }
 }
