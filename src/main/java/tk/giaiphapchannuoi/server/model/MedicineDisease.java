@@ -13,7 +13,7 @@ public class MedicineDisease extends Auditable implements Serializable {
 	private Integer id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="medicine__id")
+	@JoinColumn(name="medicine_id")
 	private Medicines medicine;
 
 	@ManyToOne(fetch = FetchType.EAGER)
