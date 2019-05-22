@@ -10,5 +10,7 @@ public interface InvoicesPigRepository extends JpaRepository<InvoicesPig, Intege
 
     Optional<InvoicesPig> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
+    List<InvoicesPig> findByStatusAndDelFlag(String status, Boolean delFlag);
+
     List<InvoicesPig> findAllByDelFlag(Boolean delFlag);
 }

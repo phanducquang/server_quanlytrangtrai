@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.DTO.InvoicesPigInvoicePigDetailDTOResponse;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.services.InvoicesPigService;
 
@@ -25,6 +27,11 @@ public class InvoicesPigController {
     @GetMapping(value = "/list")
     public List<InvoicesPig> findAll(){
         return invoicesPigService.findall();
+    }
+
+    @GetMapping(value = "/forwarding/list")
+    public InvoicesPigInvoicePigDetailDTOResponse findAllByStatus(){
+        return invoicesPigService.findbystatus("forwarding");
     }
 
     @PostMapping(value = "/")
