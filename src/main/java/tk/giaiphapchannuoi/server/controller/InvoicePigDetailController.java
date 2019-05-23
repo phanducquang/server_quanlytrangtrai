@@ -44,6 +44,7 @@ public class InvoicePigDetailController {
         return ResponseEntity.ok(temp);
     }
 
+    //Nhap heo ngoai he thong
     @Transactional
     @PostMapping(value = "/pigsinvoicepigdetail/")
     public ResponseEntity<Object> insertPig_PigInvoiceDetail(@RequestBody PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){

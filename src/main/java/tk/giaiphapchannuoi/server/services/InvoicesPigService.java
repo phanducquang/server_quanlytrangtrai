@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.InvoicesPigInvoicePigDetailDTOResponse;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTORequest;
+import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.model.Pigs;
@@ -95,6 +97,28 @@ public class InvoicesPigService {
             return response;
         }
 
+    }
+
+    @Transactional
+    public PigsInvoicePigDTOResponse savecustom(PigsInvoicePigDTORequest pigsInvoicePigDTORequest){
+        PigsInvoicePigDTOResponse response = new PigsInvoicePigDTOResponse();
+        List<Pigs> pigsList = pigsInvoicePigDTORequest.getPigsList();
+        List<Pigs> tempPigs = new ArrayList<>();
+        List<InvoicePigDetail> tempInvoicePigDetails = new ArrayList<>();
+        InvoicesPig tempInvoicePig = invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPig());
+        for (Pigs p :
+                pigsList) {
+            tempPigs.add(pigsRepository.save(p));
+            InvoicePigDetail temp = new InvoicePigDetail();
+            temp.setObjectId(p.getId());
+            temp.setInvoice(tempInvoicePig);
+            tempInvoicePigDetails.add(invoicePigDetailRepository.save(temp));
+        }
+        invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPigUpdate());
+        response.setPigsList(tempPigs);
+        response.setInvoicesPig(tempInvoicePig);
+        response.setInvoicePigDetailList(tempInvoicePigDetails);
+        return response;
     }
 
     public InvoicesPig save(InvoicesPig invoicePig){
