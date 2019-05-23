@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.InvoicesPigInvoicePigDetailDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
+import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.repository.InvoicePigDetailRepository;
 import tk.giaiphapchannuoi.server.repository.InvoicesPigRepository;
+import tk.giaiphapchannuoi.server.repository.PigsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,9 @@ public class InvoicesPigService {
     @Autowired
     UsersService usersService;
 
+    @Autowired
+    PigsRepository pigsRepository;
+
     public List<InvoicesPig> findall(){
         return invoicePigRepository.findAllByDelFlag(false);
     }
@@ -41,6 +46,7 @@ public class InvoicesPigService {
         if (farmId != 0){
             List<InvoicesPig> temp = new ArrayList<>();
             List<InvoicePigDetail> temp1 = new ArrayList<>();
+            List<Pigs> pigs = new ArrayList<>();
             for (InvoicesPig ip :
                     invoicesPigList) {
                 if(ip.getInvoiceType().equals("external-import")){
@@ -61,17 +67,31 @@ public class InvoicesPigService {
                     temp) {
                 temp1.addAll(invoicePigDetailRepository.findByInvoiceAndDelFlag(ip,false));
             }
+
+            for (InvoicePigDetail ipd :
+                    temp1) {
+                pigs.add(pigsRepository.findByIdAndDelFlag(ipd.getObjectId(),false).get());
+            }
+
             response.setInvoicesPig(temp);
             response.setInvoicePigDetail(temp1);
+            response.setPigs(pigs);
             return response;
         } else {
             List<InvoicePigDetail> temp = new ArrayList<>();
+            List<Pigs> pigs = new ArrayList<>();
             for (InvoicesPig ip :
                     invoicesPigList) {
                 temp.addAll(invoicePigDetailRepository.findByInvoiceAndDelFlag(ip,false));
             }
+
+            for (InvoicePigDetail ipd :
+                    temp) {
+                pigs.add(pigsRepository.findByIdAndDelFlag(ipd.getObjectId(),false).get());
+            }
             response.setInvoicesPig(invoicesPigList);
             response.setInvoicePigDetail(temp);
+            response.setPigs(pigs);
             return response;
         }
 
