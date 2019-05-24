@@ -112,6 +112,7 @@ public class InvoicesPigService {
             InvoicePigDetail temp = new InvoicePigDetail();
             temp.setObjectId(p.getId());
             temp.setInvoice(tempInvoicePig);
+            temp.setDelFlag(false);
             tempInvoicePigDetails.add(invoicePigDetailRepository.save(temp));
         }
         invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPigUpdate());
