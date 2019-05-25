@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.InvoicesPigInvoicePigDetailDTOResponse;
+import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTORequest;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTOResponse;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
@@ -103,20 +104,22 @@ public class InvoicesPigService {
     public PigsInvoicePigDTOResponse savecustom(PigsInvoicePigDTORequest pigsInvoicePigDTORequest){
         PigsInvoicePigDTOResponse response = new PigsInvoicePigDTOResponse();
         List<Pigs> pigsList = pigsInvoicePigDTORequest.getPigsList();
-        List<Pigs> tempPigs = new ArrayList<>();
+        List<PigsDTO> tempPigs = new ArrayList<>();
         List<InvoicePigDetail> tempInvoicePigDetails = new ArrayList<>();
         InvoicesPig tempInvoicePig = invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPig());
         for (Pigs p :
                 pigsList) {
-            tempPigs.add(pigsRepository.save(p));
-            InvoicePigDetail temp = new InvoicePigDetail();
-            temp.setObjectId(p.getId());
-            temp.setInvoice(tempInvoicePig);
-            temp.setDelFlag(false);
-            tempInvoicePigDetails.add(invoicePigDetailRepository.save(temp));
+            Pigs temp = pigsRepository.save(p);
+            PigsDTO pigsDTO = new PigsDTO(temp.getId(),temp.getPigCode(),temp.getHouse().getId(),temp.getRound().getId(),temp.getBirthId(),temp.getBreed().getId(),temp.getGender(),temp.getBirthday(),temp.getBorn_weight(),temp.getBornStatus(),temp.getOriginId(),temp.getOriginFather(), temp.getOriginMother(),temp.getOriginWeight(),temp.getReceiveWeight(), temp.getHealthPoint(),temp.getFoot().getId(),temp.getFunctionUdder(),temp.getTotalUdder(),temp.getGentialType().getId(), temp.getDescription(),temp.getFcr(),temp.getAdg(),temp.getBf(),temp.getFilet(),temp.getLongBack(),temp.getLongBody(),temp.getIndex(),temp.getParities(),temp.getImages(),temp.getHealthStatus().getId(),temp.getBreedingType(),temp.getBreedStatus(),temp.getPregnancyStatus().getId(),temp.getPoint_review(),temp.getStatus().getId(),temp.getPriceCode().getId(),temp.getOverviewStatus(),temp.getDelFlag());
+            tempPigs.add(pigsDTO);
+            InvoicePigDetail tempDetail = new InvoicePigDetail();
+            tempDetail.setObjectId(p.getId());
+            tempDetail.setInvoice(tempInvoicePig);
+            tempDetail.setDelFlag(false);
+            tempInvoicePigDetails.add(invoicePigDetailRepository.save(tempDetail));
         }
         invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPigUpdate());
-        response.setPigsList(tempPigs);
+        response.setoPigsList(tempPigs);
         response.setInvoicesPig(tempInvoicePig);
         response.setInvoicePigDetailList(tempInvoicePigDetails);
         return response;
