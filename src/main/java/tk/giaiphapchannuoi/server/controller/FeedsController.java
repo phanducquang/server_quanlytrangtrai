@@ -3,10 +3,12 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.Feeds;
 import tk.giaiphapchannuoi.server.services.FeedsService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,16 @@ public class FeedsController {
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Feeds feed){
         Feeds temp = feedsService.save(feed);
+        if( temp == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(temp);
+    }
+
+    @Transactional
+    @PostMapping(value = "/feedlist/")
+    public ResponseEntity<Object> insertlist(@RequestBody List<Feeds> feed){
+        List<Feeds> temp = feedsService.savelist(feed);
         if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

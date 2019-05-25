@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Feeds;
 import tk.giaiphapchannuoi.server.repository.FeedsRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,17 @@ public class FeedsService {
     public Feeds save(Feeds feed){
         feed.setDelFlag(false);
         return feedsRepository.save(feed);
+    }
+
+    @Transactional
+    public List<Feeds> savelist(List<Feeds> feed){
+        List<Feeds> temp = new ArrayList<>();
+        for (Feeds f :
+                feed) {
+            f.setDelFlag(false);
+            temp.add(feedsRepository.save(f));
+        }
+        return temp;
     }
 
     public Feeds update(Feeds feed){
