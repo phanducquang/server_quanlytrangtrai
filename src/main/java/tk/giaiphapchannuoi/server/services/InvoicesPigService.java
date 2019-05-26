@@ -119,7 +119,7 @@ public class InvoicesPigService {
             tempInvoicePigDetails.add(invoicePigDetailRepository.save(tempDetail));
         }
         invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPigUpdate());
-        response.setoPigsList(tempPigs);
+        response.setPigsList(tempPigs);
         response.setInvoicesPig(tempInvoicePig);
         response.setInvoicePigDetailList(tempInvoicePigDetails);
         return response;
