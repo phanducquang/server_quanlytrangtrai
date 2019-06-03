@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.TiLeDiseasesDTO;
-import tk.giaiphapchannuoi.server.model.Diseases;
-import tk.giaiphapchannuoi.server.model.Issues;
-import tk.giaiphapchannuoi.server.model.IssuesDiseases;
-import tk.giaiphapchannuoi.server.model.IssuesPigs;
+import tk.giaiphapchannuoi.server.model.*;
 import tk.giaiphapchannuoi.server.repository.IssuesDiseasesRepository;
 import tk.giaiphapchannuoi.server.repository.IssuesPigsRepository;
+import tk.giaiphapchannuoi.server.repository.PigsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,9 @@ public class IssuesPigsService {
 
     @Autowired
     IssuesDiseasesRepository issuesDiseasesRepository;
+
+    @Autowired
+    PigsRepository pigsRepository;
 
     public List<IssuesPigs> findall(){
         return issuesPigsRepository.findAllByDelFlag(false);
@@ -94,20 +95,24 @@ public class IssuesPigsService {
         }
 
         tiLeDiseasesDTOList.sort((TiLeDiseasesDTO t1,TiLeDiseasesDTO t2) -> t2.getTiLe().compareTo(t1.getTiLe()));
-//        tanSuatIssuesList.stream().sorted();
-//        tiLeDiseasesDTOList.so
         return tiLeDiseasesDTOList;
     }
-
-
 
     public Optional<IssuesPigs> findbyid(Integer id){
         return issuesPigsRepository.findByIdAndDelFlag(id,false);
     }
 
+    @Transactional
     public IssuesPigs save(IssuesPigs issuesPig){
         issuesPig.setDelFlag(false);
         issuesPig.setStatus("mới phát hiện");
+        Pigs pig = pigsRepository.findByIdAndDelFlag(issuesPig.getPig().getId(), false).get();
+        HealthStatus healthStatus = pig.getHealthStatus();
+        if(healthStatus.getId() == 1 || healthStatus.getId() == 0){
+            healthStatus.setId(2);
+            pig.setHealthStatus(healthStatus);
+            pigsRepository.save(pig);
+        }
         return issuesPigsRepository.save(issuesPig);
     }
 
