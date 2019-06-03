@@ -31,9 +31,9 @@ public class IssuesPigsController {
         return issuesPigsService.findall();
     }
 
-    @GetMapping(value = "/listcurrentissues/{idsection}")
-    public List<IssuesPigs> findCurrentIssues(@PathVariable Integer idsection){
-        return issuesPigsService.findcurrentissues(idsection);
+    @GetMapping(value = "/listcurrentissues/{idfarm}/{idsection}")
+    public List<IssuesPigs> findCurrentIssues(@PathVariable Integer idfarm, @PathVariable Integer idsection){
+        return issuesPigsService.findcurrentissues(idfarm, idsection);
     }
 
     @GetMapping(value = "/forecastdiseases/{idsection}")
