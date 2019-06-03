@@ -24,6 +24,11 @@ public class PigsController {
         return pigsService.findbyid(id);
     }
 
+    @GetMapping(value = "/issusehealthstatus/")
+    public List<Pigs> findByHealthStatus(){
+        return pigsService.findbyhealthstatus();
+    }
+
     @GetMapping(value = "/list")
     public List<PigsDTO> findAll(){
         return pigsService.findall();

@@ -32,7 +32,7 @@ public class IssuesPigsService {
         return issuesPigsRepository.findAllByDelFlag(false);
     }
 
-    public List<IssuesPigs> findcurrentissues(){
+    public List<IssuesPigs> findcurrentissues(Integer idsection){
         return issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
     }
 

@@ -3,6 +3,7 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.DTO.TiLeDiseasesDTO;
 import tk.giaiphapchannuoi.server.model.Diseases;
@@ -30,16 +31,17 @@ public class IssuesPigsController {
         return issuesPigsService.findall();
     }
 
-    @GetMapping(value = "/listcurrentissues")
-    public List<IssuesPigs> findCurrentIssues(){
-        return issuesPigsService.findcurrentissues();
+    @GetMapping(value = "/listcurrentissues/{idsection}")
+    public List<IssuesPigs> findCurrentIssues(@PathVariable Integer idsection){
+        return issuesPigsService.findcurrentissues(idsection);
     }
 
-    @GetMapping(value = "/forecastdiseases")
+    @GetMapping(value = "/forecastdiseases/{idsection}")
     public List<TiLeDiseasesDTO> forecastDiseases(){
         return issuesPigsService.forecastdiseases();
     }
 
+    @Transactional
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody List<IssuesPigs> issuesPigsList){
         List<IssuesPigs> issuesPigs = new ArrayList<>();
