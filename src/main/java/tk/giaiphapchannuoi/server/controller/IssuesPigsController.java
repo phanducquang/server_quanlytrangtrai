@@ -36,9 +36,9 @@ public class IssuesPigsController {
         return issuesPigsService.findcurrentissues(idfarm, idsection);
     }
 
-    @GetMapping(value = "/forecastdiseases/{idsection}")
-    public List<TiLeDiseasesDTO> forecastDiseases(){
-        return issuesPigsService.forecastdiseases();
+    @GetMapping(value = "/forecastdiseases/{idfarm}/{idsection}")
+    public List<TiLeDiseasesDTO> forecastDiseases(@PathVariable Integer idfarm, @PathVariable Integer idsection){
+        return issuesPigsService.forecastdiseases(idfarm, idsection);
     }
 
     @Transactional

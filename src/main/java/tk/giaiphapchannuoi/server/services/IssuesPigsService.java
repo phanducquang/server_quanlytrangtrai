@@ -47,13 +47,15 @@ public class IssuesPigsService {
         return issuesPigsList;
     }
 
-    public List<TiLeDiseasesDTO> forecastdiseases(){
+    public List<TiLeDiseasesDTO> forecastdiseases(Integer idfarm, Integer idsection){
         //Lay thong tin van de moi phat hien
         List<IssuesPigs> issuesPigsList = issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
         List<Issues> issuesList = new ArrayList<>();
         for (IssuesPigs ip :
                 issuesPigsList) {
-            issuesList.add(ip.getIssue());
+            if (ip.getPig().getHouse().getSection().getId().equals(idsection) && ip.getPig().getHouse().getSection().getFarm().getId().equals(idfarm)){
+                issuesList.add(ip.getIssue());
+            }
         }
 
         //Lay thong tin "van de - benh" dua vao thong tin van de da lay tu truoc
@@ -72,7 +74,9 @@ public class IssuesPigsService {
         //Loc lay danh sach Diseases khong trung nhau
         List<Diseases> filterDiseases = new ArrayList<>();
         //Lay phan tu dau tien
-        filterDiseases.add(diseasesList.get(0));
+        if (!diseasesList.isEmpty()){
+            filterDiseases.add(diseasesList.get(0));
+        }
         //Duyet vong lap thu nhat
         for (int i = 1; i < diseasesList.size(); i++){
             //Duy vong lap thu 2 de tim xem tu i tro ve truoc co trung khong, neu trung break
