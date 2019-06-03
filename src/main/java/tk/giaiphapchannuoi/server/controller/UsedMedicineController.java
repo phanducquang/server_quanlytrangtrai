@@ -28,8 +28,8 @@ public class UsedMedicineController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Object> insert(@RequestBody UsedMedicine usedMedicine){
-        UsedMedicine temp = usedMedicineService.save(usedMedicine);
+    public ResponseEntity<Object> insert(@RequestBody List<UsedMedicine> usedMedicine){
+        List<UsedMedicine> temp = usedMedicineService.save(usedMedicine);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.UsedMedicine;
 import tk.giaiphapchannuoi.server.repository.UsedMedicineRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +25,14 @@ public class UsedMedicineService {
         return usedMedicineRepository.findByIdAndDelFlag(id,false);
     }
 
-    public UsedMedicine save(UsedMedicine usedMedicine){
-        usedMedicine.setDelFlag(false);
-        return usedMedicineRepository.save(usedMedicine);
+    public List<UsedMedicine> save(List<UsedMedicine> usedMedicine){
+        List<UsedMedicine> temp = new ArrayList<>();
+        for (UsedMedicine um :
+                usedMedicine) {
+            um.setDelFlag(false);
+            temp.add(usedMedicineRepository.save(um));
+        }
+        return temp;
     }
 
     public UsedMedicine update(UsedMedicine usedMedicine){
