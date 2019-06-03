@@ -1,6 +1,7 @@
 package tk.giaiphapchannuoi.server.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import tk.giaiphapchannuoi.server.model.Issues;
 import tk.giaiphapchannuoi.server.model.IssuesDiseases;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface IssuesDiseasesRepository extends JpaRepository<IssuesDiseases, 
     Optional<IssuesDiseases> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
     List<IssuesDiseases> findAllByDelFlag(Boolean delFlag);
+
+    List<IssuesDiseases> findByIssueAndDelFlag(Issues issue, Boolean delFlag);
 }

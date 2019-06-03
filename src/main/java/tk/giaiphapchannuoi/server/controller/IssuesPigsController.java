@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.DTO.TiLeDiseasesDTO;
+import tk.giaiphapchannuoi.server.model.Diseases;
 import tk.giaiphapchannuoi.server.model.IssuesPigs;
 import tk.giaiphapchannuoi.server.services.IssuesPigsService;
 
@@ -26,6 +28,16 @@ public class IssuesPigsController {
     @GetMapping(value = "/list")
     public List<IssuesPigs> findAll(){
         return issuesPigsService.findall();
+    }
+
+    @GetMapping(value = "/listcurrentissues")
+    public List<IssuesPigs> findCurrentIssues(){
+        return issuesPigsService.findcurrentissues();
+    }
+
+    @GetMapping(value = "/forecastdiseases")
+    public List<TiLeDiseasesDTO> forecastDiseases(){
+        return issuesPigsService.forecastdiseases();
     }
 
     @PostMapping(value = "/")

@@ -11,4 +11,6 @@ public interface IssuesPigsRepository extends JpaRepository<IssuesPigs, Integer>
     Optional<IssuesPigs> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
     List<IssuesPigs> findAllByDelFlag(Boolean delFlag);
+
+    List<IssuesPigs> findByStatusAndDelFlag(String status, Boolean delFlag);
 }

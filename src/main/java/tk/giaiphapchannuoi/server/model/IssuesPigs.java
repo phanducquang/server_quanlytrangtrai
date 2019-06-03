@@ -39,7 +39,7 @@ public class IssuesPigs extends Auditable implements Serializable {
 	private String images;
 	
 	@Column(name="status")
-	private Integer status;
+	private String status;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -47,7 +47,7 @@ public class IssuesPigs extends Auditable implements Serializable {
 	public IssuesPigs() {
 	}
 
-	public IssuesPigs(Date date, Pigs pig, Issues issue, Employees employee, String description, String images, Integer status, Boolean delFlag) {
+	public IssuesPigs(Date date, Pigs pig, Issues issue, Employees employee, String description, String images, String status, Boolean delFlag) {
 		this.date = date;
 		this.pig = pig;
 		this.issue = issue;
@@ -122,11 +122,11 @@ public class IssuesPigs extends Auditable implements Serializable {
 		this.images = images;
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
