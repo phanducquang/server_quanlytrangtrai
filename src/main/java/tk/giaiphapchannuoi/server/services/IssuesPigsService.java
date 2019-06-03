@@ -33,7 +33,18 @@ public class IssuesPigsService {
     }
 
     public List<IssuesPigs> findcurrentissues(Integer idfarm, Integer idsection){
-        return issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
+        if (idfarm == 0){
+            return issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
+        }
+        List<IssuesPigs> temp = issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
+        List<IssuesPigs> issuesPigsList = new ArrayList<>();
+        for (IssuesPigs ip :
+                temp) {
+            if (ip.getPig().getHouse().getSection().getId().equals(idsection) && ip.getPig().getHouse().getSection().getFarm().getId().equals(idfarm)){
+                issuesPigsList.add(ip);
+            }
+        }
+        return issuesPigsList;
     }
 
     public List<TiLeDiseasesDTO> forecastdiseases(){
