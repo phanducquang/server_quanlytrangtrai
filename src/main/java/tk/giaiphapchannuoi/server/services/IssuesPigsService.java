@@ -28,8 +28,23 @@ public class IssuesPigsService {
     @Autowired
     PigsRepository pigsRepository;
 
+    @Autowired
+    UsersService usersService;
+
     public List<IssuesPigs> findall(){
-        return issuesPigsRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        if (farmId == 0){
+            return issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
+        }
+        List<IssuesPigs> temp = issuesPigsRepository.findByStatusAndDelFlag("mới phát hiện",false);
+        List<IssuesPigs> issuesPigsList = new ArrayList<>();
+        for (IssuesPigs ip :
+                temp) {
+            if (ip.getPig().getHouse().getSection().getFarm().getId().equals(farmId)){
+                issuesPigsList.add(ip);
+            }
+        }
+        return issuesPigsList;
     }
 
     public List<IssuesPigs> findcurrentissues(Integer idfarm, Integer idsection){
