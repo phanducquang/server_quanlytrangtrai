@@ -124,8 +124,9 @@ public class IssuesPigsService {
         Pigs pig = pigsRepository.findByIdAndDelFlag(issuesPig.getPig().getId(), false).get();
         HealthStatus healthStatus = pig.getHealthStatus();
         if(healthStatus.getId() == 1 || healthStatus.getId() == 0){
-            healthStatus.setId(2);
-            pig.setHealthStatus(healthStatus);
+            HealthStatus healthStatus1 = new HealthStatus();
+            healthStatus1.setId(2);
+            pig.setHealthStatus(healthStatus1);
             pigsRepository.save(pig);
         }
         return issuesPigsRepository.save(issuesPig);
