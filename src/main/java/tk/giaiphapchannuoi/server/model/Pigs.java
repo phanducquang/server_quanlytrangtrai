@@ -16,8 +16,8 @@ public class Pigs extends Auditable implements Serializable {
 	private String pigCode;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="house_id")
-	private Houses house;
+	@JoinColumn(name="cage_id")
+	private Cages house;
 
 	@ManyToOne(fetch = FetchType.EAGER)//bỏ
 	@JoinColumn(name="round_id")
@@ -142,7 +142,7 @@ public class Pigs extends Auditable implements Serializable {
 	public Pigs() {
 	}
 
-	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer birthId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+	public Pigs(String pigCode, Cages house, Rounds round, Breeds breed, Integer birthId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
 		this.pigCode = pigCode;
 		this.house = house;
 		this.round = round;
@@ -199,11 +199,11 @@ public class Pigs extends Auditable implements Serializable {
 		this.pigCode = pigCode;
 	}
 
-	public Houses getHouse() {
+	public Cages getHouse() {
 		return house;
 	}
 
-	public void setHouse(Houses house) {
+	public void setHouse(Cages house) {
 		this.house = house;
 	}
 

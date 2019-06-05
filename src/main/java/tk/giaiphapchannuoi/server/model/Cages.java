@@ -6,8 +6,8 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="houses")
-public class Houses extends Auditable implements Serializable {
+@Table(name="cages")
+public class Cages extends Auditable implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -20,7 +20,7 @@ public class Houses extends Auditable implements Serializable {
 //	@Column(name="type_id")
 //	private Integer typeId;
 	
-	@Column(name="house_code")
+	@Column(name="cage_code")
 	private String houseCode;
 	
 	@Column(name="name")
@@ -41,10 +41,10 @@ public class Houses extends Auditable implements Serializable {
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 
-	public Houses() {
+	public Cages() {
 	}
 
-	public Houses(Sections section, String houseCode, String name, String description, String position, String status, Date founding, Boolean delFlag) {
+	public Cages(Sections section, String houseCode, String name, String description, String position, String status, Date founding, Boolean delFlag) {
 		this.section = section;
 		this.houseCode = houseCode;
 		this.name = name;

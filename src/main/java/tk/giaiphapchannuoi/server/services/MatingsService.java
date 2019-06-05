@@ -10,6 +10,7 @@ import tk.giaiphapchannuoi.server.repository.MatingsRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
 import tk.giaiphapchannuoi.server.repository.StatusRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +39,8 @@ public class MatingsService {
     }
 
     public List<Matings> findbypig(Integer objId){// objId: mother (pig), father (pig), breed
-        Pigs pig = pigsService.findbyid(objId).get();
-            return matingsRepository.findByMotherOrFatherIdAndDelFlag(pig, objId,false);
+        Optional<Pigs> pig = pigsService.findbyid(objId);
+        return pig.map(p -> matingsRepository.findByMotherOrFatherIdAndDelFlag(p, objId,false)).orElse(Collections.emptyList());
     }
 
     @Transactional

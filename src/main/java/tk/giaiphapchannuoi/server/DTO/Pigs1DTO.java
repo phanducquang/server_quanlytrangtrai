@@ -1,6 +1,6 @@
 package tk.giaiphapchannuoi.server.DTO;
 
-import tk.giaiphapchannuoi.server.model.Houses;
+import tk.giaiphapchannuoi.server.model.Cages;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,11 +19,11 @@ public class Pigs1DTO implements Serializable {
 
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name="house_id")
-//	private Houses house;
+//	private Cages house;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="house_id")
-	private Houses house;
+	private Cages house;
 
 	@Column(name="round_id")
 	private Integer roundId;
@@ -140,7 +140,7 @@ public class Pigs1DTO implements Serializable {
 	public Pigs1DTO() {
 	}
 
-//	public Pigs(String pigCode, Houses house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, BreedingType breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+//	public Pigs(String pigCode, Cages house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, BreedingType breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
 //		this.pigCode = pigCode;
 //		this.house = house;
 //		this.round = round;
@@ -196,11 +196,11 @@ public class Pigs1DTO implements Serializable {
 		this.pigCode = pigCode;
 	}
 
-	public Houses getHouse() {
+	public Cages getHouse() {
 		return house;
 	}
 
-	public void setHouse(Houses house) {
+	public void setHouse(Cages house) {
 		this.house = house;
 	}
 

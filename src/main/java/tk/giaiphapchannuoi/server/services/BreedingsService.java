@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Breedings;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.model.Status;
-import tk.giaiphapchannuoi.server.model.Users;
 import tk.giaiphapchannuoi.server.repository.BreedingsRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
 import tk.giaiphapchannuoi.server.repository.StatusRepository;
@@ -14,6 +13,7 @@ import tk.giaiphapchannuoi.server.repository.UsersRepository;
 import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +56,8 @@ public class BreedingsService {
     }
 
     public List<Breedings> findallbypig(Integer id){
-        Pigs pig = pigsRepository.findByIdAndDelFlag(id,false).get();
-        return breedingsRepository.findByPigAndAndDelFlag(pig,false);
+        Optional<Pigs> pig = pigsRepository.findByIdAndDelFlag(id,false);
+        return pig.map(p -> breedingsRepository.findByPigAndAndDelFlag(p,false)).orElse(Collections.emptyList());
     }
 
     public Optional<Breedings> findbyid(Integer id){
@@ -67,14 +67,18 @@ public class BreedingsService {
     @Transactional
     public Breedings save(Breedings breedings){
         breedings.setDelFlag(false);
-        Pigs pig = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false).get();
+        Optional<Pigs> p = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false);
         //Lay status moi bang cach xac dinh status cua heo hien tai. Status nay la pre_status. Status can chuyen cho heo co code là 9
         //pre_status o day la code cua status goc
-        Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
-        pig.setStatus(status);
-        Pigs temp = pigsRepository.save(pig);
-        breedings.setPig(temp);
-        return breedingsRepository.save(breedings);
+        if (p.isPresent()){
+            Pigs pig = p.get();
+            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
+            pig.setStatus(status);
+            Pigs temp = pigsRepository.save(pig);
+            breedings.setPig(temp);
+            return breedingsRepository.save(breedings);
+        }
+        return null;
     }
 
     public Breedings update(Breedings breedings){

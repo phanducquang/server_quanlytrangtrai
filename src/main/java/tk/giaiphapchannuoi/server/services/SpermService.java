@@ -8,6 +8,7 @@ import tk.giaiphapchannuoi.server.model.Sperm;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
 import tk.giaiphapchannuoi.server.repository.SpermRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +31,8 @@ public class SpermService {
     }
 
     public List<Sperm> findbypig(Integer pigId){
-        Pigs pig = pigsService.findbyid(pigId).get();
-        return spermRepository.findByPigAndDelFlag(pig,false);
+        Optional<Pigs> pig = pigsService.findbyid(pigId);
+        return pig.map(p -> spermRepository.findByPigAndDelFlag(p,false)).orElse(Collections.emptyList());
     }
 
 
