@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.MedicineWarehouse;
 import tk.giaiphapchannuoi.server.services.MedicineWarehouseService;
+import tk.giaiphapchannuoi.server.services.UsersService;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,11 @@ public class MedicineWarehouseController {
     @GetMapping(value = "/{id}")
     public Optional<MedicineWarehouse> findById(@PathVariable Integer id){
         return medicineWarehouseService.findbyid(id);
+    }
+
+    @GetMapping(value = "/medicine/{medicineid}")
+    public List<MedicineWarehouse> findByMedicine(@PathVariable Integer medicineid){
+        return medicineWarehouseService.findbymedicine(medicineid);
     }
 
     @GetMapping(value = "/invoice/{invoiceId}")
