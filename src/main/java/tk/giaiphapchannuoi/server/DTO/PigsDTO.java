@@ -21,7 +21,7 @@ public class PigsDTO implements Serializable {
 //	@JoinColumn(name="house_id")
 //	private Cages house;
 
-	@Column(name="house_id")
+	@Column(name="cage_id")
 	private Integer houseId;
 
 	@Column(name="round_id")

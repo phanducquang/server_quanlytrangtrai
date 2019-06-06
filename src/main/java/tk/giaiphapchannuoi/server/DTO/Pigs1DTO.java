@@ -22,7 +22,7 @@ public class Pigs1DTO implements Serializable {
 //	private Cages house;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="house_id")
+	@JoinColumn(name="cage_id")
 	private Cages house;
 
 	@Column(name="round_id")

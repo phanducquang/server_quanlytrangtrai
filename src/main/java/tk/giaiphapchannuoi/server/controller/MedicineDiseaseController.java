@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.MedicineDisease;
+import tk.giaiphapchannuoi.server.model.Medicines;
 import tk.giaiphapchannuoi.server.services.MedicineDiseaseService;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class MedicineDiseaseController {
     @GetMapping(value = "/{id}")
     public Optional<MedicineDisease> findById(@PathVariable Integer id){
         return medicineDiseaseService.findbyid(id);
+    }
+
+    @GetMapping(value = "/disease/{diseaseId}")
+    public List<Medicines> findMedicineByDisease(@PathVariable Integer diseaseId){
+        return medicineDiseaseService.findMedicineByDisease(diseaseId);
     }
 
     @GetMapping(value = "/list")
