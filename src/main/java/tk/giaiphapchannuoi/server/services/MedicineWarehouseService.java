@@ -59,6 +59,9 @@ public class MedicineWarehouseService {
         if (medicine.isPresent()){
             Integer farmId = usersService.getFarmId();
             List<MedicineWarehouse> temp = medicineWarehouseRepository.findByMedicineAndDelFlag(medicine.get(),false);
+            if (farmId == 0){
+                return temp;
+            }
             List<MedicineWarehouse> medicineWarehouseList = new ArrayList<>();
             for (MedicineWarehouse mw :
                     temp) {
