@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Warehouses;
 import tk.giaiphapchannuoi.server.repository.WarehousesRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +17,23 @@ public class WarehousesService {
     @Autowired
     WarehousesRepository warehousesRepository;
 
+    @Autowired
+    UsersService usersService;
+
     public List<Warehouses> findall(){
-        return warehousesRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        if (farmId == 0){
+            return warehousesRepository.findAllByDelFlag(false);
+        }
+        List<Warehouses> temp = warehousesRepository.findAllByDelFlag(false);
+        List<Warehouses> warehousesList = new ArrayList<>();
+        for (Warehouses wh :
+                temp) {
+            if (wh.getManager().getFarm().getId().equals(farmId)){
+                warehousesList.add(wh);
+            }
+        }
+        return warehousesList;
     }
 
     public Optional<Warehouses> findbyid(Integer id){
