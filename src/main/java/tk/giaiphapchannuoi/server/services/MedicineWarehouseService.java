@@ -54,18 +54,17 @@ public class MedicineWarehouseService {
 //        return Collections.emptyList();
     }
 
-    public List<MedicineWarehouse> findbymedicine(Integer medicineid){
+    public List<MedicineWarehouse> findbymedicine(Integer farmid, Integer medicineid){
         Optional<Medicines> medicine = medicinesRepository.findByIdAndDelFlag(medicineid, false);
         if (medicine.isPresent()){
-            Integer farmId = usersService.getFarmId();
             List<MedicineWarehouse> temp = medicineWarehouseRepository.findByMedicineAndDelFlag(medicine.get(),false);
-            if (farmId == 0){
+            if (farmid == 0){
                 return temp;
             }
             List<MedicineWarehouse> medicineWarehouseList = new ArrayList<>();
             for (MedicineWarehouse mw :
                     temp) {
-                if (mw.getWarehouse().getManager().getFarm().getId().equals(farmId)){
+                if (mw.getWarehouse().getManager().getFarm().getId().equals(farmid)){
                     medicineWarehouseList.add(mw);
                 }
             }

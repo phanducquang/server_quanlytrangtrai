@@ -23,9 +23,9 @@ public class MedicineWarehouseController {
         return medicineWarehouseService.findbyid(id);
     }
 
-    @GetMapping(value = "/medicine/{medicineid}")
-    public List<MedicineWarehouse> findByMedicine(@PathVariable Integer medicineid){
-        return medicineWarehouseService.findbymedicine(medicineid);
+    @GetMapping(value = "/medicine/{farmid}/{medicineid}")
+    public List<MedicineWarehouse> findByMedicine(@PathVariable Integer farmid, @PathVariable Integer medicineid){
+        return medicineWarehouseService.findbymedicine(farmid, medicineid);
     }
 
     @GetMapping(value = "/invoice/{invoiceId}")
