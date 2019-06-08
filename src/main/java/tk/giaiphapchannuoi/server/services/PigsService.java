@@ -36,6 +36,9 @@ public class PigsService {
     FarmsRepository farmsRepository;
 
     @Autowired
+    CagesRepository cagesRepository;
+
+    @Autowired
     UsersService usersService;
 
     public List<PigsDTO> findall(){
@@ -70,6 +73,9 @@ public class PigsService {
     public List<Pigs> findbyhealthstatus(){
         Integer farmId = usersService.getFarmId();
         List<Pigs> temp = pigsRepository.findAllByDelFlag(false);
+        if (farmId.equals(0)){
+            return temp;
+        }
         List<Pigs> pigs = new ArrayList<>();
         for (Pigs p :
                 temp) {
@@ -81,33 +87,50 @@ public class PigsService {
     }
 
     public Pigs save(Pigs pig){
-        pig.setDelFlag(false);
-        return pigsRepository.save(pig);
+        Integer farmId = usersService.getFarmId();
+        //Cage bằng với house
+        Optional<Cages> cage = cagesRepository.findByIdAndDelFlag(pig.getHouse().getId(),false);
+        Integer farmIdFromPig = cage.map(c -> c.getSection().getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromPig)){
+            pig.setDelFlag(false);
+            return pigsRepository.save(pig);
+        }
+        return null;
     }
 
     @Transactional
     public Pigs update(Pigs pig){
-        float receiveWeightOld = pigsRepository.findByIdAndDelFlag(pig.getId(),false).get().getReceiveWeight();//Lay thong tin pig truoc khi cap nhat
-        Pigs temp = new Pigs();
-                temp = pigsRepository.save(pig);//Lay thong tin Pig sau khi cap nhat
-        if(receiveWeightOld != temp.getReceiveWeight()){
-            List<InvoicePigDetail> invoicePigDetailList = invoicePigDetailRepository.findByObjectIdAndDelFlag(temp.getId(), false);
-            //Thuc hien duyet tat ca cac invoice lien quan den pig de thay doi total_weight
-            for (InvoicePigDetail invoice :
-                    invoicePigDetailList) {
-                InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoice.getInvoice().getId(),false).get();
-                //gan Total_Weight = Total_Weight - (receive_weight cua heo luc chua chinh sua) + (receive_weight cua heo luc da chinh sua)
-                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - receiveWeightOld + temp.getReceiveWeight());
-                invoicesPigRepository.save(invoicesPig);
+        Integer farmId = usersService.getFarmId();
+        //Cage bằng với house
+        Optional<Cages> cage = cagesRepository.findByIdAndDelFlag(pig.getHouse().getId(),false);
+        Integer farmIdFromPig = cage.map(c -> c.getSection().getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromPig)){
+            float receiveWeightOld = pigsRepository.findByIdAndDelFlag(pig.getId(),false).get().getReceiveWeight();//Lay thong tin pig truoc khi cap nhat
+            Pigs temp = new Pigs();
+            temp = pigsRepository.save(pig);//Lay thong tin Pig sau khi cap nhat
+            if(receiveWeightOld != temp.getReceiveWeight()){
+                List<InvoicePigDetail> invoicePigDetailList = invoicePigDetailRepository.findByObjectIdAndDelFlag(temp.getId(), false);
+                //Thuc hien duyet tat ca cac invoice lien quan den pig de thay doi total_weight
+                for (InvoicePigDetail invoice :
+                        invoicePigDetailList) {
+                    InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoice.getInvoice().getId(),false).get();
+                    //gan Total_Weight = Total_Weight - (receive_weight cua heo luc chua chinh sua) + (receive_weight cua heo luc da chinh sua)
+                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - receiveWeightOld + temp.getReceiveWeight());
+                    invoicesPigRepository.save(invoicesPig);
+                }
             }
+            return temp;
         }
-        return temp;
+        return null;
     }
 
     @Transactional
     public Boolean delete(Pigs pig){
         Integer farmId = usersService.getFarmId();
-        if (farmId == 0 || pig.getHouse().getSection().getFarm().getId().equals(farmId)){
+        //Cage bằng với house
+        Optional<Cages> cage = cagesRepository.findByIdAndDelFlag(pig.getHouse().getId(),false);
+        Integer farmIdFromPig = cage.map(c -> c.getSection().getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromPig)){
             pig.setDelFlag(true);
 
             List<InvoicePigDetail> invoicePigDetailList = invoicePigDetailRepository.findByObjectIdAndDelFlag(pig.getId(), false);
