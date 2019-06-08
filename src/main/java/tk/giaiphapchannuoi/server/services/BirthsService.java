@@ -60,6 +60,7 @@ public class BirthsService {
         Integer farmId = usersService.getFarmId();
         if (births.getMating().getMother().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
             int dem = 0 ;
+            //Lay danh sach birth sau do xem xem heo nai da sinh bao nhieu lan lua lai o bien "dem"
             List<Births> birthsList = findall();
             for (Births temp :
                     birthsList) {

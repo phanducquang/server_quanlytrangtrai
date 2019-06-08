@@ -31,21 +31,18 @@ public class BreedingsService {
     StatusRepository statusRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UsersService usersService;
 
     public List<Breedings> findall(){
         List<Breedings> breedingsList = breedingsRepository.findAllByDelFlag(false);
         List<Breedings> breedingsListReturn = new ArrayList<>();
 
-        //Lay userId thong qua bien public từ class JwtAuthenticationFilter
-        int UserId = JwtAuthenticationFilter.userIdGlobal;
-        //Xac dinh farm id bang cach lay thong tin user => lay thong tin employee => lay thong tin farm
-        int FarmIdFromUser = usersRepository.findByIdAndDelFlag(UserId,false).get().getEmployee().getFarm().getId();
+        Integer farmId = usersService.getFarmId();
 
-        if (FarmIdFromUser != 0) {
+        if (farmId != 0) {
             for (Breedings breeding :
                     breedingsList) {
-                if (breeding.getPig().getHouse().getSection().getFarm().getId() == FarmIdFromUser) {
+                if (breeding.getPig().getHouse().getSection().getFarm().getId().equals(farmId)) {
                     breedingsListReturn.add(breeding);
                 }
             }
@@ -56,44 +53,75 @@ public class BreedingsService {
     }
 
     public List<Breedings> findallbypig(Integer id){
+        Integer farmId = usersService.getFarmId();
         Optional<Pigs> pig = pigsRepository.findByIdAndDelFlag(id,false);
-        return pig.map(p -> breedingsRepository.findByPigAndAndDelFlag(p,false)).orElse(Collections.emptyList());
+        if (pig.isPresent()){
+            List<Breedings> temp = breedingsRepository.findByPigAndAndDelFlag(pig.get(),false);
+            if (farmId == 0){
+                return temp;
+            }
+            List<Breedings> breedingsList = new ArrayList<>();
+            for (Breedings b :
+                    temp) {
+                if (b.getPig().getHouse().getSection().getFarm().getId().equals(farmId)){
+                    breedingsList.add(b);
+                }
+            }
+            return breedingsList;
+        }
+        return Collections.emptyList();
     }
 
     public Optional<Breedings> findbyid(Integer id){
-        return breedingsRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<Breedings> breeding = breedingsRepository.findByIdAndDelFlag(id,false);
+        if (breeding.isPresent()){
+            if (breeding.get().getPig().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0)
+            return breeding;
+        }
+        return Optional.empty();
     }
 
     @Transactional
     public Breedings save(Breedings breedings){
-        breedings.setDelFlag(false);
-        Optional<Pigs> p = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false);
-        //Lay status moi bang cach xac dinh status cua heo hien tai. Status nay la pre_status. Status can chuyen cho heo co code là 9
-        //pre_status o day la code cua status goc
-        if (p.isPresent()){
-            Pigs pig = p.get();
-            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
-            pig.setStatus(status);
-            Pigs temp = pigsRepository.save(pig);
-            breedings.setPig(temp);
-            return breedingsRepository.save(breedings);
+        Integer farmId = usersService.getFarmId();
+        if (breedings.getPig().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
+            breedings.setDelFlag(false);
+            Optional<Pigs> p = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false);
+            //Lay status moi bang cach xac dinh status cua heo hien tai. Status nay la pre_status. Status can chuyen cho heo co code là 9
+            //pre_status o day la code cua status goc
+            if (p.isPresent()){
+                Pigs pig = p.get();
+                Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
+                pig.setStatus(status);
+                Pigs temp = pigsRepository.save(pig);
+                breedings.setPig(temp);
+                return breedingsRepository.save(breedings);
+            }
         }
         return null;
     }
 
     public Breedings update(Breedings breedings){
-        return breedingsRepository.save(breedings);
+        Integer farmId = usersService.getFarmId();
+        if (breedings.getPig().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
+            return breedingsRepository.save(breedings);
+        }
+        return null;
     }
 
     public Boolean delete(Breedings breedings){
         breedings.setDelFlag(true);
-        if(breedingsRepository.save(breedings) != null){
-            Pigs pig = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false).get();
-            //Lay status bang dau bang pre_status
-            Status status = statusRepository.findByCodeAndDelFlag(pig.getStatus().getPreviousStatus(),false).get();
-            pig.setStatus(status);
-            pigsRepository.save(pig);
-            return true;
+        Integer farmId = usersService.getFarmId();
+        if (breedings.getPig().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
+            if(breedingsRepository.save(breedings) != null){
+                Pigs pig = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false).get();
+                //Lay status bang dau bang pre_status
+                Status status = statusRepository.findByCodeAndDelFlag(pig.getStatus().getPreviousStatus(),false).get();
+                pig.setStatus(status);
+                pigsRepository.save(pig);
+                return true;
+            }
         }
         return false;
     }

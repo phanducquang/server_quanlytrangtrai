@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Farms;
 import tk.giaiphapchannuoi.server.repository.FarmsRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,28 +17,61 @@ public class FarmsService {
     @Autowired
     FarmsRepository farmsRepository;
 
+    @Autowired
+    UsersService usersService;
+
     public List<Farms> findall(){
-        return farmsRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        List<Farms> temp = farmsRepository.findAllByDelFlag(false);
+        if (farmId == 0){
+            return temp;
+        }
+        List<Farms> farmsList = new ArrayList<>();
+        for (Farms f :
+                temp) {
+            if (f.getId().equals(farmId)){
+                farmsList.add(f);
+            }
+        }
+        return farmsList;
     }
 
     public Optional<Farms> findbyid(Integer id){
-        return farmsRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<Farms> farm = farmsRepository.findByIdAndDelFlag(id,false);
+        if (farm.isPresent()){
+            if (farm.get().getId().equals(farmId) || farmId == 0){
+                return farm;
+            }
+        }
+        return Optional.empty();
     }
 
     public Farms save(Farms farm){
-        farm.setDelFlag(false);
-        return farmsRepository.save(farm);
+        Integer farmId = usersService.getFarmId();
+        if (farm.getId().equals(farmId) || farmId == 0) {
+            farm.setDelFlag(false);
+            return farmsRepository.save(farm);
+        }
+        return null;
     }
 
     public Farms update(Farms farm){
-        return farmsRepository.save(farm);
+        Integer farmId = usersService.getFarmId();
+        if (farm.getId().equals(farmId) || farmId == 0){
+            return farmsRepository.save(farm);
+        }
+        return null;
     }
 
 
     public Boolean delete(Farms farm){
-        farm.setDelFlag(true);
-        if(farmsRepository.save(farm) != null){
-            return true;
+        Integer farmId = usersService.getFarmId();
+        if (farm.getId().equals(farmId) || farmId == 0){
+            farm.setDelFlag(true);
+            if(farmsRepository.save(farm) != null){
+                return true;
+            }
         }
         return false;
     }

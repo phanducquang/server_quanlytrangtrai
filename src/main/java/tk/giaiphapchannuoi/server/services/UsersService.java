@@ -22,6 +22,8 @@ public class UsersService {
     PasswordEncoder passwordEncoder;
 
     public Integer getFarmId(){
+        //Lay userId thong qua bien public từ class JwtAuthenticationFilter
+        //Xac dinh farm id bang cach lay thong tin user => lay thong tin employee => lay thong tin farm
         Users user = findbyid(JwtAuthenticationFilter.userIdGlobal).get();
         Integer farmId = user.getEmployee().getFarm().getId();
         return farmId;
