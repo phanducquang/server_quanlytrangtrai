@@ -1,5 +1,6 @@
 package tk.giaiphapchannuoi.server.controller;
 
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.Feeds;
 import tk.giaiphapchannuoi.server.services.FeedsService;
+import tk.giaiphapchannuoi.server.services.UsersService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,9 @@ public class FeedsController {
 
     @Autowired
     FeedsService feedsService;
+
+    @Autowired
+    UsersService usersService;
 
     @GetMapping(value = "/{id}")
     public Optional<Feeds> findById(@PathVariable Integer id){
@@ -31,7 +36,8 @@ public class FeedsController {
 
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Feeds feed){
-        Feeds temp = feedsService.save(feed);
+        Integer farmId = usersService.getFarmId();
+        Feeds temp = feedsService.save(farmId, feed);
         if( temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

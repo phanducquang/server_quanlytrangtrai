@@ -35,11 +35,67 @@ public class InvoicesPigService {
     PigsRepository pigsRepository;
 
     public List<InvoicesPig> findall(){
-        return invoicePigRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        List<InvoicesPig> temp = invoicePigRepository.findAllByDelFlag(false);
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<InvoicesPig> invoicesPigList = new ArrayList<>();
+        for (InvoicesPig ip :
+                temp) {
+            if(ip.getInvoiceType().equals("external-import")){
+                if (ip.getDestinationId().equals(farmId)){
+                    invoicesPigList.add(ip);
+                }
+            } else if(ip.getInvoiceType().equals("internal-export")){
+                if (ip.getSourceId().equals(farmId)){
+                    invoicesPigList.add(ip);
+                }
+            } else if (ip.getInvoiceType().equals("internal-import")){
+                if (ip.getDestinationId().equals(farmId)){
+                    invoicesPigList.add(ip);
+                }
+            } else if (ip.getInvoiceType().equals("external-export")){
+                if (ip.getSourceId().equals(farmId)){
+                    invoicesPigList.add(ip);
+                }
+            } else if (ip.getInvoiceType().equals("root")){
+                if (ip.getSourceId().equals(farmId)){
+                    invoicesPigList.add(ip);
+                }
+            }
+        }
+        return invoicesPigList;
     }
 
     public Optional<InvoicesPig> findbyid(Integer id){
-        return invoicePigRepository.findByIdAndDelFlag(id,false);
+        Optional<InvoicesPig> invoicesPig = invoicePigRepository.findByIdAndDelFlag(id,false);
+        if (invoicesPig.isPresent()){
+            Integer farmId = usersService.getFarmId();
+            InvoicesPig ip = invoicesPig.get();
+            if(ip.getInvoiceType().equals("external-import")){
+                if (ip.getDestinationId().equals(farmId)){
+                    return invoicesPig;
+                }
+            } else if(ip.getInvoiceType().equals("internal-export")){
+                if (ip.getSourceId().equals(farmId)){
+                    return invoicesPig;
+                }
+            } else if (ip.getInvoiceType().equals("internal-import")){
+                if (ip.getDestinationId().equals(farmId)){
+                    return invoicesPig;
+                }
+            } else if (ip.getInvoiceType().equals("external-export")){
+                if (ip.getSourceId().equals(farmId)){
+                    return invoicesPig;
+                }
+            } else if (ip.getInvoiceType().equals("root")){
+                if (ip.getSourceId().equals(farmId)){
+                    return invoicesPig;
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     public InvoicesPigInvoicePigDetailDTOResponse findbystatus(String status){
@@ -62,6 +118,10 @@ public class InvoicesPigService {
                     }
                 } else if (ip.getInvoiceType().equals("internal-import")){
                     if (ip.getDestinationId().equals(farmId)){
+                        temp.add(ip);
+                    }
+                } else if (ip.getInvoiceType().equals("external-export")){
+                    if (ip.getSourceId().equals(farmId)){
                         temp.add(ip);
                     }
                 }
@@ -126,18 +186,62 @@ public class InvoicesPigService {
     }
 
     public InvoicesPig save(InvoicesPig invoicePig){
+        Integer farmId = usersService.getFarmId();
         invoicePig.setDelFlag(false);
-        return invoicePigRepository.save(invoicePig);
+        if(invoicePig.getInvoiceType().equals("external-import")){
+            if (invoicePig.getDestinationId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if(invoicePig.getInvoiceType().equals("internal-export")){
+            if (invoicePig.getSourceId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if (invoicePig.getInvoiceType().equals("internal-import")){
+            if (invoicePig.getDestinationId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if (invoicePig.getInvoiceType().equals("external-export")){
+            if (invoicePig.getSourceId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if (invoicePig.getInvoiceType().equals("root")){
+            if (invoicePig.getSourceId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        }
+        return null;
     }
 
     public InvoicesPig update(InvoicesPig invoicePig){
-        return invoicePigRepository.save(invoicePig);
+        Integer farmId = usersService.getFarmId();
+        if(invoicePig.getInvoiceType().equals("external-import")){
+            if (invoicePig.getDestinationId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if(invoicePig.getInvoiceType().equals("internal-export")){
+            if (invoicePig.getSourceId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if (invoicePig.getInvoiceType().equals("internal-import")){
+            if (invoicePig.getDestinationId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if (invoicePig.getInvoiceType().equals("external-export")){
+            if (invoicePig.getSourceId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        } else if (invoicePig.getInvoiceType().equals("root")){
+            if (invoicePig.getSourceId().equals(farmId)){
+                return invoicePigRepository.save(invoicePig);
+            }
+        }
+        return null;
     }
 
 
     public Boolean delete(InvoicesPig invoicePig){
         invoicePig.setDelFlag(true);
-        if(invoicePigRepository.save(invoicePig) != null){
+        if(update(invoicePig) != null){
             return true;
         }
         return false;

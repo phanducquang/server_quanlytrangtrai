@@ -21,7 +21,7 @@ public class Customers extends Auditable implements Serializable {
 	private CustomerGroups group;
 
 	@Column(name="farm_id")
-	private String farmId;
+	private Integer farmId;
 	
 	@Column(name="name")
 	private String name;
@@ -53,7 +53,7 @@ public class Customers extends Auditable implements Serializable {
 	public Customers() {
 	}
 
-	public Customers(CustomerTypes type, CustomerGroups group, String farmId, String name, String phone, String email, String address, String companyAddress, String fax, Integer bank, String description, Boolean delFlag) {
+	public Customers(CustomerTypes type, CustomerGroups group, Integer farmId, String name, String phone, String email, String address, String companyAddress, String fax, Integer bank, String description, Boolean delFlag) {
 		this.type = type;
 		this.group = group;
 		this.farmId = farmId;
@@ -92,11 +92,11 @@ public class Customers extends Auditable implements Serializable {
 		this.group = group;
 	}
 
-	public String getFarmId() {
+	public Integer getFarmId() {
 		return farmId;
 	}
 
-	public void setFarmId(String farmId) {
+	public void setFarmId(Integer farmId) {
 		this.farmId = farmId;
 	}
 
