@@ -37,21 +37,52 @@ public class MedicineWarehouseService {
     UsersService usersService;
 
     public List<MedicineWarehouse> findall(){
-        return medicineWarehouseRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        List<MedicineWarehouse> temp = medicineWarehouseRepository.findAllByDelFlag(false);
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<MedicineWarehouse> medicineWarehouseList = new ArrayList<>();
+        for (MedicineWarehouse md :
+                temp) {
+            if (md.getWarehouse().getManager().getFarm().getId().equals(farmId)){
+                medicineWarehouseList.add(md);
+            }
+        }
+        return medicineWarehouseList;
     }
 
     public Optional<MedicineWarehouse> findbyid(Integer id){
-        return medicineWarehouseRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<MedicineWarehouse> medicineWarehouse = medicineWarehouseRepository.findByIdAndDelFlag(id,false);
+        if (medicineWarehouse.isPresent()){
+            if (farmId.equals(0) || medicineWarehouse.get().getWarehouse().getManager().getFarm().getId().equals(farmId)){
+                return medicineWarehouse;
+            }
+        }
+        return Optional.empty();
     }
 
     public List<MedicineWarehouse> findbyinvoice(Integer invoiceId){
+        Integer farmId = usersService.getFarmId();
         Optional<InvoicesProduct> invoicesProduct = invoicesProductRepository.findByIdAndDelFlag(invoiceId, false);
         //Cu phap map java 8
-        return invoicesProduct.map(invoiceP -> medicineWarehouseRepository.findByInvoiceAndDelFlag(invoiceP, false)).orElse(Collections.emptyList());
-//        if (invoicesProduct.isPresent()){
-//            return medicineWarehouseRepository.findByInvoiceAndDelFlag(invoicesProduct.get(),false);
-//        }
-//        return Collections.emptyList();
+//        return invoicesProduct.map(invoiceP -> medicineWarehouseRepository.findByInvoiceAndDelFlag(invoiceP, false)).orElse(Collections.emptyList());
+        if (invoicesProduct.isPresent()){
+            List<MedicineWarehouse> temp =  medicineWarehouseRepository.findByInvoiceAndDelFlag(invoicesProduct.get(),false);
+            if (farmId.equals(0)){
+                return temp;
+            }
+            List<MedicineWarehouse> medicineWarehouseList = new ArrayList<>();
+            for (MedicineWarehouse mw :
+                    temp) {
+                if (mw.getWarehouse().getManager().getFarm().getId().equals(farmId)){
+                    medicineWarehouseList.add(mw);
+                }
+            }
+            return medicineWarehouseList;
+        }
+        return Collections.emptyList();
     }
 
     public List<MedicineWarehouse> findbymedicine(Integer farmid, Integer medicineid){
@@ -75,21 +106,48 @@ public class MedicineWarehouseService {
 
     public List<MedicineWarehouse> findbywarehouse(Integer warehouseId){
         Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(warehouseId, false);
-        return medicineWarehouseRepository.findByWarehouseAndDelFlag(warehouse.get(),false);
+        if (warehouse.isPresent()){
+            Integer farmId = usersService.getFarmId();
+            List<MedicineWarehouse> temp = medicineWarehouseRepository.findByWarehouseAndDelFlag(warehouse.get(),false);
+            if (farmId.equals(0)){
+                return temp;
+            }
+            List<MedicineWarehouse> medicineWarehouseList = new ArrayList<>();
+            for (MedicineWarehouse mw :
+                    temp) {
+                if (mw.getWarehouse().getManager().getFarm().getId().equals(farmId)){
+                    medicineWarehouseList.add(mw);
+                }
+            }
+            return medicineWarehouseList;
+        }
+        return Collections.emptyList();
     }
 
     public MedicineWarehouse save(MedicineWarehouse medicineWarehouse){
-        medicineWarehouse.setDelFlag(false);
-        return medicineWarehouseRepository.save(medicineWarehouse);
+        Integer farmId = usersService.getFarmId();
+        Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(medicineWarehouse.getWarehouse().getId(),false);
+        Integer farmIdFromWarehouse = warehouse.map(wh -> wh.getManager().getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
+            medicineWarehouse.setDelFlag(false);
+            return medicineWarehouseRepository.save(medicineWarehouse);
+        }
+        return null;
     }
 
     public MedicineWarehouse update(MedicineWarehouse medicineWarehouse){
-        return medicineWarehouseRepository.save(medicineWarehouse);
+        Integer farmId = usersService.getFarmId();
+        Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(medicineWarehouse.getWarehouse().getId(),false);
+        Integer farmIdFromWarehouse = warehouse.map(wh -> wh.getManager().getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
+            return medicineWarehouseRepository.save(medicineWarehouse);
+        }
+        return null;
     }
 
     public Boolean delete(MedicineWarehouse medicineWarehouse){
         medicineWarehouse.setDelFlag(true);
-        if(medicineWarehouseRepository.save(medicineWarehouse) != null){
+        if(update(medicineWarehouse) != null){
             return true;
         }
         return false;

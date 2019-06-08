@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.TiLeDiseasesDTO;
 import tk.giaiphapchannuoi.server.model.*;
+import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.IssuesDiseasesRepository;
 import tk.giaiphapchannuoi.server.repository.IssuesPigsRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
@@ -27,6 +28,9 @@ public class IssuesPigsService {
 
     @Autowired
     PigsRepository pigsRepository;
+
+    @Autowired
+    EmployeesRepository employeesRepository;
 
     @Autowired
     UsersService usersService;
@@ -129,32 +133,51 @@ public class IssuesPigsService {
     }
 
     public Optional<IssuesPigs> findbyid(Integer id){
-        return issuesPigsRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<IssuesPigs> issuesPig = issuesPigsRepository.findByIdAndDelFlag(id,false);
+        if (issuesPig.isPresent()){
+            if (issuesPig.get().getEmployee().getFarm().getId().equals(farmId) || farmId.equals(0)){
+                return issuesPig;
+            }
+        }
+        return Optional.empty();
     }
 
     @Transactional
     public IssuesPigs save(IssuesPigs issuesPig){
-        issuesPig.setDelFlag(false);
-        issuesPig.setStatus("mới phát hiện");
-        Pigs pig = pigsRepository.findByIdAndDelFlag(issuesPig.getPig().getId(), false).get();
-        HealthStatus healthStatus = pig.getHealthStatus();
-        if(healthStatus.getId() == 1 || healthStatus.getId() == 0){
-            HealthStatus healthStatus1 = new HealthStatus();
-            healthStatus1.setId(2);
-            pig.setHealthStatus(healthStatus1);
-            pigsRepository.save(pig);
+        Integer farmId = usersService.getFarmId();
+        Optional<Employees> temp = employeesRepository.findByIdAndDelFlag(issuesPig.getEmployee().getId(),false);
+        Integer farmIdFromEmployee = temp.map(e -> e.getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromEmployee)){
+            issuesPig.setDelFlag(false);
+            issuesPig.setStatus("mới phát hiện");
+            Pigs pig = pigsRepository.findByIdAndDelFlag(issuesPig.getPig().getId(), false).get();
+            HealthStatus healthStatus = pig.getHealthStatus();
+            if(healthStatus.getId() == 1 || healthStatus.getId() == 0){
+                HealthStatus healthStatus1 = new HealthStatus();
+                healthStatus1.setId(2);
+                pig.setHealthStatus(healthStatus1);
+                pigsRepository.save(pig);
+            }
+            return issuesPigsRepository.save(issuesPig);
         }
-        return issuesPigsRepository.save(issuesPig);
+        return null;
     }
 
     public IssuesPigs update(IssuesPigs issuesPig){
-        return issuesPigsRepository.save(issuesPig);
+        Integer farmId = usersService.getFarmId();
+        Optional<Employees> temp = employeesRepository.findByIdAndDelFlag(issuesPig.getEmployee().getId(),false);
+        Integer farmIdFromEmployee = temp.map(e -> e.getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromEmployee)){
+            return issuesPigsRepository.save(issuesPig);
+        }
+        return null;
     }
 
 
     public Boolean delete(IssuesPigs issuesPig){
         issuesPig.setDelFlag(true);
-        if(issuesPigsRepository.save(issuesPig) != null){
+        if(update(issuesPig) != null){
             return true;
         }
         return false;
