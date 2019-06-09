@@ -27,6 +27,11 @@ public class UsersController {
         return usersService.findbyusername(username);
     }
 
+    @GetMapping(value = "/employee/{employeeId}")
+    public List<Users> findByEmployee(@PathVariable Integer employeeId){
+        return usersService.findbyemployee(employeeId);
+    }
+
     @GetMapping(value = "/list")
     public List<Users> findAll(){
         return usersService.findall();

@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.giaiphapchannuoi.server.model.Employees;
 import tk.giaiphapchannuoi.server.model.Users;
+import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.UsersRepository;
 import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +23,9 @@ public class UsersService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EmployeesRepository employeesRepository;
 
     public Integer getFarmId(){
         //Lay userId thong qua bien public từ class JwtAuthenticationFilter
@@ -39,6 +45,15 @@ public class UsersService {
 
     public Optional<Users> findbyusername(String username){
         return usersRepository.findByUsernameAndDelFlag(username,false);
+    }
+
+    public List<Users> findbyemployee(Integer employeeId){
+        Optional<Employees> employee = employeesRepository.findByIdAndDelFlag(employeeId, false);
+        if (employee.isPresent()){
+            return usersRepository.findByEmployeeAndDelFlag(employee.get(),false);
+        }
+        return Collections.emptyList();
+//        return employee.map(e -> usersRepository.findByEmployeeAndDelFlag(e,false)).orElse(Collections.emptyList());
     }
 
     public Users save(Users user){
