@@ -8,6 +8,7 @@ import tk.giaiphapchannuoi.server.model.Sperm;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
 import tk.giaiphapchannuoi.server.repository.SpermRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -22,32 +23,77 @@ public class SpermService {
     @Autowired
     PigsService pigsService;
 
+    @Autowired
+    UsersService usersService;
+
     public List<Sperm> findall(){
-        return spermRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        List<Sperm> temp = spermRepository.findAllByDelFlag(false);
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<Sperm> spermList = new ArrayList<>();
+        for (Sperm s :
+                temp) {
+            if (s.getPig().getHouse().getSection().getFarm().getId().equals(farmId)){
+                spermList.add(s);
+            }
+        }
+        return spermList;
     }
 
     public Optional<Sperm> findbyid(Integer id){
-        return spermRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<Sperm> sperm = spermRepository.findByIdAndDelFlag(id,false);
+        if (sperm.isPresent()){
+            if (farmId.equals(0) || sperm.get().getPig().getHouse().getSection().getFarm().getId().equals(farmId)){
+                return sperm;
+            }
+        }
+        return Optional.empty();
     }
 
     public List<Sperm> findbypig(Integer pigId){
+        Integer farmId = usersService.getFarmId();
         Optional<Pigs> pig = pigsService.findbyid(pigId);
-        return pig.map(p -> spermRepository.findByPigAndDelFlag(p,false)).orElse(Collections.emptyList());
+        List<Sperm> temp =  pig.map(p -> spermRepository.findByPigAndDelFlag(p,false)).orElse(Collections.emptyList());
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<Sperm> spermList = new ArrayList<>();
+        for (Sperm s :
+                temp) {
+            if (s.getPig().getHouse().getSection().getFarm().getId().equals(farmId)){
+                spermList.add(s);
+            }
+        }
+        return spermList;
     }
 
-
     public Sperm save(Sperm sperm){
-        sperm.setDelFlag(false);
-        return spermRepository.save(sperm);
+        Integer farmId = usersService.getFarmId();
+        Optional<Pigs> pig = pigsService.findbyid(sperm.getPig().getId());
+        Integer farmIdFromSperm = pig.map(p -> p.getHouse().getSection().getFarm().getId()).orElse(-1);
+        if (farmId.equals(0) || farmId.equals(farmIdFromSperm)){
+            sperm.setDelFlag(false);
+            return spermRepository.save(sperm);
+        }
+        return null;
     }
 
     public Sperm update(Sperm sperm){
-        return spermRepository.save(sperm);
+        Integer farmId = usersService.getFarmId();
+        Optional<Pigs> pig = pigsService.findbyid(sperm.getPig().getId());
+        Integer farmIdFromSperm = pig.map(p -> p.getHouse().getSection().getFarm().getId()).orElse(-1);
+        if (farmId.equals(0) || farmId.equals(farmIdFromSperm)){
+            return spermRepository.save(sperm);
+        }
+        return null;
     }
 
     public Boolean delete(Sperm sperm){
         sperm.setDelFlag(true);
-        if(spermRepository.save(sperm) != null){
+        if(update(sperm) != null){
             return true;
         }
         return false;

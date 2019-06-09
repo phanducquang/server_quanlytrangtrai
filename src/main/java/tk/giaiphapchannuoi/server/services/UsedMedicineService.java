@@ -17,6 +17,9 @@ public class UsedMedicineService {
     @Autowired
     UsedMedicineRepository usedMedicineRepository;
 
+    @Autowired
+    UsersService usersService;
+
     public List<UsedMedicine> findall(){
         return usedMedicineRepository.findAllByDelFlag(false);
     }
