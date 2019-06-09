@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.MatingDetails;
+import tk.giaiphapchannuoi.server.model.Matings;
 import tk.giaiphapchannuoi.server.repository.MatingDetailsRepository;
+import tk.giaiphapchannuoi.server.repository.MatingsRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +19,37 @@ public class MatingDetailsService {
     @Autowired
     MatingDetailsRepository matingDetailsRepository;
 
+    @Autowired
+    MatingsRepository matingsRepository;
+
+    @Autowired
+    UsersService usersService;
+
     public List<MatingDetails> findall(){
-        return matingDetailsRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        List<MatingDetails> temp = matingDetailsRepository.findAllByDelFlag(false);
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<MatingDetails> matingDetailsList = new ArrayList<>();
+        for (MatingDetails md :
+                temp) {
+            if (md.getMating().getMother().getHouse().getSection().getFarm().getId().equals(farmId)){
+                matingDetailsList.add(md);
+            }
+        }
+        return matingDetailsList;
     }
 
     public Optional<MatingDetails> findbyid(Integer id){
-        return matingDetailsRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<MatingDetails> matingDetail = matingDetailsRepository.findByIdAndDelFlag(id,false);
+        if (matingDetail.isPresent()){
+            if (farmId.equals(0) || matingDetail.get().getMating().getMother().getHouse().getSection().getFarm().getId().equals(farmId)){
+                return matingDetail;
+            }
+        }
+        return Optional.empty();
     }
 
     @Transactional
@@ -31,13 +59,19 @@ public class MatingDetailsService {
     }
 
     public MatingDetails update(MatingDetails matingDetail){
-        return matingDetailsRepository.save(matingDetail);
+        Integer farmId = usersService.getFarmId();
+        Optional<Matings> mating = matingsRepository.findByIdAndDelFlag(matingDetail.getMating().getId(),false);
+        Integer farmIdFromMatingDetail = mating.map(m -> m.getMother().getHouse().getSection().getFarm().getId()).orElse(-1);
+        if (farmId.equals(0) || farmId.equals(farmIdFromMatingDetail)){
+            return matingDetailsRepository.save(matingDetail);
+        }
+        return null;
     }
 
 
     public Boolean delete(MatingDetails matingDetail){
         matingDetail.setDelFlag(true);
-        if(matingDetailsRepository.save(matingDetail) != null){
+        if(update(matingDetail) != null){
             return true;
         }
         return false;

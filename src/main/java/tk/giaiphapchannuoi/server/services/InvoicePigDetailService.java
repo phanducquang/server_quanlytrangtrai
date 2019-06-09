@@ -3,6 +3,7 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.giaiphapchannuoi.server.DTO.Pigs1DTO;
 import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTORequest;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTOResponse;
@@ -10,11 +11,10 @@ import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.model.Status;
-import tk.giaiphapchannuoi.server.repository.InvoicePigDetailRepository;
-import tk.giaiphapchannuoi.server.repository.InvoicesPigRepository;
-import tk.giaiphapchannuoi.server.repository.PigsRepository;
-import tk.giaiphapchannuoi.server.repository.StatusRepository;
+import tk.giaiphapchannuoi.server.repository.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,17 +34,110 @@ public class InvoicePigDetailService {
     @Autowired
     StatusRepository statusRepository;
 
+    @Autowired
+    Pigs1DTORepository pigs1DTORepository;
+
+    @Autowired
+    UsersService usersService;
+
     public List<InvoicePigDetail> findall(){
-        return invoicePigDetailRepository.findAllByDelFlag(false);
+        Integer farmId = usersService.getFarmId();
+        List<InvoicePigDetail> temp = invoicePigDetailRepository.findAllByDelFlag(false);
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<InvoicePigDetail> invoicePigDetailList = new ArrayList<>();
+        for (InvoicePigDetail ipd :
+                temp) {
+            if(ipd.getInvoice().getInvoiceType().equals("external-import")){
+                if (ipd.getInvoice().getDestinationId().equals(farmId)){
+                    invoicePigDetailList.add(ipd);
+                }
+            } else if(ipd.getInvoice().getInvoiceType().equals("internal-export")){
+                if (ipd.getInvoice().getSourceId().equals(farmId)){
+                    invoicePigDetailList.add(ipd);
+                }
+            } else if (ipd.getInvoice().getInvoiceType().equals("internal-import")){
+                if (ipd.getInvoice().getDestinationId().equals(farmId)){
+                    invoicePigDetailList.add(ipd);
+                }
+            } else if (ipd.getInvoice().getInvoiceType().equals("external-export")){
+                if (ipd.getInvoice().getSourceId().equals(farmId)){
+                    invoicePigDetailList.add(ipd);
+                }
+            } else if (ipd.getInvoice().getInvoiceType().equals("root")){
+                if (ipd.getInvoice().getSourceId().equals(farmId)){
+                    invoicePigDetailList.add(ipd);
+                }
+            }
+        }
+        return invoicePigDetailList;
     }
 
     public List<InvoicePigDetail> findbyinvoice(Integer id){
+        Integer farmId = usersService.getFarmId();
         Optional<InvoicesPig> invoicesPig = invoicesPigRepository.findByIdAndDelFlag(id,false);
-        return invoicePigDetailRepository.findByInvoiceAndDelFlag(invoicesPig.get(), false);
+        List<InvoicePigDetail> temp = invoicesPig.map(ip -> invoicePigDetailRepository.findByInvoiceAndDelFlag(ip, false)).orElse(Collections.emptyList());
+        if (farmId.equals(0)){
+            return temp;
+        }
+        List<InvoicePigDetail> invoicePigDetailList = new ArrayList<>();
+        for (InvoicePigDetail ipd :
+                temp) {
+            if(ipd.getInvoice().getInvoiceType().equals("external-import")){
+                if (ipd.getInvoice().getDestinationId().equals(farmId)){
+                    return temp;// Tra ve "temp" do cung invoice nen tat ca data lay duoc deu cung farm => chi xet 1 dong dau tien
+                }
+            } else if(ipd.getInvoice().getInvoiceType().equals("internal-export")){
+                if (ipd.getInvoice().getSourceId().equals(farmId)){
+                    return temp;
+                }
+            } else if (ipd.getInvoice().getInvoiceType().equals("internal-import")){
+                if (ipd.getInvoice().getDestinationId().equals(farmId)){
+                    return temp;
+                }
+            } else if (ipd.getInvoice().getInvoiceType().equals("external-export")){
+                if (ipd.getInvoice().getSourceId().equals(farmId)){
+                    return temp;
+                }
+            } else if (ipd.getInvoice().getInvoiceType().equals("root")){
+                if (ipd.getInvoice().getSourceId().equals(farmId)){
+                    return temp;
+                }
+            }
+        }
+        return Collections.emptyList();
     }
 
     public Optional<InvoicePigDetail> findbyid(Integer id){
-        return invoicePigDetailRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<InvoicePigDetail> invoicePigDetail = invoicePigDetailRepository.findByIdAndDelFlag(id,false);
+        if (invoicePigDetail.isPresent()){
+            if (farmId.equals(0)){
+                return invoicePigDetail;
+            } else if(invoicePigDetail.get().getInvoice().getInvoiceType().equals("external-import")){
+                if (invoicePigDetail.get().getInvoice().getDestinationId().equals(farmId)){
+                    return invoicePigDetail;
+                }
+            } else if(invoicePigDetail.get().getInvoice().getInvoiceType().equals("internal-export")){
+                if (invoicePigDetail.get().getInvoice().getSourceId().equals(farmId)){
+                    return invoicePigDetail;
+                }
+            } else if (invoicePigDetail.get().getInvoice().getInvoiceType().equals("internal-import")){
+                if (invoicePigDetail.get().getInvoice().getDestinationId().equals(farmId)){
+                    return invoicePigDetail;
+                }
+            } else if (invoicePigDetail.get().getInvoice().getInvoiceType().equals("external-export")){
+                if (invoicePigDetail.get().getInvoice().getSourceId().equals(farmId)){
+                    return invoicePigDetail;
+                }
+            } else if (invoicePigDetail.get().getInvoice().getInvoiceType().equals("root")){
+                if (invoicePigDetail.get().getInvoice().getSourceId().equals(farmId)){
+                    return invoicePigDetail;
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     public InvoicePigDetail save(InvoicePigDetail invoicePigDetail){
@@ -83,39 +176,58 @@ public class InvoicePigDetailService {
     }
 
     public InvoicePigDetail update(InvoicePigDetail invoicePigDetail){
-        return invoicePigDetailRepository.save(invoicePigDetail);
+        Integer farmId = usersService.getFarmId();
+        Optional<Pigs1DTO> pig = pigs1DTORepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false);
+        if (pig.isPresent()){
+            if (farmId.equals(0) || pig.get().getHouse().getSection().getFarm().getId().equals(farmId)){
+                return invoicePigDetailRepository.save(invoicePigDetail);
+            }
+        }
+        return null;
     }
 
     @Transactional
     public Boolean delete(InvoicePigDetail invoicePigDetail){
+        Integer farmId = usersService.getFarmId();
         invoicePigDetail.setDelFlag(true);
         //Lay thong tin cua pig
-        Pigs pig = pigsRepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false).get();
-        //Thuc hien duyet tim invoice lien quan den pig de thay doi total_weight
-        InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoicePigDetail.getInvoice().getId(),false).get();
-        //gan Total_Weight = Total_Weight - receive_weight cua heo xoa
-        invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
-        invoicesPigRepository.save(invoicesPig);
-        //Xoa heo
-        pig.setDelFlag(true);
-        pigsRepository.save(pig);
-        if(invoicePigDetailRepository.save(invoicePigDetail) != null){
-            return true;
+        Optional<Pigs> temp_pig = pigsRepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false);
+        if (temp_pig.isPresent()){
+            Pigs pig = temp_pig.get();
+            if (farmId.equals(0) || pig.getHouse().getSection().getFarm().getId().equals(farmId)){
+                //Thuc hien duyet tim invoice lien quan den pig de thay doi total_weight
+                InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoicePigDetail.getInvoice().getId(),false).get();
+                //gan Total_Weight = Total_Weight - receive_weight cua heo xoa
+                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
+                invoicesPigRepository.save(invoicesPig);
+                //Xoa heo
+                pig.setDelFlag(true);
+                pigsRepository.save(pig);
+                if(invoicePigDetailRepository.save(invoicePigDetail) != null){
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     @Transactional
     public Boolean deleteonlyinvoicedetail(InvoicePigDetail invoicePigDetail){
+        Integer farmId = usersService.getFarmId();
         invoicePigDetail.setDelFlag(true);
         //Lay thong tin cua pig
-        Pigs pig = pigsRepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false).get();
-        //Cap nhat status ve pre_status
-        Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(pig.getStatus().getPreviousStatus(), 0,false).get();
-        pig.setStatus(status);
-        pigsRepository.save(pig);
-        if(invoicePigDetailRepository.save(invoicePigDetail) != null){
-            return true;
+        Optional<Pigs> temp_pig = pigsRepository.findByIdAndDelFlag(invoicePigDetail.getObjectId(),false);
+        if (temp_pig.isPresent()) {
+            Pigs pig = temp_pig.get();
+            if (farmId.equals(0) || pig.getHouse().getSection().getFarm().getId().equals(farmId)) {
+                //Cap nhat status ve pre_status
+                Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(pig.getStatus().getPreviousStatus(), 0,false).get();
+                pig.setStatus(status);
+                pigsRepository.save(pig);
+                if(invoicePigDetailRepository.save(invoicePigDetail) != null){
+                    return true;
+                }
+            }
         }
         return false;
     }

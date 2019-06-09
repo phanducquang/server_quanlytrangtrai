@@ -2,6 +2,7 @@ package tk.giaiphapchannuoi.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.UsedMedicine;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class UsedMedicineController {
         return usedMedicineService.findall();
     }
 
+    @Transactional
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody List<UsedMedicine> usedMedicine){
         List<UsedMedicine> temp = usedMedicineService.save(usedMedicine);
