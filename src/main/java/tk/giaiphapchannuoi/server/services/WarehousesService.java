@@ -53,21 +53,40 @@ public class WarehousesService {
     }
 
     public Optional<Warehouses> findbyid(Integer id){
-        return warehousesRepository.findByIdAndDelFlag(id,false);
+        Integer farmId = usersService.getFarmId();
+        Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(id,false);
+        if (warehouse.isPresent()){
+            if (farmId.equals(0) || warehouse.get().getManager().getFarm().getId().equals(farmId)){
+                return warehouse;
+            }
+        }
+        return Optional.empty();
     }
 
     public Warehouses save(Warehouses warehouse){
-        warehouse.setDelFlag(false);
-        return warehousesRepository.save(warehouse);
+        Integer farmId = usersService.getFarmId();
+        Optional<Employees> employee = employeesRepository.findByIdAndDelFlag(warehouse.getManager().getId(),false);
+        Integer farmIdFromWarehouse = employee.map(e -> e.getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
+            warehouse.setDelFlag(false);
+            return warehousesRepository.save(warehouse);
+        }
+        return null;
     }
 
     public Warehouses update(Warehouses warehouse){
-        return warehousesRepository.save(warehouse);
+        Integer farmId = usersService.getFarmId();
+        Optional<Employees> employee = employeesRepository.findByIdAndDelFlag(warehouse.getManager().getId(),false);
+        Integer farmIdFromWarehouse = employee.map(e -> e.getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
+            return warehousesRepository.save(warehouse);
+        }
+        return null;
     }
 
     public Boolean delete(Warehouses warehouse){
         warehouse.setDelFlag(true);
-        if(warehousesRepository.save(warehouse) != null){
+        if(update(warehouse) != null){
             return true;
         }
         return false;
