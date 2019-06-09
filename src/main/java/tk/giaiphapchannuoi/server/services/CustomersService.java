@@ -21,47 +21,52 @@ public class CustomersService {
     UsersService usersService;
 
     public List<Customers> findall(){
-        Integer farmId = usersService.getFarmId();
-        List<Customers> temp = customersRepository.findAllByDelFlag(false);
-        if (farmId.equals(0)){
-            return temp;
-        }
-        List<Customers> customersList = new ArrayList<>();
-        for (Customers c :
-                temp) {
-            if (c.getFarmId().equals(farmId)){
-                customersList.add(c);
-            }
-        }
-        return customersList;
+//        Integer farmId = usersService.getFarmId();
+//        List<Customers> temp = customersRepository.findAllByDelFlag(false);
+//        if (farmId.equals(0)){
+//            return temp;
+//        }
+//        List<Customers> customersList = new ArrayList<>();
+//        for (Customers c :
+//                temp) {
+//            if (c.getFarmId().equals(farmId)){
+//                customersList.add(c);
+//            }
+//        }
+//        return customersList;
+        return customersRepository.findAllByDelFlag(false);
     }
 
     public Optional<Customers> findbyid(Integer id){
-        Integer farmId = usersService.getFarmId();
-        Optional<Customers> customer = customersRepository.findByIdAndDelFlag(id,false);
-        if (customer.isPresent()){
-            if (farmId.equals(0) || customer.get().getFarmId().equals(farmId)){
-                return customer;
-            }
-        }
-        return Optional.empty();
+//        Integer farmId = usersService.getFarmId();
+//        Optional<Customers> customer = customersRepository.findByIdAndDelFlag(id,false);
+//        if (customer.isPresent()){
+//            if (farmId.equals(0) || customer.get().getFarmId().equals(farmId)){
+//                return customer;
+//            }
+//        }
+//        return Optional.empty();
+        return customersRepository.findByIdAndDelFlag(id,false);
     }
 
     public Customers save(Customers customers){
-        Integer farmId = usersService.getFarmId();
-        if (farmId.equals(0) || customers.getFarmId().equals(farmId)){
-            customers.setDelFlag(false);
-            return customersRepository.save(customers);
-        }
-        return null;
+//        Integer farmId = usersService.getFarmId();
+//        if (farmId.equals(0) || customers.getFarmId().equals(farmId)){
+//            customers.setDelFlag(false);
+//            return customersRepository.save(customers);
+//        }
+//        return null;
+        customers.setDelFlag(false);
+        return customersRepository.save(customers);
     }
 
     public Customers update(Customers customers){
-        Integer farmId = usersService.getFarmId();
-        if (farmId.equals(0) || customers.getFarmId().equals(farmId)){
-            return customersRepository.save(customers);
-        }
-        return null;
+//        Integer farmId = usersService.getFarmId();
+//        if (farmId.equals(0) || customers.getFarmId().equals(farmId)){
+//            return customersRepository.save(customers);
+//        }
+//        return null;
+        return customersRepository.save(customers);
     }
 
 

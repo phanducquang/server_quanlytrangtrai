@@ -21,35 +21,37 @@ public class FarmsService {
     UsersService usersService;
 
     public List<Farms> findall(){
-        Integer farmId = usersService.getFarmId();
-        List<Farms> temp = farmsRepository.findAllByDelFlag(false);
-        if (farmId == 0){
-            return temp;
-        }
-        List<Farms> farmsList = new ArrayList<>();
-        for (Farms f :
-                temp) {
-            if (f.getId().equals(farmId)){
-                farmsList.add(f);
-            }
-        }
-        return farmsList;
+//        Integer farmId = usersService.getFarmId();
+//        List<Farms> temp = farmsRepository.findAllByDelFlag(false);
+//        if (farmId == 0){
+//            return temp;
+//        }
+//        List<Farms> farmsList = new ArrayList<>();
+//        for (Farms f :
+//                temp) {
+//            if (f.getId().equals(farmId)){
+//                farmsList.add(f);
+//            }
+//        }
+//        return farmsList;
+        return farmsRepository.findAllByDelFlag(false);
     }
 
     public Optional<Farms> findbyid(Integer id){
-        Integer farmId = usersService.getFarmId();
-        Optional<Farms> farm = farmsRepository.findByIdAndDelFlag(id,false);
-        if (farm.isPresent()){
-            if (farm.get().getId().equals(farmId) || farmId == 0){
-                return farm;
-            }
-        }
-        return Optional.empty();
+//        Integer farmId = usersService.getFarmId();
+//        Optional<Farms> farm = farmsRepository.findByIdAndDelFlag(id,false);
+//        if (farm.isPresent()){
+//            if (farm.get().getId().equals(farmId) || farmId == 0){
+//                return farm;
+//            }
+//        }
+//        return Optional.empty();
+        return farmsRepository.findByIdAndDelFlag(id,false);
     }
 
     public Farms save(Farms farm){
         Integer farmId = usersService.getFarmId();
-        if (farm.getId().equals(farmId) || farmId == 0) {
+        if (farmId == 0) {
             farm.setDelFlag(false);
             return farmsRepository.save(farm);
         }
