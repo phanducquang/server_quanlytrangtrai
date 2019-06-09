@@ -28,7 +28,7 @@ public class WarehousesController {
         return warehousesService.findall();
     }
 
-    @GetMapping(value = "/warehouseofmanager")
+    @GetMapping(value = "/warehouseofmanager/")
     public List<Warehouses> findAllWarehousesOfManeger(){
         return warehousesService.findallwarehouseofmanager();
     }
