@@ -27,6 +27,7 @@ public class Settings {
     private List<Roles> roles;
     private List<MatingRoles> matingRoles;
     private List<WarehouseType> warehouseTypes;
+    private List<Regencies> regencies;
 
 
     public Settings() {
@@ -199,5 +200,13 @@ public class Settings {
 
     public void setWarehouseTypes(List<WarehouseType> warehouseTypes) {
         this.warehouseTypes = warehouseTypes;
+    }
+
+    public List<Regencies> getRegencies() {
+        return regencies;
+    }
+
+    public void setRegencies(List<Regencies> regencies) {
+        this.regencies = regencies;
     }
 }

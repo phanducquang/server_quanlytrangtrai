@@ -28,6 +28,11 @@ public class WarehousesController {
         return warehousesService.findall();
     }
 
+    @GetMapping(value = "/warehouseofmanager")
+    public List<Warehouses> findAllWarehousesOfManeger(){
+        return warehousesService.findallwarehouseofmanager();
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Warehouses warehouse){
         Warehouses temp = warehousesService.save(warehouse);

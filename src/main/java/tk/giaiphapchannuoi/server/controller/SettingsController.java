@@ -76,6 +76,9 @@ public class SettingsController {
     @Autowired
     WarehouseTypeService warehouseTypeService;
 
+    @Autowired
+    RegenciesService regenciesService;
+
     @GetMapping(value = "/list")
     public Settings findAll(){
         Settings settings = new Settings();
@@ -100,6 +103,7 @@ public class SettingsController {
         settings.setFoodUnits(foodUnitsService.findall());
         settings.setMatingRoles(matingRolesService.findall());
         settings.setWarehouseTypes(warehouseTypeService.findall());
+        settings.setRegencies(regenciesService.findall());
         return settings;
     }
 }
