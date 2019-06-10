@@ -37,8 +37,8 @@ public class Users extends Auditable implements Serializable {
 	@Column(name="language")
 	private String language;
 	
-	@Column(name="theme")
-	private String theme;
+	@Column(name="token_notification")
+	private String tokenNotification;
 	
 	@Column(name="last_activate")
 	private Date lastActivate;
@@ -52,7 +52,7 @@ public class Users extends Auditable implements Serializable {
 	public Users() {
 	}
 
-	public Users(String username, String password, String email, Employees employee, Roles role, Integer activate, String language, String theme, Date lastActivate, Integer login, Boolean delFlag) {
+	public Users(String username, String password, String email, Employees employee, Roles role, Integer activate, String language, String tokenNotification, Date lastActivate, Integer login, Boolean delFlag) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -60,7 +60,7 @@ public class Users extends Auditable implements Serializable {
 		this.role = role;
 		this.activate = activate;
 		this.language = language;
-		this.theme = theme;
+		this.tokenNotification = tokenNotification;
 		this.lastActivate = lastActivate;
 		this.login = login;
 		this.delFlag = delFlag;
@@ -130,12 +130,12 @@ public class Users extends Auditable implements Serializable {
 		this.language = language;
 	}
 
-	public String getTheme() {
-		return theme;
+	public String getTokenNotification() {
+		return tokenNotification;
 	}
 
-	public void setTheme(String theme) {
-		this.theme = theme;
+	public void setTokenNotification(String tokenNotification) {
+		this.tokenNotification = tokenNotification;
 	}
 
 	public Date getLastActivate() {
