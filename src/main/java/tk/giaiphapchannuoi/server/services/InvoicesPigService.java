@@ -7,12 +7,12 @@ import tk.giaiphapchannuoi.server.DTO.InvoicesPigInvoicePigDetailDTOResponse;
 import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTORequest;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTOResponse;
-import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
-import tk.giaiphapchannuoi.server.model.InvoicesPig;
-import tk.giaiphapchannuoi.server.model.Pigs;
+import tk.giaiphapchannuoi.server.model.*;
+import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.InvoicePigDetailRepository;
 import tk.giaiphapchannuoi.server.repository.InvoicesPigRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
+import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,9 @@ public class InvoicesPigService {
 
     @Autowired
     PigsRepository pigsRepository;
+
+    @Autowired
+    EmployeesRepository employeesRepository;
 
     public List<InvoicesPig> findall(){
         Integer farmId = usersService.getFarmId();
@@ -164,13 +167,21 @@ public class InvoicesPigService {
 
     }
 
+    //Tao moi chúng tu nhap heo trong he thong
     @Transactional
     public PigsInvoicePigDTOResponse savecustom(PigsInvoicePigDTORequest pigsInvoicePigDTORequest){
         PigsInvoicePigDTOResponse response = new PigsInvoicePigDTOResponse();
+        Integer userId = JwtAuthenticationFilter.userIdGlobal;
         List<Pigs> pigsList = pigsInvoicePigDTORequest.getPigsList();
         List<PigsDTO> tempPigs = new ArrayList<>();
         List<InvoicePigDetail> tempInvoicePigDetails = new ArrayList<>();
-        InvoicesPig tempInvoicePig = invoicePigRepository.save(pigsInvoicePigDTORequest.getInvoicesPig());
+        //Lay invoicesPig ra de set lai employee
+        InvoicesPig invoicesPig = pigsInvoicePigDTORequest.getInvoicesPig();
+        //Lay user tu userId dang dang nhap de lay thong tin employee
+        Optional<Users> user = usersService.findbyid(userId);
+        invoicesPig.setEmployee(user.get().getEmployee());
+
+        InvoicesPig tempInvoicePig = invoicePigRepository.save(invoicesPig);
         for (Pigs p :
                 pigsList) {
             Pigs temp = pigsRepository.save(p);
@@ -191,7 +202,10 @@ public class InvoicesPigService {
 
     public InvoicesPig save(InvoicesPig invoicePig){
         Integer farmId = usersService.getFarmId();
+        Integer userId = JwtAuthenticationFilter.userIdGlobal;
         invoicePig.setDelFlag(false);
+        Optional<Users> user = usersService.findbyid(userId);
+        invoicePig.setEmployee(user.get().getEmployee());
         if (farmId.equals(0)){
             return invoicePigRepository.save(invoicePig);
         }
