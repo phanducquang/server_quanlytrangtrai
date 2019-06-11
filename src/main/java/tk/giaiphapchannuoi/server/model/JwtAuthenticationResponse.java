@@ -3,11 +3,11 @@ package tk.giaiphapchannuoi.server.model;
 public class JwtAuthenticationResponse {
     private String accessToken;
     private String tokenType = "Bearer";
-    private Integer employeeId;
+    private Users user;
 
-    public JwtAuthenticationResponse(String accessToken, Integer employeeId) {
+    public JwtAuthenticationResponse(String accessToken, Users user) {
         this.accessToken = accessToken;
-        this.employeeId = employeeId;
+        this.user = user;
     }
 
     public String getAccessToken() {
@@ -26,11 +26,11 @@ public class JwtAuthenticationResponse {
         this.tokenType = tokenType;
     }
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public Users getUser() {
+        return user;
     }
 
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
+    public void setUser(Users user) {
+        this.user = user;
     }
 }

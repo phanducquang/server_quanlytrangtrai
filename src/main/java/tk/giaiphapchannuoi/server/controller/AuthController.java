@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.ApiResponse;
 import tk.giaiphapchannuoi.server.model.JwtAuthenticationResponse;
 import tk.giaiphapchannuoi.server.model.LoginRequest;
+import tk.giaiphapchannuoi.server.model.Users;
 import tk.giaiphapchannuoi.server.repository.UsersRepository;
 import tk.giaiphapchannuoi.server.security.JwtTokenProvider;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,8 +46,8 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
-        Integer employeeId = userRepository.findByUsernameAndDelFlag(loginRequest.getUsername(), false).get().getEmployee().getId();
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, employeeId));
+        Optional<Users> user = userRepository.findByUsernameAndDelFlag(loginRequest.getUsername(), false);
+        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, user.get()));
     }
 
     @GetMapping(value = "/check_login")
