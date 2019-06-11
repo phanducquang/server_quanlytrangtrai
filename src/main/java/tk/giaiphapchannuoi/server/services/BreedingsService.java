@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Breedings;
 import tk.giaiphapchannuoi.server.model.Pigs;
+import tk.giaiphapchannuoi.server.model.Schedule;
 import tk.giaiphapchannuoi.server.model.Status;
-import tk.giaiphapchannuoi.server.repository.BreedingsRepository;
-import tk.giaiphapchannuoi.server.repository.PigsRepository;
-import tk.giaiphapchannuoi.server.repository.StatusRepository;
-import tk.giaiphapchannuoi.server.repository.UsersRepository;
+import tk.giaiphapchannuoi.server.repository.*;
 import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
 import java.util.ArrayList;
@@ -29,6 +27,9 @@ public class BreedingsService {
 
     @Autowired
     StatusRepository statusRepository;
+
+    @Autowired
+    ScheduleRepository scheduleRepository;
 
     @Autowired
     UsersService usersService;
@@ -85,12 +86,22 @@ public class BreedingsService {
     @Transactional
     public Breedings save(Breedings breedings){
         Integer farmId = usersService.getFarmId();
-        if (breedings.getPig().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
-            breedings.setDelFlag(false);
-            Optional<Pigs> p = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false);
+        Optional<Pigs> p = pigsRepository.findByIdAndDelFlag(breedings.getPig().getId(),false);
             //Lay status moi bang cach xac dinh status cua heo hien tai. Status nay la pre_status. Status can chuyen cho heo co code là 9
             //pre_status o day la code cua status goc
-            if (p.isPresent()){
+        if (p.isPresent()){
+            if (p.get().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
+                breedings.setDelFlag(false);
+                Schedule schedule = new Schedule();
+                Schedule schedule1 = new Schedule();
+                schedule.setName("Lên giống heo \"" + p.get().getPigCode() + "\" tại chuồng \"" + p.get().getHouse().getName() + "\", " + p.get().getHouse().getSection().getName() + ".");
+                schedule.setDate(breedings.getBreedingNext());
+                schedule.setStatus("chưa phân công");
+                scheduleRepository.save(schedule);
+                schedule1.setName("Phối giống heo \"" + p.get().getPigCode() + "\" tại chuồng \"" + p.get().getHouse().getName() + "\", " + p.get().getHouse().getSection().getName() + ".");
+                schedule1.setDate(breedings.getMatingEstimate());
+                schedule1.setStatus("chưa phân công");
+                scheduleRepository.save(schedule1);
                 Pigs pig = p.get();
                 Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
                 pig.setStatus(status);

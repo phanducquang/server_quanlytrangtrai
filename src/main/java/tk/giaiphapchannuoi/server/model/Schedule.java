@@ -24,7 +24,7 @@ public class Schedule extends Auditable implements Serializable {
     private Date date;
 
     @Column(name="status")
-    private String status;
+    private String status;//da phan cong, chua phan cong, da hoan thanh
 
     @Column(name = "del_flag")
     private Boolean delFlag;

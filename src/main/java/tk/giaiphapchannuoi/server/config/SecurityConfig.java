@@ -75,6 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
 //                    .antMatchers(HttpMethod.GET,"/api/**")
 //                        .hasAnyRole("admin")
+                    .antMatchers(HttpMethod.GET,"/api/schedule/list","/api/schedule/listschedule","/api/schedule/**")
+                        .permitAll()
                     .antMatchers(HttpMethod.GET,"/auth/check_login")
                         .hasAnyRole("admin","nhan_vien_1")
                 //tong_quan_trang_trai
@@ -367,6 +369,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasAnyRole("thiet_lap_danh_sach_chuc_vu","admin")
                     .antMatchers("/api/regencies/")
                         .hasAnyRole("thiet_lap_danh_sach_chuc_vu","admin")
+                //thiet_lap_luat_phoi
+                    .antMatchers(HttpMethod.GET,"/api/matingroles/**")
+                        .hasAnyRole("thiet_lap_luat_phoi","admin")
+                    .antMatchers("/api/matingroles/")
+                        .hasAnyRole("thiet_lap_luat_phoi","admin")
                 //thiet_lap_luat_phoi
                     .antMatchers(HttpMethod.GET,"/api/matingroles/**")
                         .hasAnyRole("thiet_lap_luat_phoi","admin")
