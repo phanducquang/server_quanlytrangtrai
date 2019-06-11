@@ -11,4 +11,6 @@ public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
     Optional<Employees> findByIdAndDelFlag(Integer id, Boolean delFlag);
 
     List<Employees> findAllByDelFlag(Boolean delFlag);
+
+    Optional<Employees> findByEmailAndDelFlag(String email, Boolean delFlag);
 }

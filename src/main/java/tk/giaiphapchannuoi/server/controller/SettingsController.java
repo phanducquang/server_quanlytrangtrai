@@ -79,6 +79,12 @@ public class SettingsController {
     @Autowired
     RegenciesService regenciesService;
 
+    @Autowired
+    CustomersService customersService;
+
+    @Autowired
+    PartnersService partnersService;
+
     @GetMapping(value = "/list")
     public Settings findAll(){
         Settings settings = new Settings();
@@ -104,6 +110,8 @@ public class SettingsController {
         settings.setMatingRoles(matingRolesService.findall());
         settings.setWarehouseTypes(warehouseTypeService.findall());
         settings.setRegencies(regenciesService.findall());
+        settings.setCustomers(customersService.findall());
+        settings.setPartners(partnersService.findall());
         return settings;
     }
 }

@@ -28,11 +28,11 @@ public class Settings {
     private List<MatingRoles> matingRoles;
     private List<WarehouseType> warehouseTypes;
     private List<Regencies> regencies;
-
+    private List<Customers> customers;
+    private List<Partners> partners;
 
     public Settings() {
     }
-
 
     public List<PregnancyStatus> getPregnancyStatus() {
         return pregnancyStatus;
@@ -208,5 +208,22 @@ public class Settings {
 
     public void setRegencies(List<Regencies> regencies) {
         this.regencies = regencies;
+    }
+
+
+    public List<Customers> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customers> customers) {
+        this.customers = customers;
+    }
+
+    public List<Partners> getPartners() {
+        return partners;
+    }
+
+    public void setPartners(List<Partners> partners) {
+        this.partners = partners;
     }
 }
