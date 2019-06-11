@@ -49,10 +49,17 @@ public class InvoicesProduct extends Auditable implements Serializable {
 	@Column(name = "del_flag")
 	private Boolean delFlag;
 
+	@Column(name = "status")
+	private String status;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="employee_id")
+	private Employees employee;
+
 	public InvoicesProduct() {
 	}
 
-	public InvoicesProduct(String invoiceNo, String invoiceType, Partners source, String sourceManagerName, Farms destination, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag) {
+	public InvoicesProduct(String invoiceNo, String invoiceType, Partners source, String sourceManagerName, Farms destination, Integer destinationManager, String destinationManagerName, Float price, Date importDate, String description, Boolean delFlag, String status, Employees employee) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceType = invoiceType;
 		this.source = source;
@@ -64,6 +71,8 @@ public class InvoicesProduct extends Auditable implements Serializable {
 		this.importDate = importDate;
 		this.description = description;
 		this.delFlag = delFlag;
+		this.status = status;
+		this.employee = employee;
 	}
 
 	public Integer getId() {
@@ -160,5 +169,21 @@ public class InvoicesProduct extends Auditable implements Serializable {
 
 	public void setDelFlag(Boolean delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Employees getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
 }

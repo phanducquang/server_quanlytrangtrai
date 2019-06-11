@@ -74,10 +74,14 @@ public class InvoicesPig extends Auditable implements Serializable {
 	@Column(name = "status")
 	private String status;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="employee_id")
+	private Employees employee;
+
 	public InvoicesPig() {
 	}
 
-	public InvoicesPig(String invoiceNo, String invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status) {
+	public InvoicesPig(String invoiceNo, String invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status, Employees employee) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceType = invoiceType;
 		this.sourceId = sourceId;
@@ -98,6 +102,7 @@ public class InvoicesPig extends Auditable implements Serializable {
 		this.description = description;
 		this.delFlag = delFlag;
 		this.status = status;
+		this.employee = employee;
 	}
 
 	public Integer getId() {
@@ -266,5 +271,13 @@ public class InvoicesPig extends Auditable implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Employees getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
 }
