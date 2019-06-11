@@ -29,7 +29,7 @@ public class BreedingsService {
     StatusRepository statusRepository;
 
     @Autowired
-    ScheduleRepository scheduleRepository;
+    ScheduleService scheduleService;
 
     @Autowired
     UsersService usersService;
@@ -97,11 +97,11 @@ public class BreedingsService {
                 schedule.setName("Lên giống heo \"" + p.get().getPigCode() + "\" tại chuồng \"" + p.get().getHouse().getName() + "\", " + p.get().getHouse().getSection().getName() + ".");
                 schedule.setDate(breedings.getBreedingNext());
                 schedule.setStatus("chưa phân công");
-                scheduleRepository.save(schedule);
+                scheduleService.save(schedule);
                 schedule1.setName("Phối giống heo \"" + p.get().getPigCode() + "\" tại chuồng \"" + p.get().getHouse().getName() + "\", " + p.get().getHouse().getSection().getName() + ".");
                 schedule1.setDate(breedings.getMatingEstimate());
                 schedule1.setStatus("chưa phân công");
-                scheduleRepository.save(schedule1);
+                scheduleService.save(schedule1);
                 Pigs pig = p.get();
                 Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(9,pig.getStatus().getCode(),false).get();
                 pig.setStatus(status);

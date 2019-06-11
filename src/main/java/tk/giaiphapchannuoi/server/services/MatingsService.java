@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Matings;
 import tk.giaiphapchannuoi.server.model.Pigs;
+import tk.giaiphapchannuoi.server.model.Schedule;
 import tk.giaiphapchannuoi.server.model.Status;
 import tk.giaiphapchannuoi.server.repository.MatingsRepository;
 import tk.giaiphapchannuoi.server.repository.PigsRepository;
+import tk.giaiphapchannuoi.server.repository.ScheduleRepository;
 import tk.giaiphapchannuoi.server.repository.StatusRepository;
 
 import java.util.ArrayList;
@@ -27,6 +29,9 @@ public class MatingsService {
 
     @Autowired
     StatusRepository statusRepository;
+
+    @Autowired
+    ScheduleService scheduleService;
 
     @Autowired
     PigsService pigsService;
@@ -81,7 +86,13 @@ public class MatingsService {
 
         if (farmId.equals(0) || farmId.equals(farmIdFromMating)){
             mating.setDelFlag(false);
+            Schedule schedule = new Schedule();
             Matings mating_temp = matingsRepository.save(mating);
+            //set schedule va luu
+            schedule.setName("Đỡ đẻ cho heo \"" + mother.get().getPigCode() + "\" tại chuồng \"" + mother.get().getHouse().getName() + "\", " + mother.get().getHouse().getSection().getName() + ".");
+            schedule.setDate(mating.getBirthEstimate());
+            schedule.setStatus("chưa phân công");
+            scheduleService.save(schedule);
             //Cap nhat status heo
             Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
             if (mating.getStatus().equals("processing")){

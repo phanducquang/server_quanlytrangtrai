@@ -8,13 +8,13 @@ import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTORequest;
 import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDTOResponse;
 import tk.giaiphapchannuoi.server.model.*;
-import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
-import tk.giaiphapchannuoi.server.repository.InvoicePigDetailRepository;
-import tk.giaiphapchannuoi.server.repository.InvoicesPigRepository;
-import tk.giaiphapchannuoi.server.repository.PigsRepository;
+import tk.giaiphapchannuoi.server.repository.*;
 import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +36,9 @@ public class InvoicesPigService {
 
     @Autowired
     EmployeesRepository employeesRepository;
+
+    @Autowired
+    ScheduleService scheduleService;
 
     public List<InvoicesPig> findall(){
         Integer farmId = usersService.getFarmId();
@@ -202,11 +205,28 @@ public class InvoicesPigService {
 
     public InvoicesPig save(InvoicesPig invoicePig){
         Integer farmId = usersService.getFarmId();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date();
+        Date dateFromInvoicePig = new Date();
+        try {
+            currentDate = sdf.parse(sdf.format(new Date()));
+            dateFromInvoicePig = sdf.parse(sdf.format(invoicePig.getExportDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Integer userId = JwtAuthenticationFilter.userIdGlobal;
         invoicePig.setDelFlag(false);
         Optional<Users> user = usersService.findbyid(userId);
         invoicePig.setEmployee(user.get().getEmployee());
         if (farmId.equals(0)){
+            if (currentDate.before(dateFromInvoicePig) && (invoicePig.getInvoiceType().equals("external-import") || invoicePig.getInvoiceType().equals("sale"))){
+                Schedule schedule = new Schedule();
+                //set schedule va luu
+                schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
+                schedule.setDate(invoicePig.getExportDate());
+                schedule.setStatus("chưa phân công");
+                scheduleService.save(schedule);
+            }
             return invoicePigRepository.save(invoicePig);
         }
         if(invoicePig.getInvoiceType().equals("external-import")){
@@ -215,6 +235,14 @@ public class InvoicesPigService {
             }
         } else if(invoicePig.getInvoiceType().equals("internal-export")){
             if (invoicePig.getSourceId().equals(farmId)){
+                if (currentDate.before(dateFromInvoicePig)){
+                    Schedule schedule = new Schedule();
+                    //set schedule va luu
+                    schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
+                    schedule.setDate(invoicePig.getExportDate());
+                    schedule.setStatus("chưa phân công");
+                    scheduleService.save(schedule);
+                }
                 return invoicePigRepository.save(invoicePig);
             }
         } else if (invoicePig.getInvoiceType().equals("internal-import")){
@@ -223,6 +251,14 @@ public class InvoicesPigService {
             }
         } else if (invoicePig.getInvoiceType().equals("sale")){
             if (invoicePig.getSourceId().equals(farmId)){
+                if (currentDate.before(dateFromInvoicePig)){
+                    Schedule schedule = new Schedule();
+                    //set schedule va luu
+                    schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
+                    schedule.setDate(invoicePig.getExportDate());
+                    schedule.setStatus("chưa phân công");
+                    scheduleService.save(schedule);
+                }
                 return invoicePigRepository.save(invoicePig);
             }
         } else if (invoicePig.getInvoiceType().equals("root")){
