@@ -69,10 +69,14 @@ public class InvoicesPigService {
     }
 
     public Optional<InvoicesPig> findbyid(Integer id){
+
         Optional<InvoicesPig> invoicesPig = invoicePigRepository.findByIdAndDelFlag(id,false);
         if (invoicesPig.isPresent()){
             Integer farmId = usersService.getFarmId();
             InvoicesPig ip = invoicesPig.get();
+            if (farmId.equals(0)){
+                return invoicesPig;
+            }
             if(ip.getInvoiceType().equals("external-import")){
                 if (ip.getDestinationId().equals(farmId)){
                     return invoicesPig;
@@ -188,6 +192,9 @@ public class InvoicesPigService {
     public InvoicesPig save(InvoicesPig invoicePig){
         Integer farmId = usersService.getFarmId();
         invoicePig.setDelFlag(false);
+        if (farmId.equals(0)){
+            return invoicePigRepository.save(invoicePig);
+        }
         if(invoicePig.getInvoiceType().equals("external-import")){
             if (invoicePig.getDestinationId().equals(farmId)){
                 return invoicePigRepository.save(invoicePig);
@@ -214,6 +221,9 @@ public class InvoicesPigService {
 
     public InvoicesPig update(InvoicesPig invoicePig){
         Integer farmId = usersService.getFarmId();
+        if (farmId.equals(0)){
+            return invoicePigRepository.save(invoicePig);
+        }
         if(invoicePig.getInvoiceType().equals("external-import")){
             if (invoicePig.getDestinationId().equals(farmId)){
                 return invoicePigRepository.save(invoicePig);
