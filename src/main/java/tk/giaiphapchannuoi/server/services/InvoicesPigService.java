@@ -55,7 +55,7 @@ public class InvoicesPigService {
                 if (ip.getDestinationId().equals(farmId)){
                     invoicesPigList.add(ip);
                 }
-            } else if (ip.getInvoiceType().equals("external-export")){
+            } else if (ip.getInvoiceType().equals("sale")){
                 if (ip.getSourceId().equals(farmId)){
                     invoicesPigList.add(ip);
                 }
@@ -85,7 +85,7 @@ public class InvoicesPigService {
                 if (ip.getDestinationId().equals(farmId)){
                     return invoicesPig;
                 }
-            } else if (ip.getInvoiceType().equals("external-export")){
+            } else if (ip.getInvoiceType().equals("sale")){
                 if (ip.getSourceId().equals(farmId)){
                     return invoicesPig;
                 }
@@ -120,7 +120,7 @@ public class InvoicesPigService {
                     if (ip.getDestinationId().equals(farmId)){
                         temp.add(ip);
                     }
-                } else if (ip.getInvoiceType().equals("external-export")){
+                } else if (ip.getInvoiceType().equals("sale")){
                     if (ip.getSourceId().equals(farmId)){
                         temp.add(ip);
                     }
@@ -200,7 +200,7 @@ public class InvoicesPigService {
             if (invoicePig.getDestinationId().equals(farmId)){
                 return invoicePigRepository.save(invoicePig);
             }
-        } else if (invoicePig.getInvoiceType().equals("external-export")){
+        } else if (invoicePig.getInvoiceType().equals("sale")){
             if (invoicePig.getSourceId().equals(farmId)){
                 return invoicePigRepository.save(invoicePig);
             }
@@ -226,7 +226,7 @@ public class InvoicesPigService {
             if (invoicePig.getDestinationId().equals(farmId)){
                 return invoicePigRepository.save(invoicePig);
             }
-        } else if (invoicePig.getInvoiceType().equals("external-export")){
+        } else if (invoicePig.getInvoiceType().equals("sale")){
             if (invoicePig.getSourceId().equals(farmId)){
                 return invoicePigRepository.save(invoicePig);
             }
