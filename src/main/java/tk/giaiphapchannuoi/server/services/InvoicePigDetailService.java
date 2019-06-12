@@ -38,6 +38,9 @@ public class InvoicePigDetailService {
     Pigs1DTORepository pigs1DTORepository;
 
     @Autowired
+    PigsDTORepository pigsDTORepository;
+
+    @Autowired
     UsersService usersService;
 
     public List<InvoicePigDetail> findall(){
@@ -145,6 +148,7 @@ public class InvoicePigDetailService {
         return invoicePigDetailRepository.save(invoicePigDetail);
     }
 
+    //Them invoice pig detail va pig (nhap ngoai he thong) hoac them invoice pig detail va cap nhat pig (xuat ban, xuat heo trong he thong)
     @Transactional
     public PigsInvoicePigDetailDTOResponse savePigsInvoicePigDetail(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
         pigsInvoicePigDetailDTORequest.getPigs().setDelFlag(false);
@@ -166,11 +170,11 @@ public class InvoicePigDetailService {
         if(invoicesPig.getTotalWeight()!=null){
             invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() + pigs.getOriginWeight());
         }else{
-            invoicesPig.setTotalWeight(1f);
+            invoicesPig.setTotalWeight(pigs.getOriginWeight());
         }
-
         invoicesPigRepository.save(invoicesPig);
-        PigsDTO pigsDTO = new PigsDTO(pigs.getId(),pigs.getPigCode(),pigs.getHouse().getId(),pigs.getRound().getId(),pigs.getBirthId(),pigs.getBreed().getId(),pigs.getGender(),pigs.getBirthday(),pigs.getBorn_weight(),pigs.getBornStatus(),pigs.getOriginId(),pigs.getOriginFather(), pigs.getOriginMother(),pigs.getOriginWeight(),pigs.getReceiveWeight(), pigs.getHealthPoint(),pigs.getFoot().getId(),pigs.getFunctionUdder(),pigs.getTotalUdder(),pigs.getGentialType().getId(), pigs.getDescription(),pigs.getFcr(),pigs.getAdg(),pigs.getBf(),pigs.getFilet(),pigs.getLongBack(),pigs.getLongBody(),pigs.getIndex(),pigs.getParities(),pigs.getImages(),pigs.getHealthStatus().getId(),pigs.getBreedingType(),pigs.getBreedStatus(),pigs.getPregnancyStatus().getId(),pigs.getPoint_review(),pigs.getStatus().getId(),pigs.getPriceCode().getId(),pigs.getOverviewStatus(),pigs.getDelFlag());
+        PigsDTO pigsDTO = pigsDTORepository.findByIdAndDelFlag(pigs.getId(),false).get();
+//                new PigsDTO(pigs.getId(),pigs.getPigCode(),pigs.getHouse().getId(),pigs.getRound().getId(),pigs.getBirthId(),pigs.getBreed().getId(),pigs.getGender(),pigs.getBirthday(),pigs.getBorn_weight(),pigs.getBornStatus(),pigs.getOriginId(),pigs.getOriginFather(), pigs.getOriginMother(),pigs.getOriginWeight(),pigs.getReceiveWeight(), pigs.getHealthPoint(),pigs.getFoot().getId(),pigs.getFunctionUdder(),pigs.getTotalUdder(),pigs.getGentialType().getId(), pigs.getDescription(),pigs.getFcr(),pigs.getAdg(),pigs.getBf(),pigs.getFilet(),pigs.getLongBack(),pigs.getLongBody(),pigs.getIndex(),pigs.getParities(),pigs.getImages(),pigs.getHealthStatus().getId(),pigs.getBreedingType(),pigs.getBreedStatus(),pigs.getPregnancyStatus().getId(),pigs.getPoint_review(),pigs.getStatus().getId(),pigs.getPriceCode().getId(),pigs.getOverviewStatus(),pigs.getDelFlag());
         PigsInvoicePigDetailDTOResponse response = new PigsInvoicePigDetailDTOResponse(pigsDTO,invoicePigDetail);
         return response;
     }
