@@ -9,6 +9,7 @@ import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.services.PigsService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,22 @@ public class PigsController {
 
         PigsDTO pigsDTO = new PigsDTO(temp.getId(),temp.getPigCode(),temp.getHouse().getId(),temp.getRound().getId(),temp.getBirthId(),temp.getBreed().getId(),temp.getGender(),temp.getBirthday(),temp.getBorn_weight(),temp.getBornStatus(),temp.getOriginId(),temp.getOriginFather(), temp.getOriginMother(),temp.getOriginWeight(),temp.getReceiveWeight(), temp.getHealthPoint(),temp.getFoot().getId(),temp.getFunctionUdder(),temp.getTotalUdder(),temp.getGentialType().getId(), temp.getDescription(),temp.getFcr(),temp.getAdg(),temp.getBf(),temp.getFilet(),temp.getLongBack(),temp.getLongBody(),temp.getIndex(),temp.getParities(),temp.getImages(),temp.getHealthStatus().getId(),temp.getBreedingType(),temp.getBreedStatus(),temp.getPregnancyStatus().getId(),temp.getPoint_review(),temp.getStatus().getId(),temp.getPriceCode().getId(),temp.getOverviewStatus(),temp.getDelFlag());
         return ResponseEntity.ok(pigsDTO);
+    }
+
+    @Transactional
+    @SuppressWarnings("Duplicates")
+    @PutMapping(value = "/updatestatussold/")
+    public ResponseEntity<Object> updatestatussold(@RequestBody List<Pigs> pigsList){
+        List<Pigs> pigsList_temp = pigsService.updatestatus(pigsList,10,0);
+        if(pigsList_temp.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        List<PigsDTO> response = new ArrayList<>();
+        for (Pigs temp :
+                pigsList_temp) {
+            response.add(new PigsDTO(temp.getId(),temp.getPigCode(),temp.getHouse().getId(),temp.getRound().getId(),temp.getBirthId(),temp.getBreed().getId(),temp.getGender(),temp.getBirthday(),temp.getBorn_weight(),temp.getBornStatus(),temp.getOriginId(),temp.getOriginFather(), temp.getOriginMother(),temp.getOriginWeight(),temp.getReceiveWeight(), temp.getHealthPoint(),temp.getFoot().getId(),temp.getFunctionUdder(),temp.getTotalUdder(),temp.getGentialType().getId(), temp.getDescription(),temp.getFcr(),temp.getAdg(),temp.getBf(),temp.getFilet(),temp.getLongBack(),temp.getLongBody(),temp.getIndex(),temp.getParities(),temp.getImages(),temp.getHealthStatus().getId(),temp.getBreedingType(),temp.getBreedStatus(),temp.getPregnancyStatus().getId(),temp.getPoint_review(),temp.getStatus().getId(),temp.getPriceCode().getId(),temp.getOverviewStatus(),temp.getDelFlag()));
+        }
+        return ResponseEntity.ok(response);
     }
 
     @Transactional

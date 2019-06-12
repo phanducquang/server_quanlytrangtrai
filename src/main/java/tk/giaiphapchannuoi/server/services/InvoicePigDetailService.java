@@ -152,6 +152,10 @@ public class InvoicePigDetailService {
     @Transactional
     public PigsInvoicePigDetailDTOResponse savePigsInvoicePigDetail(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
         pigsInvoicePigDetailDTORequest.getPigs().setDelFlag(false);
+        if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("sale")){
+            Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(8,pigsInvoicePigDetailDTORequest.getPigs().getStatus().getCode(),false).get();
+            pigsInvoicePigDetailDTORequest.getPigs().setStatus(status);
+        }
         Pigs pigs = pigsRepository.save(pigsInvoicePigDetailDTORequest.getPigs());
         InvoicePigDetail temp = new InvoicePigDetail();
         temp.setDelFlag(false);

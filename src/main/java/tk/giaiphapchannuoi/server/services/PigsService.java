@@ -39,6 +39,9 @@ public class PigsService {
     CagesRepository cagesRepository;
 
     @Autowired
+    StatusRepository statusRepository;
+
+    @Autowired
     UsersService usersService;
 
     public List<PigsDTO> findall(){
@@ -122,6 +125,18 @@ public class PigsService {
             return temp;
         }
         return null;
+    }
+
+    @Transactional
+    public List<Pigs> updatestatus(List<Pigs> pigsList, Integer statusCode, Integer preStatusCode){
+        List<Pigs> temp = new ArrayList();
+        Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(statusCode,preStatusCode,false).get();
+        for (Pigs p :
+                pigsList) {
+            p.setStatus(status);
+            temp.add(pigsRepository.save(p));
+        }
+        return temp;
     }
 
     @Transactional
