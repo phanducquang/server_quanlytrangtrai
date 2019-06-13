@@ -55,9 +55,18 @@ public class UsersController {
         return ResponseEntity.ok(temp);
     }
 
-    @PutMapping(value = "/update_password")
+    @PutMapping(value = "/updatepassword/")
     public ResponseEntity<Object> updatePassword(@RequestBody Users user){
         Users temp = usersService.updatePassword(user);
+        if(temp == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(temp);
+    }
+
+    @GetMapping(value = "/updatetoken/{userId}/{token}")
+    public ResponseEntity<Object> updateToken(@PathVariable Integer userId, @PathVariable String token){
+        Users temp = usersService.updateTokenNotification(userId,token);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

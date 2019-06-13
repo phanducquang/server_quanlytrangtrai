@@ -71,6 +71,15 @@ public class UsersService {
         return usersRepository.save(user);
     }
 
+    public Users updateTokenNotification(Integer userId, String token){
+        Optional<Users> user = findbyid(userId);
+        if (user.isPresent()){
+            user.get().setTokenNotification(token);
+            return usersRepository.save(user.get());
+        }
+        return null;
+    }
+
     public Boolean delete(Users user){
         user.setDelFlag(true);
         if(usersRepository.save(user) != null){
