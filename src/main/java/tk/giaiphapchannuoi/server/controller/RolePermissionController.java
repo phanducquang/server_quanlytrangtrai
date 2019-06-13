@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tk.giaiphapchannuoi.server.model.Permissions;
 import tk.giaiphapchannuoi.server.model.RolePermission;
 import tk.giaiphapchannuoi.server.services.RolePermissionService;
 
@@ -21,6 +22,12 @@ public class RolePermissionController {
     public Optional<RolePermission> findById(@PathVariable Integer id){
         return rolePermissionService.findbyid(id);
     }
+
+    @GetMapping(value = "/role/{id}")
+    public List<Permissions> findByRole(@PathVariable Integer id){
+        return rolePermissionService.findbyrole(id);
+    }
+
 
     @GetMapping(value = "/list")
     public List<RolePermission> findAll(){
