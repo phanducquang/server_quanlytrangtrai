@@ -17,15 +17,11 @@ public class PigsDTO implements Serializable {
 	@Column(name="pig_code")
 	private String pigCode;
 
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name="house_id")
-//	private Cages house;
-
 	@Column(name="cage_id")
 	private Integer houseId;
 
-	@Column(name="round_id")
-	private Integer roundId;
+	@Column(name="pig_type")
+	private String pigType;
 
 	@Column(name = "birth_id")
 	private Integer birthId;
@@ -108,10 +104,6 @@ public class PigsDTO implements Serializable {
 	@Column(name="health_status")
 	private Integer healthStatusId;
 
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name="breeding_type")
-//	private BreedingType breedingType;
-
 	@Column(name="breeding_type")
 	private Integer breedingType;
 	
@@ -139,52 +131,11 @@ public class PigsDTO implements Serializable {
 	public PigsDTO() {
 	}
 
-//	public Pigs(String pigCode, Cages house, Rounds round, Breeds breed, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, Integer gential, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, BreedingType breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Integer status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
-//		this.pigCode = pigCode;
-//		this.house = house;
-//		this.round = round;
-//		this.breed = breed;
-//		this.gender = gender;
-//		this.birthday = birthday;
-//		this.born_weight = born_weight;
-//		this.bornStatus = bornStatus;
-//		this.originId = originId;
-//		this.originFather = originFather;
-//		this.originMother = originMother;
-//		this.originWeight = originWeight;
-//		this.receiveWeight = receiveWeight;
-//		this.healthPoint = healthPoint;
-//		this.foot = foot;
-//		this.functionUdder = functionUdder;
-//		this.totalUdder = totalUdder;
-//		this.gential = gential;
-//		this.description = description;
-//		this.fcr = fcr;
-//		this.adg = adg;
-//		this.bf = bf;
-//		this.filet = filet;
-//		this.longBack = longBack;
-//		this.longBody = longBody;
-//		this.index = index;
-//		this.parities = parities;
-//		this.images = images;
-//		this.healthStatus = healthStatus;
-//		this.breedingType = breedingType;
-//		this.breedStatus = breedStatus;
-//		this.pregnancyStatus = pregnancyStatus;
-//		this.point_review = point_review;
-//		this.status = status;
-//		this.priceCode = priceCode;
-//		this.overviewStatus = overviewStatus;
-//		this.delFlag = delFlag;
-//	}
-
-
-	public PigsDTO(Integer id, String pigCode, Integer houseId, Integer roundId, Integer birthId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer statusId, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
+	public PigsDTO(Integer id, String pigCode, Integer houseId, String pigType, Integer birthId, Integer breedId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, Integer footTypeId, Integer functionUdder, Integer totalUdder, Integer gentialTypeId, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, Integer healthStatusId, Integer breedingType, Integer breedStatus, Integer pregnancyStatusId, Integer point_review, Integer statusId, Integer priceCodeId, Integer overviewStatus, Boolean delFlag) {
 		this.id = id;
 		this.pigCode = pigCode;
 		this.houseId = houseId;
-		this.roundId = roundId;
+		this.pigType = pigType;
 		this.birthId = birthId;
 		this.breedId = breedId;
 		this.gender = gender;
@@ -246,12 +197,12 @@ public class PigsDTO implements Serializable {
 		this.houseId = houseId;
 	}
 
-	public Integer getRoundId() {
-		return roundId;
+	public String getPigType() {
+		return pigType;
 	}
 
-	public void setRoundId(Integer roundId) {
-		this.roundId = roundId;
+	public void setPigType(String pigType) {
+		this.pigType = pigType;
 	}
 
 	public Integer getBirthId() {
