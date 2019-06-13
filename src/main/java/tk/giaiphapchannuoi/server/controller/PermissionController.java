@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/permisssion")
+@RequestMapping(value = "/api/permission")
 public class PermissionController {
 
     @Autowired
