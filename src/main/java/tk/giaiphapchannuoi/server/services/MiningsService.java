@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.MiningResponse;
+import tk.giaiphapchannuoi.server.model.ApiResponse;
 import tk.giaiphapchannuoi.server.model.Minings;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.repository.MiningsRepository;
@@ -111,6 +112,34 @@ public class MiningsService {
         return null;
     }
 
+    public ApiResponse updateclassification(Integer pigId, String classification) {
+        Optional<Pigs> pig = pigsService.findbyid(pigId);
+        if (pig.isPresent()) {
+            Integer index = Integer.parseInt(convertIndex(pig.get().getIndex()));
+            Integer weight = Integer.parseInt(convertWeight(pig.get().getOriginWeight()));
+            Integer foot = Integer.parseInt(convertFoot(pig.get().getFoot().getId()));
+            Integer gential = Integer.parseInt(convertGential(pig.get().getGentialType().getId()));
+            Integer udder;
+            if (pig.get().getGender().equals(1)){
+                udder = Integer.parseInt(convertMaleUdder(pig.get().getFunctionUdder()));
+            } else if (pig.get().getGender().equals(2)){
+                udder = Integer.parseInt(convertFemaleUdder(pig.get().getFunctionUdder()));
+            } else {
+                udder = 4;
+            }
+            Integer adg = Integer.parseInt(convertAdg(pig.get().getAdg()));
+            Optional<Minings> mining = miningsRepository.findByIndexAndOriginWeightAndFootAndGentialAndUdderAndAdg(index,weight,foot,gential,udder,adg);
+            if (mining.isPresent()){
+                mining.get().setClassification(classification);
+                Minings m = miningsRepository.save(mining.get());
+                if (m != null){
+                    return new ApiResponse(true,"success");
+                }
+                return null;
+            }
+        }
+        return null;
+    }
     public String convertIndex(Float index){
         if (index > 105) {
             return "1";

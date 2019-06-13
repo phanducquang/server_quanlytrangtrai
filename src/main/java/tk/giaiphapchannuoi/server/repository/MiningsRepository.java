@@ -11,4 +11,6 @@ public interface MiningsRepository extends JpaRepository<Minings, Integer> {
     Optional<Minings> findById(Integer id);
 
     List<Minings> findAll();
+
+    Optional<Minings> findByIndexAndOriginWeightAndFootAndGentialAndUdderAndAdg(Integer index, Integer originWeight, Integer foot, Integer gential, Integer udder, Integer adg);
 }
