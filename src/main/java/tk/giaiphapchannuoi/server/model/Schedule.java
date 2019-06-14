@@ -26,17 +26,21 @@ public class Schedule extends Auditable implements Serializable {
     @Column(name="status")
     private String status;//da phan cong, chua phan cong, da hoan thanh
 
+    @Column(name="farm_id")
+    private Integer farmId;
+
     @Column(name = "del_flag")
     private Boolean delFlag;
 
     public Schedule() {
     }
 
-    public Schedule(String name, Employees employee, Date date, String status, Boolean delFlag) {
+    public Schedule(String name, Employees employee, Date date, String status, Integer farmId, Boolean delFlag) {
         this.name = name;
         this.employee = employee;
         this.date = date;
         this.status = status;
+        this.farmId = farmId;
         this.delFlag = delFlag;
     }
 
@@ -78,6 +82,14 @@ public class Schedule extends Auditable implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getFarmId() {
+        return farmId;
+    }
+
+    public void setFarmId(Integer farmId) {
+        this.farmId = farmId;
     }
 
     public Boolean getDelFlag() {

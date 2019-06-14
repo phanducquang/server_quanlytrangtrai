@@ -34,7 +34,7 @@ public class ScheduleService {
         List<Schedule> scheduleList = new ArrayList<>();
         for (Schedule s :
                 temp) {
-            if (s.getEmployee().getFarm().getId().equals(farmId)){
+            if (s.getFarmId().equals(farmId)){
                 scheduleList.add(s);
             }
         }
@@ -45,7 +45,7 @@ public class ScheduleService {
         Integer farmId = usersService.getFarmId();
         Optional<Schedule> schedule = scheduleRepository.findByIdAndDelFlag(id,false);
         if (schedule.isPresent()){
-            if (farmId.equals(0) || schedule.get().getEmployee().getFarm().getId().equals(farmId)){
+            if (farmId.equals(0) || schedule.get().getFarmId().equals(farmId)){
                 return schedule;
             }
         }
@@ -59,9 +59,7 @@ public class ScheduleService {
 
     public Schedule update(Schedule schedule){
         Integer farmId = usersService.getFarmId();
-        Optional<Employees> employee = employeesRepository.findByIdAndDelFlag(schedule.getEmployee().getId(),false);
-        Integer farmIdFromSchedule = employee.map(e -> e.getFarm().getId()).orElse(-1);
-        if (farmId.equals(0) || farmId.equals(farmIdFromSchedule)){
+        if (farmId.equals(0) || farmId.equals(schedule.getFarmId())){
             return scheduleRepository.save(schedule);
         }
         return null;
