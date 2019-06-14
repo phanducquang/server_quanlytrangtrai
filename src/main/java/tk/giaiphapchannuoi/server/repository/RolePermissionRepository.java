@@ -15,5 +15,5 @@ public interface RolePermissionRepository extends JpaRepository<RolePermission, 
 
     List<RolePermission> findAllByRoleAndDelFlag(Roles role, Boolean delFlag);
 
-    Boolean deleteByRole(Roles role);
+    Integer deleteByRole(Roles role);
 }
