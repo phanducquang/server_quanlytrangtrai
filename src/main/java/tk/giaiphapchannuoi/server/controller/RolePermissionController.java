@@ -3,6 +3,7 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.Permissions;
 import tk.giaiphapchannuoi.server.model.RolePermission;
@@ -34,19 +35,20 @@ public class RolePermissionController {
         return rolePermissionService.findall();
     }
 
+    @Transactional
     @PostMapping(value = "/")
-    public ResponseEntity<Object> insert(@RequestBody RolePermission rolePermission){
-        RolePermission temp = rolePermissionService.save(rolePermission);
-        if(temp == null){
+    public ResponseEntity<Object> insert(@RequestBody List<RolePermission> rolePermission){
+        List<RolePermission> temp = rolePermissionService.save(rolePermission);
+        if(temp.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")
-    public ResponseEntity<Object> update(@RequestBody RolePermission rolePermission){
-        RolePermission temp = rolePermissionService.update(rolePermission);
-        if(temp == null){
+    public ResponseEntity<Object> update(@RequestBody List<RolePermission> rolePermission){
+        List<RolePermission> temp = rolePermissionService.update(rolePermission);
+        if(temp.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(temp);

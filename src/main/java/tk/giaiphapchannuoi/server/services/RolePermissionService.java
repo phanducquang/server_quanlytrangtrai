@@ -45,13 +45,24 @@ public class RolePermissionService {
         return Collections.emptyList();
     }
 
-    public RolePermission save(RolePermission rolePermission){
-        rolePermission.setDelFlag(false);
-        return rolePermissionRepository.save(rolePermission);
+    @Transactional
+    public List<RolePermission> save(List<RolePermission> rolePermission){
+        List<RolePermission> temp = new ArrayList<>();
+        for (RolePermission rp:
+             rolePermission) {
+            rp.setDelFlag(false);
+            temp.add(rolePermissionRepository.save(rp));
+        }
+        return temp;
     }
 
-    public RolePermission update(RolePermission rolePermission){
-        return rolePermissionRepository.save(rolePermission);
+    public List<RolePermission> update(List<RolePermission> rolePermission){
+        Optional<Roles> role = rolesService.findbyid(rolePermission.get(0).getRole().getId());
+        if (role.isPresent()){
+            rolePermissionRepository.deleteByRole(role.get());
+            return save(rolePermission);
+        }
+        return Collections.emptyList();
     }
 
 
