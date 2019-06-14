@@ -219,12 +219,13 @@ public class InvoicesPigService {
         Optional<Users> user = usersService.findbyid(userId);
         invoicePig.setEmployee(user.get().getEmployee());
         if (farmId.equals(0)){
-            if (currentDate.before(dateFromInvoicePig) && (invoicePig.getInvoiceType().equals("external-import") || invoicePig.getInvoiceType().equals("sale"))){
+            if (currentDate.before(dateFromInvoicePig) && (invoicePig.getInvoiceType().equals("internal-export") || invoicePig.getInvoiceType().equals("sale"))){
                 Schedule schedule = new Schedule();
                 //set schedule va luu
                 schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
                 schedule.setDate(invoicePig.getExportDate());
                 schedule.setStatus("chưa phân công");
+                schedule.setFarmId(invoicePig.getSourceId());
                 scheduleService.save(schedule);
             }
             return invoicePigRepository.save(invoicePig);
@@ -241,6 +242,7 @@ public class InvoicesPigService {
                     schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
                     schedule.setDate(invoicePig.getExportDate());
                     schedule.setStatus("chưa phân công");
+                    schedule.setFarmId(invoicePig.getSourceId());
                     scheduleService.save(schedule);
                 }
                 return invoicePigRepository.save(invoicePig);
@@ -257,6 +259,7 @@ public class InvoicesPigService {
                     schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
                     schedule.setDate(invoicePig.getExportDate());
                     schedule.setStatus("chưa phân công");
+                    schedule.setFarmId(invoicePig.getSourceId());
                     scheduleService.save(schedule);
                 }
                 return invoicePigRepository.save(invoicePig);

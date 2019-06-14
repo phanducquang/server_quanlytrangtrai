@@ -92,6 +92,7 @@ public class MatingsService {
             schedule.setName("Đỡ đẻ cho heo \"" + mother.get().getPigCode() + "\" tại chuồng \"" + mother.get().getHouse().getName() + "\", " + mother.get().getHouse().getSection().getName() + ".");
             schedule.setDate(mating.getBirthEstimate());
             schedule.setStatus("chưa phân công");
+            schedule.setFarmId(farmIdFromMating);
             scheduleService.save(schedule);
             //Cap nhat status heo
             Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
