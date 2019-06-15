@@ -378,8 +378,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET,"/api/matingroles/**")
                         .hasAnyRole("thiet_lap_luat_phoi","admin")
                     .antMatchers("/api/matingroles/")
-                        .hasAnyRole("thiet_lap_luat_phoi","admin");
-
+                        .hasAnyRole("thiet_lap_luat_phoi","admin")
+                //quan_ly_bang_ke_hoach
+                    .antMatchers(HttpMethod.GET,"/api/schedule/listschedule")
+                        .hasAnyRole("xem_bang_ke_hoach","admin");
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
