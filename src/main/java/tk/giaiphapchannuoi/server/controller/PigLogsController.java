@@ -17,7 +17,7 @@ public class PigLogsController {
     @Autowired
     PigLogsService pigLogsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<PigLogs> findById(@PathVariable Integer id){
         return pigLogsService.findbyid(id);
     }

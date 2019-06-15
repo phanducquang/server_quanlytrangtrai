@@ -18,7 +18,7 @@ public class UsedMedicineController {
     @Autowired
     UsedMedicineService usedMedicineService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<UsedMedicine> findById(@PathVariable Integer id){
         return usedMedicineService.findbyid(id);
     }

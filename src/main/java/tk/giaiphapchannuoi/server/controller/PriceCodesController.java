@@ -17,7 +17,7 @@ public class PriceCodesController {
     @Autowired
     PriceCodesService priceCodesService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<PriceCodes> findById(@PathVariable Integer id){
         return priceCodesService.findbyid(id);
     }

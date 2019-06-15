@@ -17,7 +17,7 @@ public class WeaningsController {
     @Autowired
     WeaningsService weaningsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Weanings> findById(@PathVariable Integer id){
         return weaningsService.findbyid(id);
     }

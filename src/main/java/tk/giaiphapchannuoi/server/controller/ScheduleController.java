@@ -29,7 +29,7 @@ public class ScheduleController {
         return scheduleDTO;
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Schedule> findById(@PathVariable Integer id){
         return scheduleService.findbyid(id);
     }

@@ -20,7 +20,7 @@ public class PigsController {
     @Autowired
     PigsService pigsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Pigs> findById(@PathVariable Integer id){
         return pigsService.findbyid(id);
     }

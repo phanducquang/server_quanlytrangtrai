@@ -21,7 +21,7 @@ public class IssuesPigsController {
     @Autowired
     IssuesPigsService issuesPigsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<IssuesPigs> findById(@PathVariable Integer id){
         return issuesPigsService.findbyid(id);
     }

@@ -17,7 +17,7 @@ public class MatingDetailsController {
     @Autowired
     MatingDetailsService matingDetailsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<MatingDetails> findById(@PathVariable Integer id){
         return matingDetailsService.findbyid(id);
     }

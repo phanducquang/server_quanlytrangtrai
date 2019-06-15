@@ -17,7 +17,7 @@ public class PigTransferController {
     @Autowired
     PigTransferService pigTransferService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<PigTransfer> findById(@PathVariable Integer id){
         return pigTransferService.findbyid(id);
     }

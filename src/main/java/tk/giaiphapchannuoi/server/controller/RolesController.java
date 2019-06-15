@@ -17,7 +17,7 @@ public class RolesController {
     @Autowired
     RolesService rolesService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Roles> findById(@PathVariable Integer id){
         return rolesService.findbyid(id);
     }

@@ -17,7 +17,7 @@ public class IssuesDiseasesController {
     @Autowired
     IssuesDiseasesService issuesDiseasesService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<IssuesDiseases> findById(@PathVariable Integer id){
         return issuesDiseasesService.findbyid(id);
     }

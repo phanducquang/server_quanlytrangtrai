@@ -17,7 +17,7 @@ public class WarehouseTransactionController {
     @Autowired
     WarehouseTransactionService warehouseTransactionService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<WarehouseTransaction> findById(@PathVariable Integer id){
         return warehouseTransactionService.findbyid(id);
     }

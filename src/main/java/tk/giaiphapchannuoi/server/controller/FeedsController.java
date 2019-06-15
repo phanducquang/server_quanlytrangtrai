@@ -24,7 +24,7 @@ public class FeedsController {
     @Autowired
     UsersService usersService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Feeds> findById(@PathVariable Integer id){
         return feedsService.findbyid(id);
     }

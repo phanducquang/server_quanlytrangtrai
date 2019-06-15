@@ -17,7 +17,7 @@ public class ScreensController {
     @Autowired
     ScreensService screensService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Screens> findById(@PathVariable Integer id){
         return screensService.findbyid(id);
     }

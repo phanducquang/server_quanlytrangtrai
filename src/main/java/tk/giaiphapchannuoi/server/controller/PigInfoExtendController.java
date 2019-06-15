@@ -23,7 +23,7 @@ public class PigInfoExtendController {
     @Autowired
     SpermService spermService;
 
-    @GetMapping(value = "/{pigId}")
+    @GetMapping(value = "/one/{pigId}")
     public PigInfoExtendDTO findByPig(@PathVariable Integer pigId){
         PigInfoExtendDTO pigInfoExtendDTO = new PigInfoExtendDTO();
         pigInfoExtendDTO.setBreedings(breedingsService.findallbypig(pigId));

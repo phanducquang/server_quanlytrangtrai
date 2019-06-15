@@ -17,7 +17,7 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Users> findById(@PathVariable Integer id){
         return usersService.findbyid(id);
     }

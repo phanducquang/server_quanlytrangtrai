@@ -17,7 +17,7 @@ public class RegenciesController {
     @Autowired
     RegenciesService regenciesService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Regencies> findById(@PathVariable Integer id){
         return regenciesService.findbyid(id);
     }

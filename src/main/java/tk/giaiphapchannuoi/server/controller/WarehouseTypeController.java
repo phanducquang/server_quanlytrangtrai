@@ -17,7 +17,7 @@ public class WarehouseTypeController {
     @Autowired
     WarehouseTypeService warehouseTypeService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<WarehouseType> findById(@PathVariable Integer id){
         return warehouseTypeService.findbyid(id);
     }

@@ -17,7 +17,7 @@ public class InvoicesProductController {
     @Autowired
     InvoicesProductService invoicesProductService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<InvoicesProduct> findById(@PathVariable Integer id){
         return invoicesProductService.findbyid(id);
     }

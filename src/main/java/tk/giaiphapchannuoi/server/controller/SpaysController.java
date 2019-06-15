@@ -17,7 +17,7 @@ public class SpaysController {
     @Autowired
     SpaysService spaysService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Spays> findById(@PathVariable Integer id){
         return spaysService.findbyid(id);
     }

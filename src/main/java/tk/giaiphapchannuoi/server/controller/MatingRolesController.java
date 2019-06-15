@@ -17,7 +17,7 @@ public class MatingRolesController {
     @Autowired
     MatingRolesService matingRolesService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<MatingRoles> findById(@PathVariable Integer id){
         return matingRolesService.findbyid(id);
     }

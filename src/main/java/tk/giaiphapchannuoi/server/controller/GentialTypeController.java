@@ -17,7 +17,7 @@ public class GentialTypeController {
     @Autowired
     GentialTypeService gentialTypeService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<GentialType> findById(@PathVariable Integer id){
         return gentialTypeService.findbyid(id);
     }

@@ -17,7 +17,7 @@ public class SectionsController {
     @Autowired
     SectionsService sectionsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Sections> findById(@PathVariable Integer id){
         return sectionsService.findbyid(id);
     }

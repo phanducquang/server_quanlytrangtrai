@@ -19,7 +19,7 @@ public class RolePermissionController {
     @Autowired
     RolePermissionService rolePermissionService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<RolePermission> findById(@PathVariable Integer id){
         return rolePermissionService.findbyid(id);
     }

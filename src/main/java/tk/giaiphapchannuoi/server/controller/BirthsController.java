@@ -20,7 +20,7 @@ public class BirthsController {
     @Autowired
     BirthsService birthsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Births findById(@PathVariable Integer id){
         return birthsService.findbyid(id);
     }

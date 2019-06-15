@@ -17,7 +17,7 @@ public class StatusController {
     @Autowired
     StatusService statusService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Status> findById(@PathVariable Integer id){
         return statusService.findbyid(id);
     }

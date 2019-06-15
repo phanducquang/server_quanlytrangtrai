@@ -17,7 +17,7 @@ public class CustomerGroupsController {
     @Autowired
     CustomerGroupsService customerGroupsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<CustomerGroups> findById(@PathVariable Integer id){
         return customerGroupsService.findbyid(id);
     }

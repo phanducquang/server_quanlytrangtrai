@@ -17,7 +17,7 @@ public class PartnersController {
     @Autowired
     PartnersService partnersService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Partners> findById(@PathVariable Integer id){
         return partnersService.findbyid(id);
     }

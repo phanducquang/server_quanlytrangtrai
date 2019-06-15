@@ -17,7 +17,7 @@ public class FoodWarehouseController {
     @Autowired
     FoodWarehouseService foodWarehouseService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<FoodWarehouse> findById(@PathVariable Integer id){
         return foodWarehouseService.findbyid(id);
     }

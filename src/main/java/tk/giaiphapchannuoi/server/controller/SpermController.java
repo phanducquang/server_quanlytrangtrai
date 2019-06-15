@@ -17,7 +17,7 @@ public class SpermController {
     @Autowired
     SpermService spermService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Sperm> findById(@PathVariable Integer id){
         return spermService.findbyid(id);
     }

@@ -17,7 +17,7 @@ public class FootTypeController {
     @Autowired
     FootTypeService footTypeService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<FootType> findById(@PathVariable Integer id){
         return footTypeService.findbyid(id);
     }

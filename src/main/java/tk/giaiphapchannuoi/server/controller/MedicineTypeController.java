@@ -17,7 +17,7 @@ public class MedicineTypeController {
     @Autowired
     MedicineTypeService medicineTypeService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<MedicineType> findById(@PathVariable Integer id){
         return medicineTypeService.findbyid(id);
     }

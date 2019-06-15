@@ -18,7 +18,7 @@ public class BreedingsController {
     @Autowired
     BreedingsService breedingsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Breedings> findById(@PathVariable Integer id){
         return breedingsService.findbyid(id);
     }

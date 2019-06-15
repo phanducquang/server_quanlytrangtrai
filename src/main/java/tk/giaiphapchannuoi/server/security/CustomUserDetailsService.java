@@ -66,22 +66,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         //Tim ten cac permission cua role
         List<RolePermission> rolePermissionsList = rolePermissionRepository.findAllByRoleAndDelFlag(role,false);
-        List<Permissions> PermissionsList = new ArrayList<Permissions>();
         List<String> permissionsName = new ArrayList<String>();
 
         for (RolePermission r : rolePermissionsList) {
             //Lay tat ca permission co Role vưa tim o tren
-            Optional<Permissions> permissions = permissionRepository.findByIdAndDelFlag(r.getPermission().getId(),false);
-            if(permissions.isPresent()){
-                PermissionsList.add(permissions.get());
-            }
+            //Lay name permission
+            permissionsName.add(r.getPermission().getCode());
         }
-
-        //Lay name permission
-        for (Permissions p: PermissionsList){
-            permissionsName.add(p.getCode());
-        }
-
         return permissionsName;
     }
 }

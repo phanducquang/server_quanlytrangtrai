@@ -17,7 +17,7 @@ public class CagesController {
     @Autowired
     CagesService cagesService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Cages> findById(@PathVariable Integer id){
         return cagesService.findbyid(id);
     }

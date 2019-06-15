@@ -17,7 +17,7 @@ public class ObjectTypeController {
     @Autowired
     ObjectTypeService objectTypeService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<ObjectType> findById(@PathVariable Integer id){
         return objectTypeService.findbyid(id);
     }

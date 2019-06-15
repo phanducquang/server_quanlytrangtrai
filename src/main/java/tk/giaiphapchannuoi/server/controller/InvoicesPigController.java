@@ -24,7 +24,7 @@ public class InvoicesPigController {
     @Autowired
     InvoicesPigService invoicesPigService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<InvoicesPig> findById(@PathVariable Integer id){
         return invoicesPigService.findbyid(id);
     }

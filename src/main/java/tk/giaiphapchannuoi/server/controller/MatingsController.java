@@ -36,7 +36,7 @@ public class MatingsController {
     @Autowired
     StatusService statusService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Matings> findById(@PathVariable Integer id){
         return matingsService.findbyid(id);
     }

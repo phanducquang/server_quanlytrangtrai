@@ -17,7 +17,7 @@ public class PregnancyStatusController {
     @Autowired
     PregnancyStatusService pregnancyStatusService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<PregnancyStatus> findById(@PathVariable Integer id){
         return pregnancyStatusService.findbyid(id);
     }

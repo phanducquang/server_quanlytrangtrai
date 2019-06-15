@@ -17,7 +17,7 @@ public class RoundsController {
     @Autowired
     RoundsService roundsService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Rounds> findById(@PathVariable Integer id){
         return roundsService.findbyid(id);
     }

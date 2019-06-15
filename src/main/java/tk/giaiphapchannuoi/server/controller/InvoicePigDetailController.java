@@ -20,7 +20,7 @@ public class InvoicePigDetailController {
     @Autowired
     InvoicePigDetailService invoicePigDetailService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<InvoicePigDetail> findById(@PathVariable Integer id){
         return invoicePigDetailService.findbyid(id);
     }

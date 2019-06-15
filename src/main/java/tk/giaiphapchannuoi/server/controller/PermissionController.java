@@ -17,7 +17,7 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/one/{id}")
     public Optional<Permissions> findById(@PathVariable Integer id){
         return permissionService.findbyid(id);
     }
