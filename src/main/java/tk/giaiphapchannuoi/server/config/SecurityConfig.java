@@ -315,9 +315,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasAnyRole("thiet_lap_danh_sach_thuoc","admin")
                     .antMatchers("/api/medicines/")
                         .hasAnyRole("thiet_lap_danh_sach_thuoc","admin")
-                //thiet_lap_danh_sach_ma_san_pham
-                    .antMatchers(HttpMethod.GET,"/api/settings/list")
-                        .hasAnyRole("thiet_lap_danh_sach_ma_san_pham","admin")
+//                //thiet_lap_danh_sach_ma_san_pham
+//                    .antMatchers(HttpMethod.GET,"/api/settings/list")
+//                        .hasAnyRole("thiet_lap_danh_sach_ma_san_pham","admin")
                 //thiet_lap_loai_chan
                     .antMatchers(HttpMethod.GET,"/api/foottype/**")
                         .hasAnyRole("thiet_lap_loai_chan","admin")
@@ -333,9 +333,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasAnyRole("thiet_lap_danh_sach_trang_thai_heo","admin")
                     .antMatchers("/api/status/")
                         .hasAnyRole("thiet_lap_danh_sach_trang_thai_heo","admin")
-                    //Note
-                    .antMatchers("/api/rounds/**")
-                        .hasAnyRole("thiet_lap_danh_sach_lua","admin")
                 //thiet_lap_danh_sach_chuc_vu
                     .antMatchers(HttpMethod.GET,"/api/regencies/**")
                         .hasAnyRole("thiet_lap_danh_sach_chuc_vu","admin")
