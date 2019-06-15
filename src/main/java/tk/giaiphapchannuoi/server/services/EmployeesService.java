@@ -1,5 +1,6 @@
 package tk.giaiphapchannuoi.server.services;
 
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +53,11 @@ public class EmployeesService {
         Integer farmId = usersService.getFarmId();
         if (farmId.equals(0) || employee.getFarm().getId().equals(farmId)){
             employee.setDelFlag(false);
-            return employeesRepository.save(employee);
+            try {
+                return employeesRepository.save(employee);
+            } catch (JDBCException e) {
+                throw e;
+            }
         }
         return null;
     }
