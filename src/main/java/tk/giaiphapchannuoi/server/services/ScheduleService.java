@@ -9,6 +9,7 @@ import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.ScheduleRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,9 @@ public class ScheduleService {
 
     @Autowired
     EmployeesRepository employeesRepository;
+
+    @Autowired
+    EmployeesService employeesService;
 
     @Autowired
     UsersService usersService;
@@ -50,6 +54,14 @@ public class ScheduleService {
             }
         }
         return Optional.empty();
+    }
+
+    public List<Schedule> findbyemployee(Integer employeeId){
+        Optional<Employees> employee = employeesService.findbyid(employeeId);
+        if (employee.isPresent()){
+            return scheduleRepository.findByEmployeeAndDelFlag(employee.get(),false);
+        }
+        return Collections.emptyList();
     }
 
     public Schedule save(Schedule schedule){

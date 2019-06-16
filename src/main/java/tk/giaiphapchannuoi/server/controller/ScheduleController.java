@@ -34,6 +34,11 @@ public class ScheduleController {
         return scheduleService.findbyid(id);
     }
 
+    @GetMapping(value = "/employee/{employeeId}")
+    public List<Schedule> findByEmployee(@PathVariable Integer employeeId){
+        return scheduleService.findbyemployee(employeeId);
+    }
+
     @GetMapping(value = "/listschedule")
     public List<Schedule> findallschedule(){
         return scheduleService.findall();
