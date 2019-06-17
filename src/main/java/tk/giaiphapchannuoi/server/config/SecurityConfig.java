@@ -215,7 +215,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //quan_ly_hoat_dong
 
                     .antMatchers(HttpMethod.GET,"/api/pigs/one/**")
-                        .hasAnyRole("xem_thong_tin_heo","admin")
+                        .hasAnyRole("xem_thong_tin_heo","xem_thong_tin_heo_tai_khu","admin")
                     .antMatchers(HttpMethod.POST,"/api/issuespigs/")
                         .hasAnyRole("nhap_van_de_cua_heo","admin")
                     .antMatchers(HttpMethod.PUT,"/api/pigs/")
