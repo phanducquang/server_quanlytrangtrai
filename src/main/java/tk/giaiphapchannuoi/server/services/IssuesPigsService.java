@@ -174,6 +174,15 @@ public class IssuesPigsService {
         return null;
     }
 
+    public List<IssuesPigs> updateall(List<IssuesPigs> issuesPig){
+        Integer farmId = usersService.getFarmId();
+        Optional<Employees> temp = employeesRepository.findByIdAndDelFlag(issuesPig.get(0).getEmployee().getId(),false);
+        Integer farmIdFromEmployee = temp.map(e -> e.getFarm().getId()).orElse(null);
+        if (farmId.equals(0) || farmId.equals(farmIdFromEmployee)){
+            return issuesPigsRepository.saveAll(issuesPig);
+        }
+        return null;
+    }
 
     public Boolean delete(IssuesPigs issuesPig){
         issuesPig.setDelFlag(true);

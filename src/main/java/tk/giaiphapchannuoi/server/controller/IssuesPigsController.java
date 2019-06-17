@@ -64,6 +64,15 @@ public class IssuesPigsController {
         return ResponseEntity.ok(temp);
     }
 
+    @PutMapping(value = "/updateall/")
+    public ResponseEntity<Object> updateall(@RequestBody List<IssuesPigs> issuesPig){
+        List<IssuesPigs> temp = issuesPigsService.updateall(issuesPig);
+        if(temp.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(temp);
+    }
+
     @DeleteMapping(value = "/")
     public Boolean delete(@RequestBody IssuesPigs issuesPig){
         return issuesPigsService.delete(issuesPig);
