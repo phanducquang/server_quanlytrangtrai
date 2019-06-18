@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.Pigs1DTO;
+import tk.giaiphapchannuoi.server.model.MedicineDisease;
 import tk.giaiphapchannuoi.server.model.UsedMedicine;
 import tk.giaiphapchannuoi.server.repository.Pigs1DTORepository;
 import tk.giaiphapchannuoi.server.repository.UsedMedicineRepository;
@@ -21,6 +22,9 @@ public class UsedMedicineService {
 
     @Autowired
     Pigs1DTORepository pigs1DTORepository;
+
+    @Autowired
+    MedicineDiseaseService medicineDiseaseService;
 
     @Autowired
     UsersService usersService;
@@ -55,9 +59,23 @@ public class UsedMedicineService {
     @Transactional
     public List<UsedMedicine> save(List<UsedMedicine> usedMedicine){
         List<UsedMedicine> temp = new ArrayList<>();
+        //Lay danh sach medicineDisease
+        List<MedicineDisease> medicineDiseaseList = medicineDiseaseService.findbyDisease(usedMedicine.get(0).getDiseases());
         for (UsedMedicine um :
                 usedMedicine) {
             um.setDelFlag(false);
+            //Chạy vong lap kiem tra tung disease và medicine cua usedMedicine da ton tai trong medicineDiseaseList hay khong.
+            //Neu trung tang bien dem len 1. neu dem == 0 them vao data cua medicineDisease
+            Integer dem_trung = 0;//dem bao nhieu dong trung
+            for (MedicineDisease md :
+                    medicineDiseaseList) {
+                if (md.getMedicine().getId().equals(um.getMedicine().getId())) {
+                    dem_trung++;
+                }
+            }
+            if (dem_trung.equals(0)){
+                medicineDiseaseService.save(new MedicineDisease(um.getMedicine(),um.getDiseases(),false));
+            }
             temp.add(usedMedicineRepository.save(um));
         }
         return temp;

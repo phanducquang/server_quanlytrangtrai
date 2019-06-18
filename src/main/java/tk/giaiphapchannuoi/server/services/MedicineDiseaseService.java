@@ -46,6 +46,10 @@ public class MedicineDiseaseService {
         return Collections.emptyList();
     }
 
+    public List<MedicineDisease> findbyDisease(Diseases disease){
+        return medicineDiseaseRepository.findByDiseaseAndDelFlag(disease,false);
+    }
+
     public MedicineDisease save(MedicineDisease medicineDisease){
         medicineDisease.setDelFlag(false);
         return medicineDiseaseRepository.save(medicineDisease);
