@@ -30,6 +30,8 @@ public class Settings {
     private List<Regencies> regencies;
     private List<Customers> customers;
     private List<Partners> partners;
+    private List<CustomerGroups> customerGroups;
+    private List<CustomerTypes> customerTypes;
 
     public Settings() {
     }
@@ -225,5 +227,21 @@ public class Settings {
 
     public void setPartners(List<Partners> partners) {
         this.partners = partners;
+    }
+
+    public List<CustomerGroups> getCustomerGroups() {
+        return customerGroups;
+    }
+
+    public void setCustomerGroups(List<CustomerGroups> customerGroups) {
+        this.customerGroups = customerGroups;
+    }
+
+    public List<CustomerTypes> getCustomerTypes() {
+        return customerTypes;
+    }
+
+    public void setCustomerTypes(List<CustomerTypes> customerTypes) {
+        this.customerTypes = customerTypes;
     }
 }
