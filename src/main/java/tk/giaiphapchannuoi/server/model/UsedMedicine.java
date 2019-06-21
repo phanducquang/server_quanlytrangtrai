@@ -21,9 +21,9 @@ public class UsedMedicine extends Auditable implements Serializable {
     @JoinColumn(name="diseases_id")
     private Diseases diseases;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="medicine_id")
-    private Medicines medicine;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name="medicine_id")
+//    private Medicines medicine;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="medicine_warehouse_id")
@@ -51,19 +51,6 @@ public class UsedMedicine extends Auditable implements Serializable {
     public UsedMedicine() {
     }
 
-    public UsedMedicine(Pigs forPigId, Diseases diseases, Medicines medicine, MedicineWarehouse medicineWarehouse, Integer unit, Integer quantity, Date date, Employees employee, String description, Boolean delFlag) {
-        this.forPigId = forPigId;
-        this.diseases = diseases;
-        this.medicine = medicine;
-        this.medicineWarehouse = medicineWarehouse;
-        this.unit = unit;
-        this.quantity = quantity;
-        this.date = date;
-        this.employee = employee;
-        this.description = description;
-        this.delFlag = delFlag;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -86,14 +73,6 @@ public class UsedMedicine extends Auditable implements Serializable {
 
     public void setDiseases(Diseases diseases) {
         this.diseases = diseases;
-    }
-
-    public Medicines getMedicine() {
-        return medicine;
-    }
-
-    public void setMedicine(Medicines medicine) {
-        this.medicine = medicine;
     }
 
     public MedicineWarehouse getMedicineWarehouse() {

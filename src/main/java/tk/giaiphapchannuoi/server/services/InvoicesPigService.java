@@ -208,25 +208,30 @@ public class InvoicesPigService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date currentDate = new Date();
         Date dateFromInvoicePig = new Date();
-        try {
-            currentDate = sdf.parse(sdf.format(new Date()));
-            dateFromInvoicePig = sdf.parse(sdf.format(invoicePig.getExportDate()));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if (invoicePig.getInvoiceType().equals("internal-export") || invoicePig.getInvoiceType().equals("sale")) {
+            try {
+                currentDate = sdf.parse(sdf.format(new Date()));
+                dateFromInvoicePig = sdf.parse(sdf.format(invoicePig.getExportDate()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
+
         Integer userId = JwtAuthenticationFilter.userIdGlobal;
         invoicePig.setDelFlag(false);
         Optional<Users> user = usersService.findbyid(userId);
         invoicePig.setEmployee(user.get().getEmployee());
         if (farmId.equals(0)){
-            if (currentDate.before(dateFromInvoicePig) && (invoicePig.getInvoiceType().equals("internal-export") || invoicePig.getInvoiceType().equals("sale"))){
-                Schedule schedule = new Schedule();
-                //set schedule va luu
-                schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
-                schedule.setDate(invoicePig.getExportDate());
-                schedule.setStatus("chưa phân công");
-                schedule.setFarmId(invoicePig.getSourceId());
-                scheduleService.save(schedule);
+            if (invoicePig.getInvoiceType().equals("internal-export") || invoicePig.getInvoiceType().equals("sale")){
+                if (currentDate.before(dateFromInvoicePig)){
+                    Schedule schedule = new Schedule();
+                    //set schedule va luu
+                    schedule.setName("Chịu trách nhiệm xuất heo cho hoá đơn \"" + invoicePig.getInvoiceNo() + "\" xuất đi \"" + invoicePig.getDestinationAddress() + "\".");
+                    schedule.setDate(invoicePig.getExportDate());
+                    schedule.setStatus("chưa phân công");
+                    schedule.setFarmId(invoicePig.getSourceId());
+                    scheduleService.save(schedule);
+                }
             }
             return invoicePigRepository.save(invoicePig);
         }

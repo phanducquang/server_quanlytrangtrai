@@ -32,10 +32,12 @@ public class UsedMedicineController {
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody List<UsedMedicine> usedMedicine){
         List<UsedMedicine> temp = usedMedicineService.save(usedMedicine);
-        if(temp == null){
+        if (temp == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1432: so luong con lai khong du");
+        } else if(temp.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(temp);
+            return ResponseEntity.ok(temp);
     }
 
     @PutMapping(value = "/")

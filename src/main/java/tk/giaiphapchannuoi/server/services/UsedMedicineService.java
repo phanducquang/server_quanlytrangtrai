@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.Pigs1DTO;
 import tk.giaiphapchannuoi.server.model.MedicineDisease;
+import tk.giaiphapchannuoi.server.model.MedicineWarehouse;
 import tk.giaiphapchannuoi.server.model.UsedMedicine;
 import tk.giaiphapchannuoi.server.repository.Pigs1DTORepository;
 import tk.giaiphapchannuoi.server.repository.UsedMedicineRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,9 @@ public class UsedMedicineService {
 
     @Autowired
     MedicineDiseaseService medicineDiseaseService;
+
+    @Autowired
+    MedicineWarehouseService medicineWarehouseService;
 
     @Autowired
     UsersService usersService;
@@ -61,6 +66,22 @@ public class UsedMedicineService {
         List<UsedMedicine> temp = new ArrayList<>();
         //Lay danh sach medicineDisease
         List<MedicineDisease> medicineDiseaseList = medicineDiseaseService.findbyDisease(usedMedicine.get(0).getDiseases());
+        //Lay danh sach medicineWarehouse
+        List<MedicineWarehouse> medicineWarehouseList = medicineWarehouseService.findall();
+        //Kiem tra luong remain nho hon luong dung thi bao loi
+        for (UsedMedicine umf :
+                usedMedicine) {
+            for (MedicineWarehouse mw :
+                    medicineWarehouseList) {
+                //tim tung dong cua usedMedicine trong medicineWarehouseList
+                if (mw.getId().equals(umf.getMedicineWarehouse().getId())){
+                    //Neu co 1 dong so luong con lai nho hon so luong dung tra ve null de bao loi khong luu data vào db
+                    if (mw.getRemain() < umf.getQuantity()){
+                        return null;
+                    }
+                }
+            }
+        }
         for (UsedMedicine um :
                 usedMedicine) {
             um.setDelFlag(false);
@@ -69,12 +90,12 @@ public class UsedMedicineService {
             Integer dem_trung = 0;//dem bao nhieu dong trung
             for (MedicineDisease md :
                     medicineDiseaseList) {
-                if (md.getMedicine().getId().equals(um.getMedicine().getId())) {
+                if (md.getMedicine().getId().equals(um.getMedicineWarehouse().getMedicine().getId())) {
                     dem_trung++;
                 }
             }
             if (dem_trung.equals(0)){
-                medicineDiseaseService.save(new MedicineDisease(um.getMedicine(),um.getDiseases(),false));
+                medicineDiseaseService.save(new MedicineDisease(um.getMedicineWarehouse().getMedicine(),um.getDiseases(),false));
             }
             temp.add(usedMedicineRepository.save(um));
         }
