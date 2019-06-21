@@ -105,6 +105,7 @@ public class FoodWarehouseService {
         Integer farmIDFromWarehouse = warehouses.map(w -> w.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(farmIDFromWarehouse) || farmId.equals(0)){
             foodWarehouse.setDelFlag(false);
+            foodWarehouse.setRemain(foodWarehouse.getQuantity());
             return foodWarehouseRepository.save(foodWarehouse);
         }
         return null;

@@ -85,6 +85,15 @@ public class UsedMedicineService {
         for (UsedMedicine um :
                 usedMedicine) {
             um.setDelFlag(false);
+            for (MedicineWarehouse mw :
+            medicineWarehouseList){
+                //tim tung dong cua usedMedicine trong medicineWarehouseList
+                if (mw.getId().equals(um.getMedicineWarehouse().getId())) {
+                    mw.setUsed(mw.getUsed() + um.getQuantity());
+                    mw.setRemain(mw.getQuantity() - mw.getUsed());
+                    medicineWarehouseService.update(mw);
+                }
+            }
             //Chạy vong lap kiem tra tung disease và medicine cua usedMedicine da ton tai trong medicineDiseaseList hay khong.
             //Neu trung tang bien dem len 1. neu dem == 0 them vao data cua medicineDisease
             Integer dem_trung = 0;//dem bao nhieu dong trung

@@ -48,7 +48,10 @@ public class FeedsController {
     @PostMapping(value = "/feedlist/")
     public ResponseEntity<Object> insertlist(@RequestBody List<Feeds> feed){
         List<Feeds> temp = feedsService.savelist(feed);
-        if( temp == null){
+        if (temp == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1432: so luong con lai khong du");
+        }
+        else if( temp.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(temp);

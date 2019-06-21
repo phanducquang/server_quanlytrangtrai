@@ -130,6 +130,7 @@ public class MedicineWarehouseService {
         Integer farmIdFromWarehouse = warehouse.map(wh -> wh.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
             medicineWarehouse.setDelFlag(false);
+            medicineWarehouse.setRemain(medicineWarehouse.getQuantity());
             return medicineWarehouseRepository.save(medicineWarehouse);
         }
         return null;

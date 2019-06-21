@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Employees;
 import tk.giaiphapchannuoi.server.model.Feeds;
+import tk.giaiphapchannuoi.server.model.FoodWarehouse;
 import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.FeedsRepository;
 
@@ -24,6 +25,9 @@ public class FeedsService {
 
     @Autowired
     EmployeesRepository employeesRepository;
+
+    @Autowired
+    FoodWarehouseService foodWarehouseService;
 
     public List<Feeds> findall(){
         Integer farmId = usersService.getFarmId();
@@ -67,8 +71,32 @@ public class FeedsService {
     public List<Feeds> savelist(List<Feeds> feed){
         List<Feeds> temp = new ArrayList<>();
         Integer farmId = usersService.getFarmId();
+        List<FoodWarehouse> foodWarehouseList = foodWarehouseService.findall();
+        // Kiem tra list co dong nao quantity lon hon remain khong
+        for (Feeds ff :
+                feed) {
+            for (FoodWarehouse fw :
+                    foodWarehouseList) {
+                if (ff.getFoodWarehouse().getId().equals(fw.getId())){
+                    if (ff.getQuantity() > fw.getRemain()){
+                        return null;
+                    }
+                }
+            }
+        }
         for (Feeds f :
                 feed) {
+            //Cap nhat so luong ton kho
+            for (FoodWarehouse fw :
+                    foodWarehouseList) {
+                if (f.getFoodWarehouse().getId().equals(fw.getId())){
+                    if (f.getQuantity() > fw.getRemain()){
+                        fw.setUsed(fw.getUsed() + f.getQuantity());// da su dung + so luong su dung lan nay
+                        fw.setRemain(fw.getQuantity() - fw.getUsed());// so luong nhap - so luong da su dung
+                        foodWarehouseService.update(fw);
+                    }
+                }
+            }
             temp.add(save(farmId, f));
         }
         return temp;
