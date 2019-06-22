@@ -33,7 +33,7 @@ public class UsedMedicine extends Auditable implements Serializable {
     private Integer unit;
 
     @Column(name="quantity")
-    private Integer quantity;
+    private Float quantity;
 
     @Column(name="date")
     private Date date;
@@ -91,11 +91,11 @@ public class UsedMedicine extends Auditable implements Serializable {
         this.unit = unit;
     }
 
-    public Integer getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 

@@ -32,6 +32,9 @@ public class UsedMedicineService {
     MedicineWarehouseService medicineWarehouseService;
 
     @Autowired
+    MedicineUnitsService medicineUnitsService;
+
+    @Autowired
     UsersService usersService;
 
     public List<UsedMedicine> findall(){
@@ -76,7 +79,9 @@ public class UsedMedicineService {
                 //tim tung dong cua usedMedicine trong medicineWarehouseList
                 if (mw.getId().equals(umf.getMedicineWarehouse().getId())){
                     //Neu co 1 dong so luong con lai nho hon so luong dung tra ve null de bao loi khong luu data vào db
-                    if (mw.getRemain() < umf.getQuantity()){
+                    Float remain = mw.getRemain() * mw.getUnit().getQuantity();
+                    float quantity = umf.getQuantity() * medicineUnitsService.findbyid(umf.getUnit()).get().getQuantity();
+                    if (remain < quantity){
                         return null;
                     }
                 }
