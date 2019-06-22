@@ -29,6 +29,9 @@ public class FeedsService {
     @Autowired
     FoodWarehouseService foodWarehouseService;
 
+    @Autowired
+    FoodUnitsService foodUnitsService;
+
     public List<Feeds> findall(){
         Integer farmId = usersService.getFarmId();
         List<Feeds> temp = feedsRepository.findAllByDelFlag(false);
@@ -78,7 +81,9 @@ public class FeedsService {
             for (FoodWarehouse fw :
                     foodWarehouseList) {
                 if (ff.getFoodWarehouse().getId().equals(fw.getId())){
-                    if (ff.getQuantity() > fw.getRemain()){
+                    Float remain = fw.getRemain() * fw.getUnit().getQuantity();
+                    float quantity = ff.getQuantity() * foodUnitsService.findbyid(ff.getUnit()).get().getQuantity();
+                    if (quantity > remain){
                         return null;
                     }
                 }
