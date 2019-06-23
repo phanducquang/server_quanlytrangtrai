@@ -98,7 +98,7 @@ public class IssuesPigsService {
         }
         //Duyet vong lap thu nhat
         for (int i = 1; i < diseasesList.size(); i++){
-            //Duy vong lap thu 2 de tim xem tu i tro ve truoc co trung khong, neu trung break
+            //Duyet vong lap thu 2 de tim xem tu i tro ve truoc co trung khong, neu trung break
             for (int j = 0; j < i; j++) {
                 if (diseasesList.get(i).equals(diseasesList.get(j))) {
                     break;

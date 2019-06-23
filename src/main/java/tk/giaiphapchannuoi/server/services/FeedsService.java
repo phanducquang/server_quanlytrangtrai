@@ -75,9 +75,52 @@ public class FeedsService {
         List<Feeds> temp = new ArrayList<>();
         Integer farmId = usersService.getFarmId();
         List<FoodWarehouse> foodWarehouseList = foodWarehouseService.findall();
+
+        //Tao danh sach phan tu tu request khong trung nhau
+        List<Feeds> feedsList = new ArrayList<>();
+        //Gom feeds giong nhau lai 1 dong de kiem tra
+        //Lay phan tu dau tien
+        if (!feed.isEmpty()){
+            feedsList.add(feed.get(0));
+        }
+
+        //Duyet vong lap thu nhat
+        for (int i = 1; i < feed.size(); i++){
+            //Duyet vong lap thu 2 de tim xem tu i tro ve truoc co trung khong, neu trung break
+            for (int j = 0; j < i; j++) {
+                if (feed.get(i).getFoodWarehouse().getFood().getId().equals(feed.get(j).getFoodWarehouse().getFood().getId())) {
+                    break;
+                }
+                //Neu khong trung thi kiem tra lai lan cuoi xem vi tri j da la gia tri ke truoc i hay chua.
+                //co nghia la da duyet xong vong lap thu 2 hay chua
+                //Neu thoa thi them vao list
+                if (j+1 == i){
+                    feedsList.add(feed.get(i));
+                }
+            }
+        }
+
+        //Set so luong su dung cho list khong trung
+        for (Feeds um :
+                feedsList) {
+            //Dat bien dem de bo qua khong cong quantity cua phan tu dau tien
+            //(vi phan tu dau tien da la so luong trong list khong trung)
+            Integer dem =0;
+            //Duyet list feeds de xem neu co medicine nao trung lai thi cong tong lai
+            for (Feeds ums:
+                    feed) {
+                if (um.getFoodWarehouse().getFood().getId().equals(ums.getFoodWarehouse().getFood().getId())){
+                    if (dem > 0){
+                        um.setQuantity(um.getQuantity() + ums.getQuantity());
+                    }
+                    dem++;
+                }
+            }
+        }
+
         // Kiem tra list co dong nao quantity lon hon remain khong
         for (Feeds ff :
-                feed) {
+                feedsList) {
             for (FoodWarehouse fw :
                     foodWarehouseList) {
                 if (ff.getFoodWarehouse().getId().equals(fw.getId())){
