@@ -82,7 +82,7 @@ public class FeedsService {
                     foodWarehouseList) {
                 if (ff.getFoodWarehouse().getId().equals(fw.getId())){
                     Float remain = fw.getRemain() * fw.getUnit().getQuantity();
-                    float quantity = ff.getQuantity() * foodUnitsService.findbyid(ff.getUnit()).get().getQuantity();
+                    Float quantity = ff.getQuantity() * foodUnitsService.findbyid(ff.getUnit()).get().getQuantity();
                     if (quantity > remain){
                         return null;
                     }
@@ -96,8 +96,15 @@ public class FeedsService {
                     foodWarehouseList) {
                 if (f.getFoodWarehouse().getId().equals(fw.getId())){
                     if (f.getQuantity() > fw.getRemain()){
-                        fw.setUsed(fw.getUsed() + f.getQuantity());// da su dung + so luong su dung lan nay
-                        fw.setRemain(fw.getQuantity() - fw.getUsed());// so luong nhap - so luong da su dung
+                        //tính quantity voi don vi moi (unit) cua food nhap vao feeds
+                        Float quantity = f.getQuantity() * foodUnitsService.findbyid(f.getUnit()).get().getQuantity();
+                        //Tinh luọng da su dung sau khi nhap quantity vao feeds
+                        //chuyen sang don vi co ban (base_unit) roi tinh . khi tinh xg chuyen ve don vi goc
+                        Float used = (fw.getUsed()*fw.getUnit().getQuantity() + quantity)/fw.getUnit().getQuantity();
+                        //Tính luọng con lai sau khi nhap quantity vao feeds
+                        Float remain = (fw.getQuantity()*fw.getUnit().getQuantity() - used)/fw.getUnit().getQuantity();
+                        fw.setUsed(used);
+                        fw.setRemain(remain);
                         foodWarehouseService.update(fw);
                     }
                 }

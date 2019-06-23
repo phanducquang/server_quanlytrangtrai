@@ -80,7 +80,7 @@ public class UsedMedicineService {
                 if (mw.getId().equals(umf.getMedicineWarehouse().getId())){
                     //Neu co 1 dong so luong con lai nho hon so luong dung tra ve null de bao loi khong luu data vào db
                     Float remain = mw.getRemain() * mw.getUnit().getQuantity();
-                    float quantity = umf.getQuantity() * medicineUnitsService.findbyid(umf.getUnit()).get().getQuantity();
+                    Float quantity = umf.getQuantity() * medicineUnitsService.findbyid(umf.getUnit()).get().getQuantity();
                     if (remain < quantity){
                         return null;
                     }
@@ -94,8 +94,15 @@ public class UsedMedicineService {
             medicineWarehouseList){
                 //tim tung dong cua usedMedicine trong medicineWarehouseList
                 if (mw.getId().equals(um.getMedicineWarehouse().getId())) {
-                    mw.setUsed(mw.getUsed() + um.getQuantity());
-                    mw.setRemain(mw.getQuantity() - mw.getUsed());
+                    //tính quantity voi don vi moi (unit) cua medicinde nhap vao usedMedicine
+                    Float quantity = um.getQuantity() * medicineUnitsService.findbyid(um.getUnit()).get().getQuantity();
+                    //Tinh luọng da su dung sau khi nhap quantity vao usedMedicine
+                    //chuyen sang don vi co ban (base_unit) roi tinh . khi tinh xg chuyen ve don vi goc
+                    Float used = (mw.getUsed()*mw.getUnit().getQuantity() + quantity)/mw.getUnit().getQuantity();
+                    //Tính luọng con lai sau khi nhap quantity vao usedMedicine
+                    Float remain = (mw.getQuantity()*mw.getUnit().getQuantity() - used)/mw.getUnit().getQuantity();
+                    mw.setUsed(used);
+                    mw.setRemain(remain);
                     medicineWarehouseService.update(mw);
                 }
             }
