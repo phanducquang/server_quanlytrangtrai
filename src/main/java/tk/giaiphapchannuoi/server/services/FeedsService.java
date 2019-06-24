@@ -10,6 +10,7 @@ import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.FeedsRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,16 @@ public class FeedsService {
             }
         }
         return Optional.empty();
+    }
+
+    public List<Feeds> findbyfoodwarehouse(Integer foodWarehouseId){
+        Integer farmId = usersService.getFarmId();
+        FoodWarehouse foodWarehouse = foodWarehouseService.findbyid(foodWarehouseId).get();
+        if (foodWarehouse.getWarehouse().getManager().getFarm().getId().equals(farmId) || farmId.equals(0)){
+            return feedsRepository.findByFoodWarehouseAndDelFlag(foodWarehouse,false);
+
+        }
+        return Collections.emptyList();
     }
 
     @Transactional

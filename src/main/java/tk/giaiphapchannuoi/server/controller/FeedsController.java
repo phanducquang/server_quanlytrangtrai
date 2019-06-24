@@ -34,6 +34,11 @@ public class FeedsController {
         return feedsService.findall();
     }
 
+    @GetMapping(value = "/foodwarehouse/{foodWarehouseId}")
+    public List<Feeds> findByFoodWarehouse(@PathVariable Integer foodWarehouseId){
+        return feedsService.findbyfoodwarehouse(foodWarehouseId);
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody Feeds feed){
         Integer farmId = usersService.getFarmId();
