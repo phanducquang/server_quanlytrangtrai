@@ -64,6 +64,17 @@ public class UsedMedicineService {
         return Optional.empty();
     }
 
+    public List<UsedMedicine> findbymedicinewarehouse(Integer medicineWarehouseId){
+        Optional<MedicineWarehouse> medicineWarehouse = medicineWarehouseService.findbyid(medicineWarehouseId);
+        if (medicineWarehouse.isPresent()){
+            Integer farmId = usersService.getFarmId();
+            if (farmId.equals(0) || medicineWarehouse.get().getWarehouse().getManager().getId().equals(farmId)){
+                return usedMedicineRepository.findByMedicineWarehouseAndDelFlag(medicineWarehouse.get(),false);
+            }
+        }
+        return Collections.emptyList();
+    }
+
     @Transactional
     public List<UsedMedicine> save(List<UsedMedicine> usedMedicine){
         List<UsedMedicine> temp = new ArrayList<>();

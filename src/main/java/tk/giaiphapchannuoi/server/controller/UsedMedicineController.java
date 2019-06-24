@@ -23,6 +23,11 @@ public class UsedMedicineController {
         return usedMedicineService.findbyid(id);
     }
 
+    @GetMapping(value = "/medicinewarehouse/{medicineWarehouseId}")
+    public List<UsedMedicine> findByMedicineWarehouse(@PathVariable Integer medicineWarehouseId){
+        return usedMedicineService.findbymedicinewarehouse(medicineWarehouseId);
+    }
+
     @GetMapping(value = "/list")
     public List<UsedMedicine> findAll(){
         return usedMedicineService.findall();

@@ -153,7 +153,7 @@ public class FeedsService {
             for (FoodWarehouse fw :
                     foodWarehouseList) {
                 if (f.getFoodWarehouse().getId().equals(fw.getId())){
-                    if (f.getQuantity() > fw.getRemain()){
+//                    if (f.getQuantity() <= fw.getRemain()){
                         //tính quantity voi don vi moi (unit) cua food nhap vao feeds
                         Float quantity = f.getQuantity() * foodUnitsService.findbyid(f.getUnit()).get().getQuantity();
                         //Tinh luọng da su dung sau khi nhap quantity vao feeds
@@ -164,7 +164,7 @@ public class FeedsService {
                         fw.setUsed(used);
                         fw.setRemain(remain);
                         foodWarehouseService.update(fw);
-                    }
+//                    }
                 }
             }
             temp.add(save(farmId, f));
