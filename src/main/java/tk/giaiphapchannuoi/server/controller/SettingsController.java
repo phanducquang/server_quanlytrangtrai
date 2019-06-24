@@ -56,9 +56,6 @@ public class SettingsController {
     IssuesService issuesService;
 
     @Autowired
-    RoundsService roundsService;
-
-    @Autowired
     StatusService statusService;
 
     @Autowired
@@ -105,7 +102,6 @@ public class SettingsController {
         settings.setFootType(footTypeService.findall());
         settings.setGentialType(gentialTypeService.findall());
         settings.setIssues(issuesService.findall());
-        settings.setRounds(roundsService.findall());
         settings.setStatus(statusService.findall());
         settings.setRoles(rolesService.findall());
         settings.setFoodUnits(foodUnitsService.findall());

@@ -21,7 +21,6 @@ public class Settings {
     private List<FootType> footType;
     private List<GentialType> gentialType;
     private List<Issues> issues;
-    private List<Rounds> rounds;
     private List<Status> status;
     private List<Roles> roles;
     private List<MatingRoles> matingRoles;
@@ -153,14 +152,6 @@ public class Settings {
 
     public void setIssues(List<Issues> issues) {
         this.issues = issues;
-    }
-
-    public List<Rounds> getRounds() {
-        return rounds;
-    }
-
-    public void setRounds(List<Rounds> rounds) {
-        this.rounds = rounds;
     }
 
     public List<Status> getStatus() {
