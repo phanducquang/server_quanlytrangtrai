@@ -124,9 +124,6 @@ public class Pigs1DTO implements Serializable {
 	@Column(name="status")
 	private Integer statusId;
 
-	@Column(name="price_code")
-	private Integer priceCodeId;
-
 	@Column(name="overview_status")
 	private Integer overviewStatus;
 
@@ -422,14 +419,6 @@ public class Pigs1DTO implements Serializable {
 
 	public void setStatusId(Integer statusId) {
 		this.statusId = statusId;
-	}
-
-	public Integer getPriceCodeId() {
-		return priceCodeId;
-	}
-
-	public void setPriceCodeId(Integer priceCodeId) {
-		this.priceCodeId = priceCodeId;
 	}
 
 	public Integer getOverviewStatus() {

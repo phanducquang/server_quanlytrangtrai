@@ -18,7 +18,6 @@ public class Settings {
     private List<MedicineType> medicineType;
     private List<MedicineUnits> medicineUnits;
     private List<Medicines> medicines;
-    private List<PriceCodes> priceCodes;
     private List<FootType> footType;
     private List<GentialType> gentialType;
     private List<Issues> issues;
@@ -130,14 +129,6 @@ public class Settings {
 
     public void setMedicines(List<Medicines> medicines) {
         this.medicines = medicines;
-    }
-
-    public List<PriceCodes> getPriceCodes() {
-        return priceCodes;
-    }
-
-    public void setPriceCodes(List<PriceCodes> priceCodes) {
-        this.priceCodes = priceCodes;
     }
 
     public List<FootType> getFootType() {

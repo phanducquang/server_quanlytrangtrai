@@ -54,7 +54,7 @@ public class PigsService {
         for (Pigs1DTO p :
                 pigs1DTOList) {
             if (p.getHouse().getSection().getFarm().getId().equals(farmId)){
-                PigsDTO pigsDTO = new PigsDTO(p.getId(),p.getPigCode(),p.getHouse().getId(),p.getPigType(),p.getBirthId(),p.getBreedId(),p.getGender(),p.getBirthday(),p.getBorn_weight(),p.getBornStatus(),p.getOriginId(),p.getOriginFather(), p.getOriginMother(),p.getOriginWeight(),p.getReceiveWeight(), p.getHealthPoint(),p.getFootTypeId(),p.getFunctionUdder(),p.getTotalUdder(),p.getGentialTypeId(), p.getDescription(),p.getFcr(),p.getAdg(),p.getBf(),p.getFilet(),p.getLongBack(),p.getLongBody(),p.getIndex(),p.getParities(),p.getImages(),p.getHealthStatusId(),p.getBreedingType(),p.getBreedStatus(),p.getPregnancyStatusId(),p.getPoint_review(),p.getStatusId(),p.getPriceCodeId(),p.getOverviewStatus(),p.getDelFlag());
+                PigsDTO pigsDTO = new PigsDTO(p.getId(),p.getPigCode(),p.getHouse().getId(),p.getPigType(),p.getBirthId(),p.getBreedId(),p.getGender(),p.getBirthday(),p.getBorn_weight(),p.getBornStatus(),p.getOriginId(),p.getOriginFather(), p.getOriginMother(),p.getOriginWeight(),p.getReceiveWeight(), p.getHealthPoint(),p.getFootTypeId(),p.getFunctionUdder(),p.getTotalUdder(),p.getGentialTypeId(), p.getDescription(),p.getFcr(),p.getAdg(),p.getBf(),p.getFilet(),p.getLongBack(),p.getLongBody(),p.getIndex(),p.getParities(),p.getImages(),p.getHealthStatusId(),p.getBreedingType(),p.getBreedStatus(),p.getPregnancyStatusId(),p.getPoint_review(),p.getStatusId(),p.getOverviewStatus(),p.getDelFlag());
                 pigsDTOList.add(pigsDTO);
             }
         }

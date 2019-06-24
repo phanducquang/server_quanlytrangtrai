@@ -128,10 +128,6 @@ public class Pigs extends Auditable implements Serializable {
 	@JoinColumn(name="status")
 	private Status status;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="price_code")
-	private PriceCodes priceCode;
-
 	@Column(name="overview_status")
 	private Integer overviewStatus;
 
@@ -141,7 +137,7 @@ public class Pigs extends Auditable implements Serializable {
 	public Pigs() {
 	}
 
-	public Pigs(String pigCode, Cages house, String pigType, Breeds breed, Integer birthId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, PriceCodes priceCode, Integer overviewStatus, Boolean delFlag) {
+	public Pigs(String pigCode, Cages house, String pigType, Breeds breed, Integer birthId, Integer gender, Date birthday, Float born_weight, Float bornStatus, Integer originId, String originFather, String originMother, Float originWeight, Float receiveWeight, Float healthPoint, FootType foot, Integer functionUdder, Integer totalUdder, GentialType gentialType, String description, Float fcr, Float adg, Float bf, Float filet, Float longBack, Float longBody, Float index, Integer parities, String images, HealthStatus healthStatus, Integer breedingType, Integer breedStatus, PregnancyStatus pregnancyStatus, Integer point_review, Status status, Integer overviewStatus, Boolean delFlag) {
 		this.pigCode = pigCode;
 		this.house = house;
 		this.pigType = pigType;
@@ -177,7 +173,6 @@ public class Pigs extends Auditable implements Serializable {
 		this.pregnancyStatus = pregnancyStatus;
 		this.point_review = point_review;
 		this.status = status;
-		this.priceCode = priceCode;
 		this.overviewStatus = overviewStatus;
 		this.delFlag = delFlag;
 	}
@@ -468,14 +463,6 @@ public class Pigs extends Auditable implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public PriceCodes getPriceCode() {
-		return priceCode;
-	}
-
-	public void setPriceCode(PriceCodes priceCode) {
-		this.priceCode = priceCode;
 	}
 
 	public Integer getOverviewStatus() {

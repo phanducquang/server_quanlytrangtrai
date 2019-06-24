@@ -47,9 +47,6 @@ public class SettingsController {
     MedicinesService medicinesService;
 
     @Autowired
-    PriceCodesService priceCodesService;
-
-    @Autowired
     FootTypeService footTypeService;
 
     @Autowired
@@ -105,7 +102,6 @@ public class SettingsController {
         settings.setMedicineType(medicineTypeService.findall());
         settings.setMedicineUnits(medicineUnitsService.findall());
         settings.setMedicines(medicinesService.findall());
-        settings.setPriceCodes(priceCodesService.findall());
         settings.setFootType(footTypeService.findall());
         settings.setGentialType(gentialTypeService.findall());
         settings.setIssues(issuesService.findall());
