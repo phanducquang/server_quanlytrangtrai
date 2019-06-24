@@ -76,7 +76,9 @@ public class UsedMedicineService {
         //Gom usedMedicine giong nhau lai 1 dong de kiem tra
         //Lay phan tu dau tien
         if (!usedMedicine.isEmpty()){
-            usedMedicineList.add(usedMedicine.get(0));
+            UsedMedicine usedMedicine_temp = new UsedMedicine(usedMedicine.get(0).getForPigId(),usedMedicine.get(0).getDiseases(),usedMedicine.get(0).getMedicineWarehouse(),usedMedicine.get(0).getUnit(),usedMedicine.get(0).getQuantity(),usedMedicine.get(0).getDate(),usedMedicine.get(0).getEmployee(),usedMedicine.get(0).getDescription(),usedMedicine.get(0).getDelFlag());
+            usedMedicine_temp.setId(usedMedicine.get(0).getId());
+            usedMedicineList.add(usedMedicine_temp);
         }
         //Duyet vong lap thu nhat
         for (int i = 1; i < usedMedicine.size(); i++){
@@ -89,7 +91,9 @@ public class UsedMedicineService {
                 //co nghia la da duyet xong vong lap thu 2 hay chua
                 //Neu thoa thi them vao list
                 if (j+1 == i){
-                    usedMedicineList.add(usedMedicine.get(i));
+                    UsedMedicine usedMedicine_temp = new UsedMedicine(usedMedicine.get(i).getForPigId(),usedMedicine.get(i).getDiseases(),usedMedicine.get(i).getMedicineWarehouse(),usedMedicine.get(i).getUnit(),usedMedicine.get(i).getQuantity(),usedMedicine.get(i).getDate(),usedMedicine.get(i).getEmployee(),usedMedicine.get(i).getDescription(),usedMedicine.get(i).getDelFlag());
+                    usedMedicine_temp.setId(usedMedicine.get(i).getId());
+                    usedMedicineList.add(usedMedicine_temp);
                 }
             }
         }

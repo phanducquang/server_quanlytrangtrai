@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.model.Employees;
 import tk.giaiphapchannuoi.server.model.Schedule;
+import tk.giaiphapchannuoi.server.model.Users;
 import tk.giaiphapchannuoi.server.repository.EmployeesRepository;
 import tk.giaiphapchannuoi.server.repository.ScheduleRepository;
+import tk.giaiphapchannuoi.server.security.JwtAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,8 +60,11 @@ public class ScheduleService {
 
     public List<Schedule> findbyemployee(Integer employeeId){
         Optional<Employees> employee = employeesService.findbyid(employeeId);
-        if (employee.isPresent()){
-            return scheduleRepository.findByEmployeeAndDelFlag(employee.get(),false);
+        Optional<Users> user = usersService.findbyid(JwtAuthenticationFilter.userIdGlobal);
+        if (employee.isPresent() && user.isPresent()){
+            if (employee.get().getId().equals(user.get().getEmployee().getId())){
+                return scheduleRepository.findByEmployeeAndDelFlag(employee.get(),false);
+            }
         }
         return Collections.emptyList();
     }

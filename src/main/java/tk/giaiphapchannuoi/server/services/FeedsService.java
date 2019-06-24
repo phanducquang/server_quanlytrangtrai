@@ -92,7 +92,9 @@ public class FeedsService {
         //Gom feeds giong nhau lai 1 dong de kiem tra
         //Lay phan tu dau tien
         if (!feed.isEmpty()){
-            feedsList.add(feed.get(0));
+            Feeds feed_temp = new Feeds(feed.get(0).getPig(),feed.get(0).getFoodWarehouse(),feed.get(0).getUnit(),feed.get(0).getQuantity(),feed.get(0).getDate(),feed.get(0).getEmployee(),feed.get(0).getDescription(),feed.get(0).getDelFlag());
+            feed_temp.setId(feed.get(0).getId());
+            feedsList.add(feed_temp);
         }
 
         //Duyet vong lap thu nhat
@@ -106,7 +108,9 @@ public class FeedsService {
                 //co nghia la da duyet xong vong lap thu 2 hay chua
                 //Neu thoa thi them vao list
                 if (j+1 == i){
-                    feedsList.add(feed.get(i));
+                    Feeds feed_temp = new Feeds(feed.get(i).getPig(),feed.get(i).getFoodWarehouse(),feed.get(i).getUnit(),feed.get(i).getQuantity(),feed.get(i).getDate(),feed.get(i).getEmployee(),feed.get(i).getDescription(),feed.get(i).getDelFlag());
+                    feed_temp.setId(feed.get(i).getId());
+                    feedsList.add(feed_temp);
                 }
             }
         }

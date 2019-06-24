@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/auth/login","/auth/keepawake")
                         .permitAll()
-                    .antMatchers(HttpMethod.GET,"/api/schedule/list","/api/schedule/listschedule","/api/schedule/one/**","/api/farms/list","/api/sections/list","/api/houses/list","/api/settings/list")
+                    .antMatchers(HttpMethod.GET,"/api/schedule/list","/api/schedule/listschedule","/api/schedule/one/**","/api/schedule/employee/**","/api/farms/list","/api/sections/list","/api/houses/list","/api/settings/list")
                         .permitAll()
                     .antMatchers(HttpMethod.GET,"/auth/check_login")
                         .hasAnyRole("admin","nhan_vien")
@@ -339,8 +339,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/matingroles/")
                         .hasAnyRole("thiet_lap_luat_phoi","admin")
                 //quan_ly_danh_sach_nhan_vien
-                    .antMatchers(HttpMethod.GET,"/api/schedule/employee/**")
-                        .hasAnyRole("xem_lich_bieu_nhan_vien","admin")
                     .antMatchers(HttpMethod.GET,"/api/users/employee/**")
                         .hasAnyRole("xem_danh_sach_tai_khoan_nhan_vien","admin")
                 //quan_ly_danh_sach_chung_tu

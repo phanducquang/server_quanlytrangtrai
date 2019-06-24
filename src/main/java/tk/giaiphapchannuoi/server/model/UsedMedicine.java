@@ -51,6 +51,18 @@ public class UsedMedicine extends Auditable implements Serializable {
     public UsedMedicine() {
     }
 
+    public UsedMedicine(Pigs forPigId, Diseases diseases, MedicineWarehouse medicineWarehouse, Integer unit, Float quantity, Date date, Employees employee, String description, Boolean delFlag) {
+        this.forPigId = forPigId;
+        this.diseases = diseases;
+        this.medicineWarehouse = medicineWarehouse;
+        this.unit = unit;
+        this.quantity = quantity;
+        this.date = date;
+        this.employee = employee;
+        this.description = description;
+        this.delFlag = delFlag;
+    }
+
     public Integer getId() {
         return id;
     }
