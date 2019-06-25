@@ -62,7 +62,7 @@ public class ScheduleService {
         Optional<Employees> employee = employeesService.findbyid(employeeId);
         Optional<Users> user = usersService.findbyid(JwtAuthenticationFilter.userIdGlobal);
         if (employee.isPresent() && user.isPresent()){
-            if (employee.get().getId().equals(user.get().getEmployee().getId())){
+            if (employee.get().getId().equals(user.get().getEmployee().getId()) || user.get().getEmployee().getFarm().getId().equals(0)){
                 return scheduleRepository.findByEmployeeAndDelFlag(employee.get(),false);
             }
         }
