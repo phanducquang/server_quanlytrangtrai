@@ -223,13 +223,13 @@ public class InvoicePigDetailService {
         Pigs pig = pigsInvoicePigDetailDTORequest.getPigs();
         InvoicesPig invoicesPig = pigsInvoicePigDetailDTORequest.getInvoicesPig();
         PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest_temp = new PigsInvoicePigDetailDTORequest();
-        Pigs pig_temp = pigsService.update(pig);
-        pigsInvoicePigDetailDTORequest_temp.setPigs(pig_temp);
+        Pigs pig_temp = pigsService.findbyid(pig.getId()).get();
+        pigsInvoicePigDetailDTORequest_temp.setPigs(pigsService.update(pig));
         //nhap ngoai he thong thi dung receive_weight de tinh, nguoc lai dung origin_weight de tinh
         if (!pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
-            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getOriginWeight());
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getOriginWeight() + pig.getOriginWeight());
         } else if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
-            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getReceiveWeight());
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getReceiveWeight() + pig.getReceiveWeight());
             if(invoicesPig.getTotalPrice()!=null){
                 invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig_temp.getReceiveWeight()*invoicesPig.getUnitPrice());
             }else{
@@ -270,8 +270,22 @@ public class InvoicePigDetailService {
             if (farmId.equals(0) || pig.getHouse().getSection().getFarm().getId().equals(farmId)){
                 //Thuc hien duyet tim invoice lien quan den pig de thay doi total_weight
                 InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoicePigDetail.getInvoice().getId(),false).get();
-                //gan Total_Weight = Total_Weight - receive_weight cua heo xoa
-                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
+
+                //nhap ngoai he thong thi dung receive_weight de tinh, nguoc lai dung origin_weight de tinh
+                if (!invoicesPig.getInvoiceType().equals("external-import")){
+                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getOriginWeight());
+                } else if (invoicesPig.getInvoiceType().equals("external-import")){
+                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
+                    invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig.getReceiveWeight()*invoicesPig.getUnitPrice());
+                }
+                //Cap nhat lai gia neu hoa don dung de ban
+                if (invoicesPig.getInvoiceType().equals("sale")){
+                    invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig.getOriginWeight()*invoicesPig.getUnitPrice());
+                }
+
+//                //gan Total_Weight = Total_Weight - receive_weight cua heo xoa
+//                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
+//                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig.getReceiveWeight()*invoicesPig.getUnitPrice());
                 invoicesPigRepository.save(invoicesPig);
                 //Xoa heo
                 pig.setDelFlag(true);
@@ -293,6 +307,21 @@ public class InvoicePigDetailService {
         if (temp_pig.isPresent()) {
             Pigs pig = temp_pig.get();
             if (farmId.equals(0) || pig.getHouse().getSection().getFarm().getId().equals(farmId)) {
+
+                //Cap nhat lai invoicePig khi xao heo khoi invoice
+                InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoicePigDetail.getInvoice().getId(),false).get();
+                //nhap ngoai he thong thi dung receive_weight de tinh, nguoc lai dung origin_weight de tinh
+                if (!invoicesPig.getInvoiceType().equals("external-import")){
+                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getOriginWeight());
+                } else if (invoicesPig.getInvoiceType().equals("external-import")){
+                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
+                    invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig.getReceiveWeight()*invoicesPig.getUnitPrice());
+                }
+                //Cap nhat lai gia neu hoa don dung de ban
+                if (invoicesPig.getInvoiceType().equals("sale")){
+                    invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig.getOriginWeight()*invoicesPig.getUnitPrice());
+                }
+
                 //Cap nhat status ve pre_status
                 Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(pig.getStatus().getPreviousStatus(), 0,false).get();
                 pig.setStatus(status);
