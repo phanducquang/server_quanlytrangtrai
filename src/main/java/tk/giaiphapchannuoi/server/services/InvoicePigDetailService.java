@@ -3,10 +3,7 @@ package tk.giaiphapchannuoi.server.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.giaiphapchannuoi.server.DTO.Pigs1DTO;
-import tk.giaiphapchannuoi.server.DTO.PigsDTO;
-import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTORequest;
-import tk.giaiphapchannuoi.server.DTO.PigsInvoicePigDetailDTOResponse;
+import tk.giaiphapchannuoi.server.DTO.*;
 import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
 import tk.giaiphapchannuoi.server.model.InvoicesPig;
 import tk.giaiphapchannuoi.server.model.Pigs;
@@ -41,6 +38,12 @@ public class InvoicePigDetailService {
     PigsDTORepository pigsDTORepository;
 
     @Autowired
+    PigsService pigsService;
+
+    @Autowired
+    InvoicesPigService invoicesPigService;
+
+    @Autowired
     UsersService usersService;
 
     public List<InvoicePigDetail> findall(){
@@ -64,7 +67,7 @@ public class InvoicePigDetailService {
                 if (ipd.getInvoice().getDestinationId().equals(farmId)){
                     invoicePigDetailList.add(ipd);
                 }
-            } else if (ipd.getInvoice().getInvoiceType().equals("external-export")){
+            } else if (ipd.getInvoice().getInvoiceType().equals("sale")){
                 if (ipd.getInvoice().getSourceId().equals(farmId)){
                     invoicePigDetailList.add(ipd);
                 }
@@ -99,7 +102,7 @@ public class InvoicePigDetailService {
                 if (ipd.getInvoice().getDestinationId().equals(farmId)){
                     return temp;
                 }
-            } else if (ipd.getInvoice().getInvoiceType().equals("external-export")){
+            } else if (ipd.getInvoice().getInvoiceType().equals("sale")){
                 if (ipd.getInvoice().getSourceId().equals(farmId)){
                     return temp;
                 }
@@ -130,7 +133,7 @@ public class InvoicePigDetailService {
                 if (invoicePigDetail.get().getInvoice().getDestinationId().equals(farmId)){
                     return invoicePigDetail;
                 }
-            } else if (invoicePigDetail.get().getInvoice().getInvoiceType().equals("external-export")){
+            } else if (invoicePigDetail.get().getInvoice().getInvoiceType().equals("sale")){
                 if (invoicePigDetail.get().getInvoice().getSourceId().equals(farmId)){
                     return invoicePigDetail;
                 }
@@ -172,24 +175,77 @@ public class InvoicePigDetailService {
             invoicesPig.setQuantity(1);
         }
 
-        //Cap nhat tong trong luong
-        if(invoicesPig.getTotalWeight()!=null){
-            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() + pigs.getOriginWeight());
-        }else{
-            invoicesPig.setTotalWeight(pigs.getOriginWeight());
+        //Origin_Weight: khoi luong dong, thay doi theo vong doi heo.
+        //Receive_Weight: Khoi luong heo luc nhan(so lieu tu nha cung cap)
+        //Truong hop nhap heo ngoai he thong tinh heo khoi luong nhap
+        if (!pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")) {
+            //Cap nhat tong trong luong
+            if(invoicesPig.getTotalWeight()!=null){
+                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() + pigs.getOriginWeight());
+            }else{
+                invoicesPig.setTotalWeight(pigs.getOriginWeight());
+            }
         }
 
-        //Cap nhat tong trong luong
-        if(invoicesPig.getTotalPrice()!=null){
-            invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pigs.getOriginWeight()*invoicesPig.getUnitPrice());
-        }else{
-            invoicesPig.setTotalWeight(pigs.getOriginWeight()*invoicesPig.getUnitPrice());
+        //Cap nhat tong gia neu la ban
+        if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("sale")){
+            if(invoicesPig.getTotalPrice()!=null){
+                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pigs.getOriginWeight()*invoicesPig.getUnitPrice());
+            }else{
+                invoicesPig.setTotalWeight(pigs.getOriginWeight()*invoicesPig.getUnitPrice());
+            }
+        } else if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
+            //Cap nhat tong trong luong
+            if(invoicesPig.getTotalWeight()!=null){
+                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() + pigs.getReceiveWeight());
+            }else{
+                invoicesPig.setTotalWeight(pigs.getReceiveWeight());
+            }
+            //Cap nhat tong gia neu la nhap ngoai he thong
+            if(invoicesPig.getTotalPrice()!=null){
+                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pigs.getReceiveWeight()*invoicesPig.getUnitPrice());
+            }else{
+                invoicesPig.setTotalWeight(pigs.getReceiveWeight()*invoicesPig.getUnitPrice());
+            }
         }
+
         invoicesPigRepository.save(invoicesPig);
         PigsDTO pigsDTO = pigsDTORepository.findByIdAndDelFlag(pigs.getId(),false).get();
 //                new PigsDTO(pigs.getId(),pigs.getPigCode(),pigs.getHouse().getId(),pigs.getRound().getId(),pigs.getBirthId(),pigs.getBreed().getId(),pigs.getGender(),pigs.getBirthday(),pigs.getBorn_weight(),pigs.getBornStatus(),pigs.getOriginId(),pigs.getOriginFather(), pigs.getOriginMother(),pigs.getOriginWeight(),pigs.getReceiveWeight(), pigs.getHealthPoint(),pigs.getFoot().getId(),pigs.getFunctionUdder(),pigs.getTotalUdder(),pigs.getGentialType().getId(), pigs.getDescription(),pigs.getFcr(),pigs.getAdg(),pigs.getBf(),pigs.getFilet(),pigs.getLongBack(),pigs.getLongBody(),pigs.getIndex(),pigs.getParities(),pigs.getImages(),pigs.getHealthStatus().getId(),pigs.getBreedingType(),pigs.getBreedStatus(),pigs.getPregnancyStatus().getId(),pigs.getPoint_review(),pigs.getStatus().getId(),pigs.getPriceCode().getId(),pigs.getOverviewStatus(),pigs.getDelFlag());
         PigsInvoicePigDetailDTOResponse response = new PigsInvoicePigDetailDTOResponse(pigsDTO,invoicePigDetail);
         return response;
+    }
+
+    //Cap nhat pig khi da them pig vao invoice_pig
+    @Transactional
+    public PigsInvoicePigDetailDTORequest updatePigInInvoicePig(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
+        Integer farmId = usersService.getFarmId();
+        Pigs pig = pigsInvoicePigDetailDTORequest.getPigs();
+        InvoicesPig invoicesPig = pigsInvoicePigDetailDTORequest.getInvoicesPig();
+        PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest_temp = new PigsInvoicePigDetailDTORequest();
+        Pigs pig_temp = pigsService.update(pig);
+        pigsInvoicePigDetailDTORequest_temp.setPigs(pig_temp);
+        //nhap ngoai he thong thi dung receive_weight de tinh, nguoc lai dung origin_weight de tinh
+        if (!pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getOriginWeight());
+        } else if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getReceiveWeight());
+            if(invoicesPig.getTotalPrice()!=null){
+                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig_temp.getReceiveWeight()*invoicesPig.getUnitPrice());
+            }else{
+                invoicesPig.setTotalWeight(pig_temp.getReceiveWeight()*invoicesPig.getUnitPrice());
+            }
+        }
+        //Cap nhat lai gia neu hoa don dung de ban
+        if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("sale")){
+            if(invoicesPig.getTotalPrice()!=null){
+                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig_temp.getOriginWeight()*invoicesPig.getUnitPrice());
+            }else{
+                invoicesPig.setTotalWeight(pig_temp.getOriginWeight()*invoicesPig.getUnitPrice());
+            }
+        }
+        pigsInvoicePigDetailDTORequest_temp.setInvoicesPig(invoicesPigService.update(invoicesPig));
+        return pigsInvoicePigDetailDTORequest_temp;
     }
 
     public InvoicePigDetail update(InvoicePigDetail invoicePigDetail){

@@ -56,6 +56,18 @@ public class InvoicePigDetailController {
         return ResponseEntity.ok(temp);
     }
 
+    //Nhap heo ngoai he thong
+    @Transactional
+    @PutMapping(value = "/updatepigininvoicepig/")
+    public ResponseEntity<Object> updatePigInInvoicePig(@RequestBody PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
+
+        PigsInvoicePigDetailDTORequest temp = invoicePigDetailService.updatePigInInvoicePig(pigsInvoicePigDetailDTORequest);
+        if(temp == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(temp);
+    }
+
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody InvoicePigDetail invoicePigDetail){
         InvoicePigDetail temp = invoicePigDetailService.update(invoicePigDetail);

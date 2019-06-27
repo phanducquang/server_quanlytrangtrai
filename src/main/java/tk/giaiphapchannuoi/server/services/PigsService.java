@@ -106,23 +106,26 @@ public class PigsService {
         Integer farmId = usersService.getFarmId();
         //Cage bằng với house
         Optional<Cages> cage = cagesRepository.findByIdAndDelFlag(pig.getHouse().getId(),false);
-        Integer farmIdFromPig = cage.map(c -> c.getSection().getFarm().getId()).orElse(null);
+        Integer farmIdFromPig = cage.map(c -> c.getSection().getFarm().getId()).orElse(-1);
         if (farmId.equals(0) || farmId.equals(farmIdFromPig)){
-            float receiveWeightOld = pigsRepository.findByIdAndDelFlag(pig.getId(),false).get().getReceiveWeight();//Lay thong tin pig truoc khi cap nhat
-            Pigs temp = new Pigs();
-            temp = pigsRepository.save(pig);//Lay thong tin Pig sau khi cap nhat
-            if(receiveWeightOld != temp.getReceiveWeight()){
-                List<InvoicePigDetail> invoicePigDetailList = invoicePigDetailRepository.findByObjectIdAndDelFlag(temp.getId(), false);
-                //Thuc hien duyet tat ca cac invoice lien quan den pig de thay doi total_weight
-                for (InvoicePigDetail invoice :
-                        invoicePigDetailList) {
-                    InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoice.getInvoice().getId(),false).get();
-                    //gan Total_Weight = Total_Weight - (receive_weight cua heo luc chua chinh sua) + (receive_weight cua heo luc da chinh sua)
-                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - receiveWeightOld + temp.getReceiveWeight());
-                    invoicesPigRepository.save(invoicesPig);
-                }
-            }
-            return temp;
+//            //Dung biet temp de lu tam thoi thong tin pig cu
+//            Pigs temp = pigsRepository.findByIdAndDelFlag(pig.getId(),false).get();
+//            Float receiveWeightOld = temp.getReceiveWeight();//Lay thong tin pig truoc khi cap nhat
+//            Float originWeightOld = temp.getOriginWeight();//Lay thong tin pig truoc khi cap nhat
+//            //sau khi lay duoc thong tin weight cua pig cu ta thuc hien thay doi muc dich su dung cua bien temp
+//            temp = pigsRepository.save(pig);//Lay thong tin Pig sau khi cap nhat
+//            if((!receiveWeightOld.equals(temp.getReceiveWeight())) || (!originWeightOld.equals(temp.getOriginWeight()))){
+//                List<InvoicePigDetail> invoicePigDetailList = invoicePigDetailRepository.findByObjectIdAndDelFlag(temp.getId(), false);
+//                //Thuc hien duyet tat ca cac invoice lien quan den pig de thay doi total_weight
+//                for (InvoicePigDetail invoice :
+//                        invoicePigDetailList) {
+//                    InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(invoice.getInvoice().getId(),false).get();
+//                    //gan Total_Weight = Total_Weight - (receive_weight cua heo luc chua chinh sua) + (receive_weight cua heo luc da chinh sua)
+//                    invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - receiveWeightOld + temp.getReceiveWeight());
+//                    invoicesPigRepository.save(invoicesPig);
+//                }
+//            }
+            return pigsRepository.save(pig);
         }
         return null;
     }
