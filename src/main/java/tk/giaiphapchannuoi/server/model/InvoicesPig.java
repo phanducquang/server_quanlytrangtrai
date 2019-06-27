@@ -51,13 +51,13 @@ public class InvoicesPig extends Auditable implements Serializable {
 	private Integer quantity;
 	
 	@Column(name="unit_price")
-	private Double unitPrice;
+	private Float unitPrice;
 	
 	@Column(name="total_weight")
 	private Float totalWeight;
 	
 	@Column(name="total_price")
-	private Double totalPrice;
+	private Float totalPrice;
 	
 	@Column(name="import_date")
 	private Date importDate;
@@ -81,7 +81,7 @@ public class InvoicesPig extends Auditable implements Serializable {
 	public InvoicesPig() {
 	}
 
-	public InvoicesPig(String invoiceNo, String invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Double unitPrice, Float totalWeight, Double totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status, Employees employee) {
+	public InvoicesPig(String invoiceNo, String invoiceType, Integer sourceId, Integer sourceManager, String sourceManagerName, String sourceAddress, Integer destinationId, Integer destinationManager, String destinationManagerName, String destinationAddress, String vehicleNumber, Integer quantity, Float unitPrice, Float totalWeight, Float totalPrice, Date importDate, Date exportDate, String description, Boolean delFlag, String status, Employees employee) {
 		this.invoiceNo = invoiceNo;
 		this.invoiceType = invoiceType;
 		this.sourceId = sourceId;
@@ -209,11 +209,11 @@ public class InvoicesPig extends Auditable implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Double getUnitPrice() {
+	public Float getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Double unitPrice) {
+	public void setUnitPrice(Float unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 
@@ -225,11 +225,11 @@ public class InvoicesPig extends Auditable implements Serializable {
 		this.totalWeight = totalWeight;
 	}
 
-	public Double getTotalPrice() {
+	public Float getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(Double totalPrice) {
+	public void setTotalPrice(Float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 

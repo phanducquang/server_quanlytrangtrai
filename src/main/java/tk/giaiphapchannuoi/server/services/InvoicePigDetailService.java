@@ -165,16 +165,25 @@ public class InvoicePigDetailService {
         InvoicePigDetail invoicePigDetail = save(temp);
         InvoicesPig invoicesPig = invoicesPigRepository.findByIdAndDelFlag(pigsInvoicePigDetailDTORequest.getInvoicesPig().getId(),false).get();
 
+        //Cap nhat so luong heo
         if(invoicesPig.getQuantity()!=null){
             invoicesPig.setQuantity(invoicesPig.getQuantity() + 1);
         }else{
             invoicesPig.setQuantity(1);
         }
 
+        //Cap nhat tong trong luong
         if(invoicesPig.getTotalWeight()!=null){
             invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() + pigs.getOriginWeight());
         }else{
             invoicesPig.setTotalWeight(pigs.getOriginWeight());
+        }
+
+        //Cap nhat tong trong luong
+        if(invoicesPig.getTotalPrice()!=null){
+            invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pigs.getOriginWeight()*invoicesPig.getUnitPrice());
+        }else{
+            invoicesPig.setTotalWeight(pigs.getOriginWeight()*invoicesPig.getUnitPrice());
         }
         invoicesPigRepository.save(invoicesPig);
         PigsDTO pigsDTO = pigsDTORepository.findByIdAndDelFlag(pigs.getId(),false).get();
