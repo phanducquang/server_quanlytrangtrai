@@ -146,11 +146,11 @@ public class MedicineWarehouseService {
                 }
                 InvoicesProduct invoicesProduct = medicineWarehouseList.get(0).getInvoice();
                 invoicesProduct.setPrice(total_price);
-                invoicesProductService.update(invoicesProduct);
+                medicineWarehouse.setInvoice(invoicesProductService.update(invoicesProduct));
             }else{
                 InvoicesProduct invoicesProduct = invoicesProductService.findbyid(medicineWarehouse.getInvoice().getId()).get();
                 invoicesProduct.setPrice(medicineWarehouse.getTotalPrice());
-                invoicesProductService.update(invoicesProduct);
+                medicineWarehouse.setInvoice(invoicesProductService.update(invoicesProduct));
             }
             return medicineWarehouseRepository.save(medicineWarehouse);
         }

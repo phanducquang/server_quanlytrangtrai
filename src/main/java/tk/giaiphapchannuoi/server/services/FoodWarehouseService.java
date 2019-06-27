@@ -121,11 +121,11 @@ public class FoodWarehouseService {
                 }
                 InvoicesProduct invoicesProduct = foodWarehouseList.get(0).getInvoice();
                 invoicesProduct.setPrice(total_price);
-                invoicesProductService.update(invoicesProduct);
+                foodWarehouse.setInvoice(invoicesProductService.update(invoicesProduct));
             } else {
                 InvoicesProduct invoicesProduct = invoicesProductService.findbyid(foodWarehouse.getInvoice().getId()).get();
                 invoicesProduct.setPrice(foodWarehouse.getTotalPrice());
-                invoicesProductService.update(invoicesProduct);
+                foodWarehouse.setInvoice(invoicesProductService.update(invoicesProduct));
             }
             return foodWarehouseRepository.save(foodWarehouse);
         }
@@ -143,7 +143,7 @@ public class FoodWarehouseService {
             if (!foodWarehouse1.getTotalPrice().equals(foodWarehouse.getTotalPrice())){
                 InvoicesProduct invoicesProduct = invoicesProductService.findbyid(foodWarehouse.getInvoice().getId()).get();
                 invoicesProduct.setPrice(invoicesProduct.getPrice() - foodWarehouse1.getTotalPrice() + foodWarehouse.getTotalPrice());
-                invoicesProductService.update(invoicesProduct);
+                foodWarehouse.setInvoice(invoicesProductService.update(invoicesProduct));
             }
             return foodWarehouseRepository.save(foodWarehouse);
         }
