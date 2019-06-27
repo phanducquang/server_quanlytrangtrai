@@ -48,8 +48,8 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	@Column(name="total_price")
 	private Float totalPrice;
 
-//	@Column(name="total")
-//	private Float total;
+	@Column(name="total")
+	private Float total;
 	
 	@Column(name="used")
 	private Float used;
@@ -78,7 +78,7 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 	public MedicineWarehouse() {
 	}
 
-	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, InvoicesProduct invoice, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float unitPrice, Float totalPrice, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
+	public MedicineWarehouse(Warehouses warehouse, Medicines medicine, InvoicesProduct invoice, Integer parentId, Date importDate, MedicineUnits unit, Float quantity, Float unitPrice, Float totalPrice, Float total, Float used, Float remain, String manufacturer, Date mfgDate, Date expiryDate, String images, Boolean delFlag) {
 		this.warehouse = warehouse;
 		this.medicine = medicine;
 		this.invoice = invoice;
@@ -88,6 +88,7 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 		this.totalPrice = totalPrice;
+		this.total = total;
 		this.used = used;
 		this.remain = remain;
 		this.manufacturer = manufacturer;
@@ -175,6 +176,14 @@ public class MedicineWarehouse extends Auditable implements Serializable {
 
 	public void setTotalPrice(Float totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public Float getTotal() {
+		return total;
+	}
+
+	public void setTotal(Float total) {
+		this.total = total;
 	}
 
 	public Float getUsed() {

@@ -28,6 +28,9 @@ public class MedicineWarehouseService {
     InvoicesProductRepository invoicesProductRepository;
 
     @Autowired
+    InvoicesProductService invoicesProductService;
+
+    @Autowired
     WarehousesRepository warehousesRepository;
 
     @Autowired
@@ -124,30 +127,61 @@ public class MedicineWarehouseService {
         return Collections.emptyList();
     }
 
+    @Transactional
     public MedicineWarehouse save(MedicineWarehouse medicineWarehouse){
         Integer farmId = usersService.getFarmId();
         Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(medicineWarehouse.getWarehouse().getId(),false);
         Integer farmIdFromWarehouse = warehouse.map(wh -> wh.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
             medicineWarehouse.setDelFlag(false);
-            medicineWarehouse.setRemain(medicineWarehouse.getQuantity());
+            medicineWarehouse.setQuantity(medicineWarehouse.getTotal());
+            medicineWarehouse.setRemain(medicineWarehouse.getTotal());
+            medicineWarehouse.setTotalPrice(medicineWarehouse.getUnitPrice() * medicineWarehouse.getTotal());
+            List<MedicineWarehouse> medicineWarehouseList = medicineWarehouseRepository.findByInvoiceAndDelFlag(medicineWarehouse.getInvoice(),false);
+            if (!medicineWarehouseList.isEmpty()){
+                Float total_price = medicineWarehouse.getTotalPrice();
+                for (MedicineWarehouse mw :
+                        medicineWarehouseList) {
+                    total_price = total_price + mw.getTotalPrice();
+                }
+                InvoicesProduct invoicesProduct = medicineWarehouseList.get(0).getInvoice();
+                invoicesProduct.setPrice(total_price);
+                invoicesProductService.update(invoicesProduct);
+            }else{
+                InvoicesProduct invoicesProduct = invoicesProductService.findbyid(medicineWarehouse.getInvoice().getId()).get();
+                invoicesProduct.setPrice(medicineWarehouse.getTotalPrice());
+                invoicesProductService.update(invoicesProduct);
+            }
             return medicineWarehouseRepository.save(medicineWarehouse);
         }
         return null;
     }
 
+    @Transactional
     public MedicineWarehouse update(MedicineWarehouse medicineWarehouse){
         Integer farmId = usersService.getFarmId();
         Optional<Warehouses> warehouse = warehousesRepository.findByIdAndDelFlag(medicineWarehouse.getWarehouse().getId(),false);
         Integer farmIdFromWarehouse = warehouse.map(wh -> wh.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(0) || farmId.equals(farmIdFromWarehouse)){
+            medicineWarehouse.setTotalPrice(medicineWarehouse.getUnitPrice() * medicineWarehouse.getTotal());
+            MedicineWarehouse medicineWarehouse1 = medicineWarehouseRepository.findByIdAndDelFlag(medicineWarehouse.getId(),false).get();
+            if (!medicineWarehouse1.getTotalPrice().equals(medicineWarehouse.getTotalPrice())){
+                InvoicesProduct invoicesProduct = invoicesProductService.findbyid(medicineWarehouse.getInvoice().getId()).get();
+                invoicesProduct.setPrice(invoicesProduct.getPrice() - medicineWarehouse1.getTotalPrice() + medicineWarehouse.getTotalPrice());
+                invoicesProductService.update(invoicesProduct);
+            }
             return medicineWarehouseRepository.save(medicineWarehouse);
         }
         return null;
     }
 
+    @Transactional
     public Boolean delete(MedicineWarehouse medicineWarehouse){
+        InvoicesProduct invoicesProduct = invoicesProductService.findbyid(medicineWarehouse.getInvoice().getId()).get();
+        invoicesProduct.setPrice(invoicesProduct.getPrice() - medicineWarehouse.getTotalPrice());
+        invoicesProductService.update(invoicesProduct);
         medicineWarehouse.setDelFlag(true);
+
         if(update(medicineWarehouse) != null){
             return true;
         }

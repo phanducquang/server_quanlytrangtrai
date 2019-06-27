@@ -26,6 +26,9 @@ public class FoodWarehouseService {
     InvoicesProductRepository invoicesProductRepository;
 
     @Autowired
+    InvoicesProductService invoicesProductService;
+
+    @Autowired
     WarehousesRepository warehousesRepository;
 
     @Autowired
@@ -99,34 +102,63 @@ public class FoodWarehouseService {
         return Collections.emptyList();
     }
 
+    @Transactional
     public FoodWarehouse save(FoodWarehouse foodWarehouse){
         Integer farmId = usersService.getFarmId();
         Optional<Warehouses> warehouses = warehousesRepository.findByIdAndDelFlag(foodWarehouse.getWarehouse().getId(),false);
         Integer farmIDFromWarehouse = warehouses.map(w -> w.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(farmIDFromWarehouse) || farmId.equals(0)){
             foodWarehouse.setDelFlag(false);
-            foodWarehouse.setRemain(foodWarehouse.getQuantity());
+            foodWarehouse.setQuantity(foodWarehouse.getTotal());
+            foodWarehouse.setRemain(foodWarehouse.getTotal());
+            foodWarehouse.setTotalPrice(foodWarehouse.getUnitPrice() * foodWarehouse.getTotal());
+            List<FoodWarehouse> foodWarehouseList = foodWarehouseRepository.findByInvoiceAndDelFlag(foodWarehouse.getInvoice(),false);
+            if (!foodWarehouseList.isEmpty()){
+                Float total_price = foodWarehouse.getTotalPrice();
+                for (FoodWarehouse fw :
+                        foodWarehouseList) {
+                    total_price = total_price + fw.getTotalPrice();
+                }
+                InvoicesProduct invoicesProduct = foodWarehouseList.get(0).getInvoice();
+                invoicesProduct.setPrice(total_price);
+                invoicesProductService.update(invoicesProduct);
+            } else {
+                InvoicesProduct invoicesProduct = invoicesProductService.findbyid(foodWarehouse.getInvoice().getId()).get();
+                invoicesProduct.setPrice(foodWarehouse.getTotalPrice());
+                invoicesProductService.update(invoicesProduct);
+            }
             return foodWarehouseRepository.save(foodWarehouse);
         }
         return null;
     }
 
+    @Transactional
     public FoodWarehouse update(FoodWarehouse foodWarehouse){
         Integer farmId = usersService.getFarmId();
         Optional<Warehouses> warehouses = warehousesRepository.findByIdAndDelFlag(foodWarehouse.getWarehouse().getId(),false);
         Integer farmIDFromWarehouse = warehouses.map(w -> w.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(farmIDFromWarehouse) || farmId.equals(0)){
+            foodWarehouse.setTotalPrice(foodWarehouse.getUnitPrice() * foodWarehouse.getTotal());
+            FoodWarehouse foodWarehouse1 = foodWarehouseRepository.findByIdAndDelFlag(foodWarehouse.getId(),false).get();
+            if (!foodWarehouse1.getTotalPrice().equals(foodWarehouse.getTotalPrice())){
+                InvoicesProduct invoicesProduct = invoicesProductService.findbyid(foodWarehouse.getInvoice().getId()).get();
+                invoicesProduct.setPrice(invoicesProduct.getPrice() - foodWarehouse1.getTotalPrice() + foodWarehouse.getTotalPrice());
+                invoicesProductService.update(invoicesProduct);
+            }
             return foodWarehouseRepository.save(foodWarehouse);
         }
         return null;
     }
 
-
+    @Transactional
     public Boolean delete(FoodWarehouse foodWarehouse){
         Integer farmId = usersService.getFarmId();
         Optional<Warehouses> warehouses = warehousesRepository.findByIdAndDelFlag(foodWarehouse.getWarehouse().getId(),false);
         Integer farmIDFromWarehouse = warehouses.map(w -> w.getManager().getFarm().getId()).orElse(null);
         if (farmId.equals(farmIDFromWarehouse) || farmId.equals(0)){
+            InvoicesProduct invoicesProduct = invoicesProductService.findbyid(foodWarehouse.getInvoice().getId()).get();
+            invoicesProduct.setPrice(invoicesProduct.getPrice() - foodWarehouse.getTotalPrice());
+            invoicesProductService.update(invoicesProduct);
             foodWarehouse.setDelFlag(true);
             if(foodWarehouseRepository.save(foodWarehouse) != null){
                 return true;

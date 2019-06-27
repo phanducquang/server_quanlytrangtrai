@@ -3,6 +3,7 @@ package tk.giaiphapchannuoi.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.model.MedicineWarehouse;
 import tk.giaiphapchannuoi.server.services.MedicineWarehouseService;
@@ -43,6 +44,7 @@ public class MedicineWarehouseController {
         return medicineWarehouseService.findall();
     }
 
+    @Transactional
     @PostMapping(value = "/")
     public ResponseEntity<Object> insert(@RequestBody MedicineWarehouse medicineWarehouse){
         if(medicineWarehouseService.save(medicineWarehouse) == null){
@@ -51,6 +53,7 @@ public class MedicineWarehouseController {
         return ResponseEntity.ok(medicineWarehouse);
     }
 
+    @Transactional
     @PutMapping(value = "/")
     public ResponseEntity<Object> update(@RequestBody MedicineWarehouse medicineWarehouse){
         if(medicineWarehouseService.update(medicineWarehouse) == null){
@@ -59,6 +62,7 @@ public class MedicineWarehouseController {
         return ResponseEntity.ok(medicineWarehouse);
     }
 
+    @Transactional
     @DeleteMapping(value = "/")
     public Boolean delete(@RequestBody MedicineWarehouse medicineWarehouse){
         return medicineWarehouseService.delete(medicineWarehouse);
