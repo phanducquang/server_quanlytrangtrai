@@ -7,6 +7,7 @@ import tk.giaiphapchannuoi.server.model.Pigs;
 public class PigsInvoicePigDetailDTOResponse {
     private PigsDTO pigs;
     private InvoicePigDetail invoicePigDetail;
+    private InvoicesPig invoicesPig;
 
     public PigsInvoicePigDetailDTOResponse() {
     }
@@ -30,5 +31,13 @@ public class PigsInvoicePigDetailDTOResponse {
 
     public void setInvoicePigDetail(InvoicePigDetail invoicePigDetail) {
         this.invoicePigDetail = invoicePigDetail;
+    }
+
+    public InvoicesPig getInvoicesPig() {
+        return invoicesPig;
+    }
+
+    public void setInvoicesPig(InvoicesPig invoicesPig) {
+        this.invoicesPig = invoicesPig;
     }
 }

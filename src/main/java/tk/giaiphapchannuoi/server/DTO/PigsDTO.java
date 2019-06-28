@@ -169,6 +169,47 @@ public class PigsDTO implements Serializable {
 		this.delFlag = delFlag;
 	}
 
+	public void convertTo(Pigs pig){
+		this.id = pig.getId();
+		this.pigCode = pig.getPigCode();
+		this.houseId = pig.getHouse().getId();
+		this.pigType = pig.getPigType();
+		this.birthId = pig.getBirthId();
+		this.breedId = pig.getBreed().getId();
+		this.gender = pig.getGender();
+		this.birthday = pig.getBirthday();
+		this.born_weight = pig.getBorn_weight();
+		this.bornStatus = pig.getBornStatus();
+		this.originId = pig.getOriginId();
+		this.originFather = pig.getOriginFather();
+		this.originMother = pig.getOriginMother();
+		this.originWeight = pig.getOriginWeight();
+		this.receiveWeight = pig.getReceiveWeight();
+		this.healthPoint = pig.getHealthPoint();
+		this.footTypeId = pig.getFoot().getId();
+		this.functionUdder = pig.getFunctionUdder();
+		this.totalUdder = pig.getTotalUdder();
+		this.gentialTypeId = pig.getGentialType().getId();
+		this.description = pig.getDescription();
+		this.fcr = pig.getFcr();
+		this.adg = pig.getAdg();
+		this.bf = pig.getBf();
+		this.filet = pig.getFilet();
+		this.longBack = pig.getLongBack();
+		this.longBody = pig.getLongBody();
+		this.index = pig.getIndex();
+		this.parities = pig.getParities();
+		this.images = pig.getImages();
+		this.healthStatusId = pig.getHealthStatus().getId();
+		this.breedingType = pig.getBreedingType();
+		this.breedStatus = pig.getBreedStatus();
+		this.pregnancyStatusId = pig.getPregnancyStatus().getId();
+		this.point_review = pig.getPoint_review();
+		this.statusId = pig.getStatus().getId();
+		this.overviewStatus = pig.getOverviewStatus();
+		this.delFlag = pig.getDelFlag();
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -218,34 +218,29 @@ public class InvoicePigDetailService {
 
     //Cap nhat pig khi da them pig vao invoice_pig
     @Transactional
-    public PigsInvoicePigDetailDTORequest updatePigInInvoicePig(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
+    public PigsInvoicePigDetailDTOResponse updatePigInInvoicePig(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
         Integer farmId = usersService.getFarmId();
         Pigs pig = pigsInvoicePigDetailDTORequest.getPigs();
+        PigsDTO pig_old = new PigsDTO();
+        pig_old.convertTo(pigsService.findbyid(pig.getId()).get());
         InvoicesPig invoicesPig = pigsInvoicePigDetailDTORequest.getInvoicesPig();
-        PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest_temp = new PigsInvoicePigDetailDTORequest();
-        Pigs pig_temp = pigsService.findbyid(pig.getId()).get();
-        pigsInvoicePigDetailDTORequest_temp.setPigs(pigsService.update(pig));
+        PigsInvoicePigDetailDTOResponse pigsInvoicePigDetailDTOResponse = new PigsInvoicePigDetailDTOResponse();
+        pigsService.update(pig);
+        PigsDTO pigsDTO = pigsDTORepository.findByIdAndDelFlag(pig.getId(),false).get();
+        pigsInvoicePigDetailDTOResponse.setPigs(pigsDTO);
         //nhap ngoai he thong thi dung receive_weight de tinh, nguoc lai dung origin_weight de tinh
         if (!pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
-            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getOriginWeight() + pig.getOriginWeight());
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_old.getOriginWeight() + pig.getOriginWeight());
         } else if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("external-import")){
-            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_temp.getReceiveWeight() + pig.getReceiveWeight());
-            if(invoicesPig.getTotalPrice()!=null){
-                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig_temp.getReceiveWeight()*invoicesPig.getUnitPrice());
-            }else{
-                invoicesPig.setTotalWeight(pig_temp.getReceiveWeight()*invoicesPig.getUnitPrice());
-            }
+            invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig_old.getReceiveWeight() + pig.getReceiveWeight());
+            invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig_old.getReceiveWeight()*invoicesPig.getUnitPrice() + pig.getReceiveWeight()*invoicesPig.getUnitPrice());
         }
         //Cap nhat lai gia neu hoa don dung de ban
         if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("sale")){
-            if(invoicesPig.getTotalPrice()!=null){
-                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig_temp.getOriginWeight()*invoicesPig.getUnitPrice());
-            }else{
-                invoicesPig.setTotalWeight(pig_temp.getOriginWeight()*invoicesPig.getUnitPrice());
-            }
+            invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig_old.getOriginWeight()*invoicesPig.getUnitPrice() + pig.getOriginWeight()*invoicesPig.getUnitPrice());
         }
-        pigsInvoicePigDetailDTORequest_temp.setInvoicesPig(invoicesPigService.update(invoicesPig));
-        return pigsInvoicePigDetailDTORequest_temp;
+        pigsInvoicePigDetailDTOResponse.setInvoicesPig(invoicesPigService.update(invoicesPig));
+        return pigsInvoicePigDetailDTOResponse;
     }
 
     public InvoicePigDetail update(InvoicePigDetail invoicePigDetail){
@@ -321,12 +316,13 @@ public class InvoicePigDetailService {
                 if (invoicesPig.getInvoiceType().equals("sale")){
                     invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig.getOriginWeight()*invoicesPig.getUnitPrice());
                 }
-
+                invoicesPig.setQuantity(invoicesPig.getQuantity() - 1);
                 //Cap nhat status ve pre_status
                 Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(pig.getStatus().getPreviousStatus(), 0,false).get();
                 pig.setStatus(status);
                 pigsRepository.save(pig);
                 if(invoicePigDetailRepository.save(invoicePigDetail) != null){
+                    invoicesPigService.update(invoicesPig);
                     return true;
                 }
             }

@@ -61,7 +61,7 @@ public class InvoicePigDetailController {
     @PutMapping(value = "/updatepigininvoicepig/")
     public ResponseEntity<Object> updatePigInInvoicePig(@RequestBody PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
 
-        PigsInvoicePigDetailDTORequest temp = invoicePigDetailService.updatePigInInvoicePig(pigsInvoicePigDetailDTORequest);
+        PigsInvoicePigDetailDTOResponse temp = invoicePigDetailService.updatePigInInvoicePig(pigsInvoicePigDetailDTORequest);
         if(temp == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
