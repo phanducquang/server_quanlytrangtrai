@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.*;
-import tk.giaiphapchannuoi.server.model.InvoicePigDetail;
-import tk.giaiphapchannuoi.server.model.InvoicesPig;
-import tk.giaiphapchannuoi.server.model.Pigs;
-import tk.giaiphapchannuoi.server.model.Status;
+import tk.giaiphapchannuoi.server.model.*;
 import tk.giaiphapchannuoi.server.repository.*;
 
 import java.util.ArrayList;
@@ -42,6 +39,9 @@ public class InvoicePigDetailService {
 
     @Autowired
     InvoicesPigService invoicesPigService;
+
+    @Autowired
+    BirthsService birthsService;
 
     @Autowired
     UsersService usersService;
@@ -155,6 +155,8 @@ public class InvoicePigDetailService {
     @Transactional
     public PigsInvoicePigDetailDTOResponse savePigsInvoicePigDetail(PigsInvoicePigDetailDTORequest pigsInvoicePigDetailDTORequest){
         pigsInvoicePigDetailDTORequest.getPigs().setDelFlag(false);
+
+        //Chuyen sang trang thai cho ban khi hoa don la "xuat ban"
         if (pigsInvoicePigDetailDTORequest.getInvoicesPig().getInvoiceType().equals("sale")){
             Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(8,pigsInvoicePigDetailDTORequest.getPigs().getStatus().getCode(),false).get();
             pigsInvoicePigDetailDTORequest.getPigs().setStatus(status);
@@ -173,6 +175,23 @@ public class InvoicePigDetailService {
             invoicesPig.setQuantity(invoicesPig.getQuantity() + 1);
         }else{
             invoicesPig.setQuantity(1);
+        }
+
+        //Cap nhat theo nghiep vu HEO CON
+        if (pigs.getStatus().getCode().equals(12)){
+            Births births = birthsService.findbyid(pigs.getBirthId());
+            if (births.getBorning() != null){
+                births.setBorning( births.getBorning() + 1);
+            }else {
+                births.setBorning(1);
+            }
+
+            if (births.getSelected() != null){
+                births.setSelected( births.getSelected() + 1);
+            }else {
+                births.setSelected(1);
+            }
+            birthsService.update(births);
         }
 
         //Origin_Weight: khoi luong dong, thay doi theo vong doi heo.

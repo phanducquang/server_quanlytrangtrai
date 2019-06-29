@@ -72,6 +72,7 @@ public class BirthsService {
             matings.setStatus("borned");
             matingsRepository.save(matings);
             births.setParities(dem);
+            births.setBorning(births.getDieBorning() + births.getDieBlack() + births.getDieBeforeBorning() + births.getDefect() + births.getSmallRemove());
             births.setDelFlag(false);
             return birthsRepository.save(births);
         }else {
@@ -82,6 +83,8 @@ public class BirthsService {
     public Births update(Births births){
         Integer farmId = usersService.getFarmId();
         if (births.getMating().getMother().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
+            Births temp = findbyid(births.getId());
+            births.setBorning(births.getBorning() - (births.getSelected() + births.getDieBorning() + births.getDieBlack() + births.getDieBeforeBorning() + births.getDefect() + births.getSmallRemove())   + births.getSelected() + births.getDieBorning() + births.getDieBlack() + births.getDieBeforeBorning() + births.getDefect() + births.getSmallRemove());
             return birthsRepository.save(births);
         }else {
             return null;
