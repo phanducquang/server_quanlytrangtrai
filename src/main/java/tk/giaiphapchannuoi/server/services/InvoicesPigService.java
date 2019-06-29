@@ -184,6 +184,14 @@ public class InvoicesPigService {
         Optional<Users> user = usersService.findbyid(userId);
         invoicesPig.setEmployee(user.get().getEmployee());
 
+        Float total_weight = 0f;
+        //Tinh tong trong luong heo
+        for (Pigs p :
+                pigsList) {
+            total_weight = total_weight + p.getOriginWeight();
+        }
+
+        invoicesPig.setTotalWeight(total_weight);
         InvoicesPig tempInvoicePig = invoicePigRepository.save(invoicesPig);
         for (Pigs p :
                 pigsList) {
