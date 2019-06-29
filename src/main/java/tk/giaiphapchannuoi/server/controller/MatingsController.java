@@ -63,11 +63,10 @@ public class MatingsController {
     @Transactional
     @PostMapping(value = "/matingsmatingdetails/")
     public ResponseEntity<Object> insertMatingsMatingDetails(@RequestBody MatingsMatingDetailsDTO matingsMatingDetailsDTO){
-        //Luu thong tin mating sau khi luu mating tu request
-        Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
         //Lay danh sach mating detail tu request
         List<MatingDetails> matingDetailsList = matingsMatingDetailsDTO.getMatingDetail();
 
+        //Check luong tinh con lai co du hay khong
         for (MatingDetails matingDetail :
                 matingDetailsList) {
             if (matingDetail.getId() == null){
@@ -78,13 +77,16 @@ public class MatingsController {
                         temp.setUsed(temp.getUsed() + 1);
                         spermService.update(temp);
                     }else {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1433: so luong con lai khong du");
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1433: so lieu con lai khong du");
                     }
                 }else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
             }
         }
+
+        //Luu thong tin mating sau khi luu mating tu request
+        Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
 
         matingDetailsService.deleteByMating(mating);
 
