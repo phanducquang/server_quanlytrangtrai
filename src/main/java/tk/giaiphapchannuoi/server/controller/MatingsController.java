@@ -70,7 +70,6 @@ public class MatingsController {
 
         for (MatingDetails matingDetail :
                 matingDetailsList) {
-
             if (matingDetail.getId() == null){
                 Optional<Sperm> sperm = spermService.findbyid(matingDetail.getSperm().getId());
                 if (sperm.isPresent()){
@@ -79,7 +78,7 @@ public class MatingsController {
                         temp.setUsed(temp.getUsed() + 1);
                         spermService.update(temp);
                     }else {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1432: so luong con lai khong du");
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1433: so luong con lai khong du");
                     }
                 }else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
