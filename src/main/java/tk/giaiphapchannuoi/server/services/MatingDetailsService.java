@@ -9,6 +9,7 @@ import tk.giaiphapchannuoi.server.repository.MatingDetailsRepository;
 import tk.giaiphapchannuoi.server.repository.MatingsRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,17 @@ public class MatingDetailsService {
         return Optional.empty();
     }
 
+    public List<MatingDetails> findbymating(Matings mating){
+        Integer farmId = usersService.getFarmId();
+        List<MatingDetails> matingDetailsList = matingDetailsRepository.findByMatingAndDelFlag(mating,false);
+        if (!matingDetailsList.isEmpty()){
+            if (farmId.equals(0) || matingDetailsList.get(0).getMating().getMother().getHouse().getSection().getFarm().getId().equals(farmId)){
+                return matingDetailsList;
+            }
+        }
+        return Collections.emptyList();
+    }
+
     @Transactional
     public MatingDetails save(MatingDetails matingDetail){
         matingDetail.setDelFlag(false);
@@ -75,5 +87,9 @@ public class MatingDetailsService {
             return true;
         }
         return false;
+    }
+
+    public void deleteByMating(Matings mating){
+        matingDetailsRepository.delete(matingDetailsRepository.findByMatingAndDelFlag(mating,false).get(0));
     }
 }

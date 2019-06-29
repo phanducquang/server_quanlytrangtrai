@@ -88,12 +88,7 @@ public class MatingsService {
             mating.setDelFlag(false);
             Schedule schedule = new Schedule();
             Matings mating_temp = matingsRepository.save(mating);
-            //set schedule va luu
-            schedule.setName("Đỡ đẻ cho heo \"" + mother.get().getPigCode() + "\" tại chuồng \"" + mother.get().getHouse().getName() + "\", " + mother.get().getHouse().getSection().getName() + ".");
-            schedule.setDate(mating.getBirthEstimate());
-            schedule.setStatus("chưa phân công");
-            schedule.setFarmId(farmIdFromMating);
-            scheduleService.save(schedule);
+
             //Cap nhat status heo
             Pigs pigs = pigsRepository.findByIdAndDelFlag(mating.getMother().getId(),false).get();
             if (mating.getStatus().equals("processing")){
@@ -102,6 +97,13 @@ public class MatingsService {
                 //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating
                 mating_temp.setMother(pigsService.update(pigs));
             }else if(mating.getStatus().equals("finish")){
+                //set schedule va luu
+                schedule.setName("Đỡ đẻ cho heo \"" + mother.get().getPigCode() + "\" tại chuồng \"" + mother.get().getHouse().getName() + "\", " + mother.get().getHouse().getSection().getName() + ".");
+                schedule.setDate(mating.getBirthEstimate());
+                schedule.setStatus("chưa phân công");
+                schedule.setFarmId(farmIdFromMating);
+                scheduleService.save(schedule);
+
                 Status status = statusRepository.findByCodeAndPreviousStatusAndDelFlag(2, 0,false).get();
                 pigs.setStatus(status);
                 //Cap nhat status pig va cap nhat lai thong tin pig cho obj mating

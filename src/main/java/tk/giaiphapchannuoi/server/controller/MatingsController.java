@@ -7,14 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.giaiphapchannuoi.server.DTO.ListMatingsMatingDetailsDTO;
 import tk.giaiphapchannuoi.server.DTO.MatingsMatingDetailsDTO;
-import tk.giaiphapchannuoi.server.model.MatingDetails;
-import tk.giaiphapchannuoi.server.model.Matings;
-import tk.giaiphapchannuoi.server.model.Pigs;
-import tk.giaiphapchannuoi.server.model.Status;
-import tk.giaiphapchannuoi.server.services.MatingDetailsService;
-import tk.giaiphapchannuoi.server.services.MatingsService;
-import tk.giaiphapchannuoi.server.services.PigsService;
-import tk.giaiphapchannuoi.server.services.StatusService;
+import tk.giaiphapchannuoi.server.model.*;
+import tk.giaiphapchannuoi.server.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +29,9 @@ public class MatingsController {
 
     @Autowired
     StatusService statusService;
+
+    @Autowired
+    SpermService spermService;
 
     @GetMapping(value = "/one/{id}")
     public Optional<Matings> findById(@PathVariable Integer id){
@@ -68,9 +65,30 @@ public class MatingsController {
     public ResponseEntity<Object> insertMatingsMatingDetails(@RequestBody MatingsMatingDetailsDTO matingsMatingDetailsDTO){
         //Luu thong tin mating sau khi luu mating tu request
         Matings mating = matingsService.save(matingsMatingDetailsDTO.getMating());
-
         //Lay danh sach mating detail tu request
         List<MatingDetails> matingDetailsList = matingsMatingDetailsDTO.getMatingDetail();
+
+        for (MatingDetails matingDetail :
+                matingDetailsList) {
+
+            if (matingDetail.getId() == null){
+                Optional<Sperm> sperm = spermService.findbyid(matingDetail.getSperm().getId());
+                if (sperm.isPresent()){
+                    Sperm temp = sperm.get();
+                    if (temp.getUsed() < temp.getDoses()){
+                        temp.setUsed(temp.getUsed() + 1);
+                        spermService.update(temp);
+                    }else {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1432: so luong con lai khong du");
+                    }
+                }else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                }
+            }
+        }
+
+        matingDetailsService.deleteByMating(mating);
+
         //Tao danh sach mating detail de luu thong tin mating detail sau khi luu vao db
         List<MatingDetails> matingDetails = new ArrayList<MatingDetails>();
         for (MatingDetails matingDetail :
