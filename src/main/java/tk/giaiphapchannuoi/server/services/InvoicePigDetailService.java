@@ -276,15 +276,15 @@ public class InvoicePigDetailService {
                 if (invoicesPig.getInvoiceType().equals("sale")){
                     invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() - pig.getOriginWeight()*invoicesPig.getUnitPrice());
                 }
-
+                invoicesPig.setQuantity(invoicesPig.getQuantity() - 1);
 //                //gan Total_Weight = Total_Weight - receive_weight cua heo xoa
 //                invoicesPig.setTotalWeight(invoicesPig.getTotalWeight() - pig.getReceiveWeight());
 //                invoicesPig.setTotalPrice(invoicesPig.getTotalPrice() + pig.getReceiveWeight()*invoicesPig.getUnitPrice());
-                invoicesPigRepository.save(invoicesPig);
                 //Xoa heo
                 pig.setDelFlag(true);
                 pigsRepository.save(pig);
                 if(invoicePigDetailRepository.save(invoicePigDetail) != null){
+                    invoicesPigRepository.save(invoicesPig);
                     return true;
                 }
             }
