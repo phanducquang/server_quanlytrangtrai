@@ -33,6 +33,9 @@ public class MatingsController {
     @Autowired
     SpermService spermService;
 
+    @Autowired
+    BreedingsService breedingsService;
+
     @GetMapping(value = "/one/{id}")
     public Optional<Matings> findById(@PathVariable Integer id){
         return matingsService.findbyid(id);
@@ -100,6 +103,7 @@ public class MatingsController {
             matingDetails.add(matingDetailsService.save(matingDetail));
         }
         MatingsMatingDetailsDTO temp = new MatingsMatingDetailsDTO();
+        temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
         temp.setMating(mating);
         temp.setMatingDetail(matingDetails);
         if(temp.getMating() == null || temp.getMatingDetail() == null){
