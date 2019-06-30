@@ -90,6 +90,9 @@ public class MatingDetailsService {
     }
 
     public void deleteByMating(Matings mating){
-        matingDetailsRepository.delete(matingDetailsRepository.findByMatingAndDelFlag(mating,false).get(0));
+        List<MatingDetails> matingDetailsList = matingDetailsRepository.findByMatingAndDelFlag(mating,false);
+        if (!matingDetailsList.isEmpty()){
+            matingDetailsRepository.delete(matingDetailsList.get(0));
+        }
     }
 }
