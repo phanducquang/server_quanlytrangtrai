@@ -21,8 +21,8 @@ public class Breedings extends Auditable implements Serializable {
 	@Column(name="date")
 	private Date date;
 	
-	@Column(name="log_id")
-	private Integer logId;
+//	@Column(name="log_id")
+//	private Integer logId;
 
 	@Column(name="type_id")
 	private Integer typeId;
@@ -48,10 +48,9 @@ public class Breedings extends Auditable implements Serializable {
 	public Breedings() {
 	}
 
-	public Breedings(Pigs pig, Date date, Integer logId, Integer typeId, String description, Integer breedingCount, Date breedingNext, Date matingEstimate, Date matingReal, Boolean delFlag) {
+	public Breedings(Pigs pig, Date date, Integer typeId, String description, Integer breedingCount, Date breedingNext, Date matingEstimate, Date matingReal, Boolean delFlag) {
 		this.pig = pig;
 		this.date = date;
-		this.logId = logId;
 		this.typeId = typeId;
 		this.description = description;
 		this.breedingCount = breedingCount;
@@ -83,14 +82,6 @@ public class Breedings extends Auditable implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Integer getLogId() {
-		return logId;
-	}
-
-	public void setLogId(Integer logId) {
-		this.logId = logId;
 	}
 
 	public Integer getTypeId() {

@@ -21,8 +21,8 @@ public class Births extends Auditable implements Serializable {
 	@Column(name="date")
 	private Date date;
 	
-	@Column(name="log_id")
-	private Integer logId;
+//	@Column(name="log_id")
+//	private Integer logId;
 	
 	@Column(name="parities")
 	private Integer parities;
@@ -51,8 +51,8 @@ public class Births extends Auditable implements Serializable {
 	@Column(name="small_remove")
 	private Integer smallRemove;
 	
-	@Column(name="remain")
-	private Integer remain;
+//	@Column(name="remain")
+//	private Integer remain;
 
 	@Column(name = "del_flag")
 	private Boolean delFlag;
@@ -60,10 +60,9 @@ public class Births extends Auditable implements Serializable {
 	public Births() {
 	}
 
-	public Births(Matings mating, Date date, Integer logId, Integer parities, Integer borning, Float fetalWeight, Integer selected, Integer dieBeforeBorning, Integer dieBorning, Integer dieBlack, Integer defect, Integer smallRemove, Integer remain, Boolean delFlag) {
+	public Births(Matings mating, Date date, Integer parities, Integer borning, Float fetalWeight, Integer selected, Integer dieBeforeBorning, Integer dieBorning, Integer dieBlack, Integer defect, Integer smallRemove, Boolean delFlag) {
 		this.mating = mating;
 		this.date = date;
-		this.logId = logId;
 		this.parities = parities;
 		this.borning = borning;
 		this.fetalWeight = fetalWeight;
@@ -73,7 +72,6 @@ public class Births extends Auditable implements Serializable {
 		this.dieBlack = dieBlack;
 		this.defect = defect;
 		this.smallRemove = smallRemove;
-		this.remain = remain;
 		this.delFlag = delFlag;
 	}
 
@@ -99,14 +97,6 @@ public class Births extends Auditable implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Integer getLogId() {
-		return logId;
-	}
-
-	public void setLogId(Integer logId) {
-		this.logId = logId;
 	}
 
 	public Integer getParities() {
@@ -179,14 +169,6 @@ public class Births extends Auditable implements Serializable {
 
 	public void setSmallRemove(Integer smallRemove) {
 		this.smallRemove = smallRemove;
-	}
-
-	public Integer getRemain() {
-		return remain;
-	}
-
-	public void setRemain(Integer remain) {
-		this.remain = remain;
 	}
 
 	public Boolean getDelFlag() {

@@ -18,10 +18,6 @@ public class Permissions extends Auditable implements Serializable {
 	@Column(name="code")
 	private String code;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "screen_id")
-	private Screens screen;
-
 	@Column(name="description")
 	private String description;
 
@@ -31,10 +27,9 @@ public class Permissions extends Auditable implements Serializable {
 	public Permissions() {
 	}
 
-	public Permissions(String name, String code, Screens screen, String description, Boolean delFlag) {
+	public Permissions(String name, String code, String description, Boolean delFlag) {
 		this.name = name;
 		this.code = code;
-		this.screen = screen;
 		this.description = description;
 		this.delFlag = delFlag;
 	}
@@ -53,14 +48,6 @@ public class Permissions extends Auditable implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Screens getScreen() {
-		return screen;
-	}
-
-	public void setScreen(Screens screen) {
-		this.screen = screen;
 	}
 
 	public String getDescription() {
