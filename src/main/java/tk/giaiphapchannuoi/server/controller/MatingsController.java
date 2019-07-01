@@ -109,7 +109,7 @@ public class MatingsController {
             matingDetails.add(matingDetailsService.save(matingDetail));
         }
 
-        if (matingsMatingDetailsDTO.getBreeding() == null){
+        if (matingsMatingDetailsDTO.getBreeding() != null){
             temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
         }
         temp.setMating(mating);
