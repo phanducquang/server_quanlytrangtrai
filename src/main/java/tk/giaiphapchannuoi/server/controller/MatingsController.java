@@ -70,8 +70,9 @@ public class MatingsController {
         List<MatingDetails> matingDetailsList = matingsMatingDetailsDTO.getMatingDetail();
 
         MatingsMatingDetailsDTO temp = new MatingsMatingDetailsDTO();
-
         //Check luong tinh con lai co du hay khong
+
+        int dem = 0;
         for (MatingDetails matingDetail :
                 matingDetailsList) {
             if (matingDetail.getId() == null){
@@ -87,9 +88,10 @@ public class MatingsController {
                 }else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
-
-                temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
-
+                if (dem == 0){
+                    temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
+                }
+                dem ++;
             }
         }
 
