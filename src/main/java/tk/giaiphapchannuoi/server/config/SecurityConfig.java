@@ -379,7 +379,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/customertypes/")
                         .hasAnyRole("thiet_lap_danh_sach_loai_khach_hang","admin")
                     .antMatchers("/api/customergroups/")
-                        .hasAnyRole("thiet_lap_danh_sach_nhóm_khach_hang","admin")
+                        .hasAnyRole("thiet_lap_danh_sach_nhom_khach_hang","admin")
                     .antMatchers("/api/customers/")
                         .hasAnyRole("thiet_lap_danh_sach_khach_hang","admin")
                     .antMatchers("/api/medicineunits/")
