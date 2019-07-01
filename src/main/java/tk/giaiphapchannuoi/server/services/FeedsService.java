@@ -160,7 +160,7 @@ public class FeedsService {
                         //chuyen sang don vi co ban (base_unit) roi tinh . khi tinh xg chuyen ve don vi goc
                         Float used = (fw.getUsed()*fw.getUnit().getQuantity() + quantity)/fw.getUnit().getQuantity();
                         //Tính luọng con lai sau khi nhap quantity vao feeds
-                        Float remain = (fw.getQuantity()*fw.getUnit().getQuantity() - used)/fw.getUnit().getQuantity();
+                        Float remain = (fw.getQuantity() - used);
                         fw.setUsed(used);
                         fw.setRemain(remain);
                         foodWarehouseService.update(fw);

@@ -154,7 +154,7 @@ public class UsedMedicineService {
                     //chuyen sang don vi co ban (base_unit) roi tinh . khi tinh xg chuyen ve don vi goc
                     Float used = (mw.getUsed()*mw.getUnit().getQuantity() + quantity)/mw.getUnit().getQuantity();
                     //Tính luọng con lai sau khi nhap quantity vao usedMedicine
-                    Float remain = (mw.getQuantity()*mw.getUnit().getQuantity() - used)/mw.getUnit().getQuantity();
+                    Float remain = (mw.getQuantity() - used);
                     mw.setUsed(used);
                     mw.setRemain(remain);
                     medicineWarehouseService.update(mw);
