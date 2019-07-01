@@ -117,6 +117,7 @@ public class BreedingsService {
 
     public Breedings update(Breedings breedings){
         Integer farmId = usersService.getFarmId();
+
         if (breedings.getPig().getHouse().getSection().getFarm().getId().equals(farmId) || farmId == 0){
             return breedingsRepository.save(breedings);
         }

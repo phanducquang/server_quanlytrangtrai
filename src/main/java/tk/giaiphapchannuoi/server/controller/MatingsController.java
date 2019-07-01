@@ -69,22 +69,27 @@ public class MatingsController {
         //Lay danh sach mating detail tu request
         List<MatingDetails> matingDetailsList = matingsMatingDetailsDTO.getMatingDetail();
 
+        MatingsMatingDetailsDTO temp = new MatingsMatingDetailsDTO();
+
         //Check luong tinh con lai co du hay khong
         for (MatingDetails matingDetail :
                 matingDetailsList) {
             if (matingDetail.getId() == null){
                 Optional<Sperm> sperm = spermService.findbyid(matingDetail.getSperm().getId());
                 if (sperm.isPresent()){
-                    Sperm temp = sperm.get();
-                    if (temp.getUsed() < temp.getDoses()){
-                        temp.setUsed(temp.getUsed() + 1);
-                        spermService.update(temp);
+                    Sperm spetm_temp = sperm.get();
+                    if (spetm_temp.getUsed() < spetm_temp.getDoses()){
+                        spetm_temp.setUsed(spetm_temp.getUsed() + 1);
+                        spermService.update(spetm_temp);
                     }else {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("1433: so lieu con lai khong du");
                     }
                 }else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
+
+                temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
+
             }
         }
 
@@ -102,8 +107,7 @@ public class MatingsController {
 //            }
             matingDetails.add(matingDetailsService.save(matingDetail));
         }
-        MatingsMatingDetailsDTO temp = new MatingsMatingDetailsDTO();
-        temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
+
         temp.setMating(mating);
         temp.setMatingDetail(matingDetails);
         if(temp.getMating() == null || temp.getMatingDetail() == null){
