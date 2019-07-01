@@ -72,9 +72,10 @@ public class MatingsController {
         MatingsMatingDetailsDTO temp = new MatingsMatingDetailsDTO();
         //Check luong tinh con lai co du hay khong
 
-        int dem = 0;
+//        int dem = 0;
         for (MatingDetails matingDetail :
                 matingDetailsList) {
+//            dem ++;
             if (matingDetail.getId() == null){
                 Optional<Sperm> sperm = spermService.findbyid(matingDetail.getSperm().getId());
                 if (sperm.isPresent()){
@@ -88,10 +89,8 @@ public class MatingsController {
                 }else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
                 }
-                if (dem == 0){
-                    temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
-                }
-                dem ++;
+//                if (dem == 1){
+//                }
             }
         }
 
@@ -110,6 +109,9 @@ public class MatingsController {
             matingDetails.add(matingDetailsService.save(matingDetail));
         }
 
+        if (matingsMatingDetailsDTO.getBreeding() == null){
+            temp.setBreeding(breedingsService.update(matingsMatingDetailsDTO.getBreeding()));
+        }
         temp.setMating(mating);
         temp.setMatingDetail(matingDetails);
         if(temp.getMating() == null || temp.getMatingDetail() == null){
