@@ -32,4 +32,18 @@ public class MiningsController {
         }
         return ResponseEntity.ok(temp);
     }
+
+//    @GetMapping(value = "/autoupdate/")
+//    public void autoclassification(){
+//        miningsService.autoclassification();
+//    }
+
+    @GetMapping(value = "/training/")
+    public ResponseEntity<Object> training(){
+        if (miningsService.training()){
+            ApiResponse apiResponse = new ApiResponse(true,"success");
+            return ResponseEntity.ok(apiResponse);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 }

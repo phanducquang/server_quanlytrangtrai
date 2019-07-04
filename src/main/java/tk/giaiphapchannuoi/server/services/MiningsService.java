@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.giaiphapchannuoi.server.DTO.MiningResponse;
+import tk.giaiphapchannuoi.server.DTO.PigsDTO;
 import tk.giaiphapchannuoi.server.model.ApiResponse;
 import tk.giaiphapchannuoi.server.model.Minings;
 import tk.giaiphapchannuoi.server.model.Pigs;
 import tk.giaiphapchannuoi.server.repository.MiningsRepository;
+import tk.giaiphapchannuoi.server.repository.PigsDTORepository;
+import tk.giaiphapchannuoi.server.repository.PigsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,16 @@ public class MiningsService {
     @Autowired
     PigsService pigsService;
 
+    @Autowired
+    PigsRepository pigsRepository;
+
+    @Autowired
+    PigsDTORepository pigsDTORepository;
+
+    protected static Classifier<String, String> bayes = new BayesClassifier<String, String>();
+
+    protected static Boolean flag_training = false;
+
     public List<Minings> findall(){
         return miningsRepository.findAll();
     }
@@ -33,84 +46,222 @@ public class MiningsService {
         return miningsRepository.save(medicineType);
     }
 
-    public MiningResponse classification(Integer pigId){
-        Optional<Pigs> pig = pigsService.findbyid(pigId);
-        if (pig.isPresent()){
-            final Classifier<String, String> bayes = new BayesClassifier<String, String>();
-            //set 5000 learned classifications
-            bayes.setMemoryCapacity(5000);
+    public Boolean training(){
 
-            //Lay thong tin tap train tu database
-            List<Minings> miningsList = findall();
-            //cho thuat toan hoc du lieu tu tap train
-            for (Minings m :
-                    miningsList) {
-                if (m.getClassification().equals("Loai 1")){
-                    List<String> list = new ArrayList<>();
-                    list.add(m.getIndex().toString());
-                    list.add(m.getOriginWeight().toString());
-                    list.add(m.getFoot().toString());
-                    list.add(m.getGential().toString());
-                    list.add(m.getUdder().toString());
-                    list.add(m.getAdg().toString());
-                    bayes.learn("Loai 1", list);//bien 1: nhan phan lop; bien 2 collection<String> cac thuoc tinh phan lop
-                } else if (m.getClassification().equals("Loai 2")){
-                    List<String> list = new ArrayList<>();
-                    list.add(m.getIndex().toString());
-                    list.add(m.getOriginWeight().toString());
-                    list.add(m.getFoot().toString());
-                    list.add(m.getGential().toString());
-                    list.add(m.getUdder().toString());
-                    list.add(m.getAdg().toString());
-                    bayes.learn("Loai 2", list);
-                } else if (m.getClassification().equals("Loai 3")){
-                    List<String> list = new ArrayList<>();
-                    list.add(m.getIndex().toString());
-                    list.add(m.getOriginWeight().toString());
-                    list.add(m.getFoot().toString());
-                    list.add(m.getGential().toString());
-                    list.add(m.getUdder().toString());
-                    list.add(m.getAdg().toString());
-                    bayes.learn("Loai 3", list);
-                } else if (m.getClassification().equals("Loai 4")){
-                    List<String> list = new ArrayList<>();
-                    list.add(m.getIndex().toString());
-                    list.add(m.getOriginWeight().toString());
-                    list.add(m.getFoot().toString());
-                    list.add(m.getGential().toString());
-                    list.add(m.getUdder().toString());
-                    list.add(m.getAdg().toString());
-                    bayes.learn("Loai 4", list);
+        bayes.setMemoryCapacity(5000);
+
+        List<PigsDTO> pigsList = pigsDTORepository.findAllByDelFlag(false);
+        //Lay thong tin tap train tu database
+        //cho thuat toan hoc du lieu tu tap train
+        for (PigsDTO p :
+                pigsList) {
+            if (p.getPigType().equals("Loai 1")){
+                List<String> list = new ArrayList<>();
+                list.add(p.getIndex().toString());
+                list.add(p.getOriginWeight().toString());
+                list.add(p.getFootTypeId().toString());
+                list.add(p.getGentialTypeId().toString());
+                //Thuc hien quy doi de dong bo giua con duc va cai
+                if (p.getGender().equals(1)){
+                    list.add(convertMaleUdder(p.getFunctionUdder()));
+                } else if (p.getGender().equals(2)){
+                    list.add(convertFemaleUdder(p.getFunctionUdder()));
+                } else {
+                    list.add("4");
                 }
+//                    list.add(p.getFunctionUdder().toString());
+                list.add(p.getAdg().toString());
+                bayes.learn("Loai 1", list);//bien 1: nhan phan lop; bien 2 collection<String> cac thuoc tinh phan lop
+            } else if (p.getPigType().equals("Loai 2")){
+                List<String> list = new ArrayList<>();
+                list.add(p.getIndex().toString());
+                list.add(p.getOriginWeight().toString());
+                list.add(p.getFootTypeId().toString());
+                list.add(p.getGentialTypeId().toString());
+                if (p.getGender().equals(1)){
+                    list.add(convertMaleUdder(p.getFunctionUdder()));
+                } else if (p.getGender().equals(2)){
+                    list.add(convertFemaleUdder(p.getFunctionUdder()));
+                } else {
+                    list.add("4");
+                }
+                list.add(p.getAdg().toString());
+                bayes.learn("Loai 2", list);
+            } else if (p.getPigType().equals("Loai 3")){
+                List<String> list = new ArrayList<>();
+                list.add(p.getIndex().toString());
+                list.add(p.getOriginWeight().toString());
+                list.add(p.getFootTypeId().toString());
+                list.add(p.getGentialTypeId().toString());
+                if (p.getGender().equals(1)){
+                    list.add(convertMaleUdder(p.getFunctionUdder()));
+                } else if (p.getGender().equals(2)){
+                    list.add(convertFemaleUdder(p.getFunctionUdder()));
+                } else {
+                    list.add("4");
+                }
+                list.add(p.getAdg().toString());
+                bayes.learn("Loai 3", list);
+            } else if (p.getPigType().equals("Loai 4")){
+                List<String> list = new ArrayList<>();
+                list.add(p.getIndex().toString());
+                list.add(p.getOriginWeight().toString());
+                list.add(p.getFootTypeId().toString());
+                list.add(p.getGentialTypeId().toString());
+                if (p.getGender().equals(1)){
+                    list.add(convertMaleUdder(p.getFunctionUdder()));
+                } else if (p.getGender().equals(2)){
+                    list.add(convertFemaleUdder(p.getFunctionUdder()));
+                } else {
+                    list.add("4");
+                }
+                list.add(p.getAdg().toString());
+                bayes.learn("Loai 4", list);
             }
+        }
+        flag_training = true;
+        return true;
+    }
 
-            List<String> list = new ArrayList<>();
-            //Chuyen thong tin heo sang diem danh gia chung dua vao tieu chi xep loai
-            list.add(convertIndex(pig.get().getIndex()));
-            list.add(convertWeight(pig.get().getOriginWeight()));
-            list.add(convertFoot(pig.get().getFoot().getId()));
-            list.add(convertGential(pig.get().getGentialType().getId()));
-            if (pig.get().getGender().equals(1)){
-                list.add(convertMaleUdder(pig.get().getFunctionUdder()));
-            } else if (pig.get().getGender().equals(2)){
-                list.add(convertFemaleUdder(pig.get().getFunctionUdder()));
-            } else {
-                list.add("4");
+    public MiningResponse classification(Integer pigId){
+        if (flag_training){
+            Optional<Pigs> pig = pigsService.findbyid(pigId);
+            if (pig.isPresent()){
+                List<String> list = new ArrayList<>();
+
+                list.add(pig.get().getIndex().toString());
+                list.add(pig.get().getOriginWeight().toString());
+                list.add(pig.get().getFoot().getId().toString());
+                list.add(pig.get().getGentialType().getId().toString());
+                if (pig.get().getGender().equals(1)){
+                    list.add(pig.get().getFunctionUdder().toString());
+                } else if (pig.get().getGender().equals(2)){
+                    list.add(convertFemaleUdder(pig.get().getFunctionUdder()));
+                } else {
+                    list.add("4");
+                }
+                list.add(pig.get().getAdg().toString());
+
+                //Phan lop sau do lay ra category
+                String category = bayes.classify(list).getCategory();
+                MiningResponse miningResponse =
+                        new MiningResponse(pig.get().getIndex(), pig.get().getOriginWeight(),pig.get().getFoot().getName(),pig.get().getGentialType().getName(),pig.get().getFunctionUdder(),pig.get().getAdg(),category);
+                ((BayesClassifier<String, String>) bayes).classifyDetailed(
+                        list);
+
+                bayes.setMemoryCapacity(500); // remember the last 500 learned classifications
+                return miningResponse;
             }
-            list.add(convertAdg(pig.get().getAdg()));
-
-            //Phan lop sau do lay ra category
-            String category = bayes.classify(list).getCategory();
-            MiningResponse miningResponse =
-                    new MiningResponse(pig.get().getIndex(), pig.get().getOriginWeight(),pig.get().getFoot().getName(),pig.get().getGentialType().getName(),pig.get().getFunctionUdder(),pig.get().getAdg(),category);
-            ((BayesClassifier<String, String>) bayes).classifyDetailed(
-                    list);
-
-            bayes.setMemoryCapacity(500); // remember the last 500 learned classifications
-            return miningResponse;
+        }else {
+            throw new IllegalArgumentException("code 1434: Chua thuc hien training");
         }
         return null;
     }
+
+//    public void autoclassification(){
+////        Optional<Pigs> pig = pigsService.findbyid(pigId);
+////        if (pig.isPresent()){
+//        final Classifier<String, String> bayes = new BayesClassifier<String, String>();
+//        //set 5000 learned classifications
+//        bayes.setMemoryCapacity(5000);
+//
+//        List<Pigs> pigsList = pigsRepository.findAllByDelFlag(false);
+//        //Lay thong tin tap train tu database
+//        List<Minings> miningsList = findall();
+//        //cho thuat toan hoc du lieu tu tap train
+//        for (Minings m :
+//                miningsList) {
+//            if (m.getClassification().equals("Loai 1")){
+//                List<String> list = new ArrayList<>();
+//                list.add(m.getIndex().toString());
+//                list.add(m.getOriginWeight().toString());
+//                list.add(m.getFoot().toString());
+//                list.add(m.getGential().toString());
+//                list.add(m.getUdder().toString());
+//                list.add(m.getAdg().toString());
+//                bayes.learn("Loai 1", list);//bien 1: nhan phan lop; bien 2 collection<String> cac thuoc tinh phan lop
+//            } else if (m.getClassification().equals("Loai 2")){
+//                List<String> list = new ArrayList<>();
+//                list.add(m.getIndex().toString());
+//                list.add(m.getOriginWeight().toString());
+//                list.add(m.getFoot().toString());
+//                list.add(m.getGential().toString());
+//                list.add(m.getUdder().toString());
+//                list.add(m.getAdg().toString());
+//                bayes.learn("Loai 2", list);
+//            } else if (m.getClassification().equals("Loai 3")){
+//                List<String> list = new ArrayList<>();
+//                list.add(m.getIndex().toString());
+//                list.add(m.getOriginWeight().toString());
+//                list.add(m.getFoot().toString());
+//                list.add(m.getGential().toString());
+//                list.add(m.getUdder().toString());
+//                list.add(m.getAdg().toString());
+//                bayes.learn("Loai 3", list);
+//            } else if (m.getClassification().equals("Loai 4")){
+//                List<String> list = new ArrayList<>();
+//                list.add(m.getIndex().toString());
+//                list.add(m.getOriginWeight().toString());
+//                list.add(m.getFoot().toString());
+//                list.add(m.getGential().toString());
+//                list.add(m.getUdder().toString());
+//                list.add(m.getAdg().toString());
+//                bayes.learn("Loai 4", list);
+//            }
+//        }
+//
+//        for (Pigs pig :
+//                pigsList) {
+////            List<String> list = new ArrayList<>();
+//            //Chuyen thong tin heo sang diem danh gia chung dua vao tieu chi xep loai
+//            Integer index = Integer.parseInt(convertIndex(pig.getIndex()));
+//            Integer weight = Integer.parseInt(convertWeight(pig.getOriginWeight()));
+//            Integer foot = Integer.parseInt(convertFoot(pig.getFoot().getId()));
+//            Integer gential = Integer.parseInt(convertGential(pig.getGentialType().getId()));
+//            Integer udder;
+//            if (pig.getGender().equals(1)){
+//                udder = Integer.parseInt(convertMaleUdder(pig.getFunctionUdder()));
+//            } else if (pig.getGender().equals(2)){
+//                udder = Integer.parseInt(convertFemaleUdder(pig.getFunctionUdder()));
+//            } else {
+//                udder = 4;
+//            }
+//            Integer adg = Integer.parseInt(convertAdg(pig.getAdg()));
+//
+//            Optional<Minings> mining = miningsRepository.findByIndexAndOriginWeightAndFootAndGentialAndUdderAndAdg(index,weight,foot,gential,udder,adg);
+//
+//            //Phan lop sau do lay ra category
+////            String category = bayes.classify(list).getCategory();
+//            pig.setPigType(mining.get().getClassification());
+//            pigsRepository.save(pig);
+////            ((BayesClassifier<String, String>) bayes).classifyDetailed(
+////                    list);
+//        }
+////            List<String> list = new ArrayList<>();
+////            //Chuyen thong tin heo sang diem danh gia chung dua vao tieu chi xep loai
+////            list.add(convertIndex(pig.get().getIndex()));
+////            list.add(convertWeight(pig.get().getOriginWeight()));
+////            list.add(convertFoot(pig.get().getFoot().getId()));
+////            list.add(convertGential(pig.get().getGentialType().getId()));
+////            if (pig.get().getGender().equals(1)){
+////                list.add(convertMaleUdder(pig.get().getFunctionUdder()));
+////            } else if (pig.get().getGender().equals(2)){
+////                list.add(convertFemaleUdder(pig.get().getFunctionUdder()));
+////            } else {
+////                list.add("4");
+////            }
+////            list.add(convertAdg(pig.get().getAdg()));
+////
+////            //Phan lop sau do lay ra category
+////            String category = bayes.classify(list).getCategory();
+////            MiningResponse miningResponse =
+////                    new MiningResponse(pig.get().getIndex(), pig.get().getOriginWeight(),pig.get().getFoot().getName(),pig.get().getGentialType().getName(),pig.get().getFunctionUdder(),pig.get().getAdg(),category);
+////            ((BayesClassifier<String, String>) bayes).classifyDetailed(
+////                    list);
+//
+//        bayes.setMemoryCapacity(500); // remember the last 500 learned classifications
+////            return miningResponse;
+//    }
 
     public ApiResponse updateclassification(Integer pigId, String classification) {
         Optional<Pigs> pig = pigsService.findbyid(pigId);
@@ -164,7 +315,7 @@ public class MiningsService {
         }
     }
 
-    public String convertMaleUdder(Integer mUdder) {
+    public static String convertMaleUdder(Integer mUdder) {
         if (mUdder >= 16) {
             return "1";
         } else if (mUdder == 15) {
@@ -176,7 +327,7 @@ public class MiningsService {
         }
     }
 
-    public String convertFemaleUdder(Integer fUdder) {
+    public static String convertFemaleUdder(Integer fUdder) {
         if (fUdder >= 16) {
             return "1";
         } else if (fUdder >= 14 && fUdder <= 15) {
