@@ -48,6 +48,7 @@ public class MiningsService {
 
     public Boolean training(){
 
+        bayes.reset();
         bayes.setMemoryCapacity(5000);
 
         List<PigsDTO> pigsList = pigsDTORepository.findAllByDelFlag(false);
@@ -146,10 +147,10 @@ public class MiningsService {
                 String category = bayes.classify(list).getCategory();
                 MiningResponse miningResponse =
                         new MiningResponse(pig.get().getIndex(), pig.get().getOriginWeight(),pig.get().getFoot().getName(),pig.get().getGentialType().getName(),pig.get().getFunctionUdder(),pig.get().getAdg(),category);
-                ((BayesClassifier<String, String>) bayes).classifyDetailed(
-                        list);
+//                ((BayesClassifier<String, String>) bayes).classifyDetailed(
+//                        list);
 
-                bayes.setMemoryCapacity(500); // remember the last 500 learned classifications
+//                bayes.setMemoryCapacity(500); // remember the last 500 learned classifications
                 return miningResponse;
             }
         }else {
