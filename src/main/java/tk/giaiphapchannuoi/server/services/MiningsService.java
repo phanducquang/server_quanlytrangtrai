@@ -48,7 +48,7 @@ public class MiningsService {
 
     public Boolean training(){
 
-//        bayes.reset();
+        bayes.reset();
         bayes.setMemoryCapacity(5000);
 
         List<PigsDTO> pigsList = pigsDTORepository.findAllByDelFlag(false);
